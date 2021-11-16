@@ -410,6 +410,20 @@ public class ArticlesUITest extends BaseUISeleniumTest {
             triggerTestFailure(badURLs);
         }
     }
+    
+    @Test
+    public final void givenAllArticles_whenAnArticleLoads_thenItIsNotBuiltUsingTheThriveArchtect() throws IOException {
+        do {           
+            if (page.containsThriveArchtectResource()) {
+                recordMetrics(1, TestMetricTypes.FAILED);
+                badURLs.put(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenItIsNotBuiltUsingTheThriveArchtect, page.getUrlWithNewLineFeed());
+            }
+        } while (loadNextURL());
+
+        if (!allTestsFlag && badURLs.size() > 0) {
+            triggerTestFailure(badURLs);
+        }
+    }
 
     @Test
     public final void givenAllArticles_whenAnArticleLoads_thenItDoesNotLinkToOldJavaDocs() {

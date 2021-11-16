@@ -592,6 +592,14 @@ public class SitePage extends BlogBaseDriver {
             return false;
         }
     }
+    
+    public boolean containsThriveArchtectResource() {
+        try {
+            return this.getWebDriver().findElement(By.xpath("//script[@id='tve_frontend-js']")).isEnabled();           
+        } catch (NoSuchElementException e) {
+            return false;
+        }
+    }
 
     public boolean findElementForAnchor(String anchorLink) {
         try {

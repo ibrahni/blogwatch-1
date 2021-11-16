@@ -284,4 +284,5 @@ public class GlobalConstants {
     public static final String givenAllArticles_whenAnArticleLoads_thenItDoesNotLinkToOldJavaDocs = "givenAllArticles_whenAnArticleLoads_thenItDoesNotLinkToOldJavaDocs";
     public static final String givenAPage_whenThePageLoads_thenNoPopupAppearsOnThePage = "givenAPage_whenThePageLoads_thenNoPopupAppearsOnThePage";
     public static final String givenTutorialsRepo_whenAllModulesAnalysed_thenFolderNameAndArtifiactIdAndModuleNameMatch = "givenTutorialsRepo_whenAllModulesAnalysed_thenFolderNameAndArtifiactIdAndModuleNameMatch";
+    public static final String givenAllArticles_whenAnArticleLoads_thenItIsNotBuiltUsingTheThriveArchtect = "givenAllArticles_whenAnArticleLoads_thenItIsNotBuiltUsingTheThriveArchtect";
 }
