@@ -32,7 +32,7 @@ import com.baeldung.site.strategy.ITitleAnalyzerStrategy;
 @Component
 public class SitePage extends BlogBaseDriver {
 
-    private static DateTimeFormatter publishedDateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'");
+    private static DateTimeFormatter publishedDateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssXXX");
 
     @Override
     public void setUrl(String pageURL) {
