@@ -415,7 +415,7 @@ public class ArticlesUITest extends BaseUISeleniumTest {
     public final void givenAllArticles_whenAnArticleLoads_thenItIsNotBuiltUsingTheThriveArchtect() throws IOException {
         do {           
             if (page.containsThriveArchtectResource()) {
-                logger.info("page found which is build using Thrive Archetect" + page.getUrl());
+                logger.info("page found which is build using Thrive Archetect " + page.getUrl());
                 recordMetrics(1, TestMetricTypes.FAILED);
                 badURLs.put(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenItIsNotBuiltUsingTheThriveArchtect, page.getUrlWithNewLineFeed());
             }
