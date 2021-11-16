@@ -595,7 +595,7 @@ public class SitePage extends BlogBaseDriver {
     
     public boolean containsThriveArchtectResource() {
         try {
-            return this.getWebDriver().findElement(By.xpath("//script[@id='tve_frontend-js']")).isEnabled();           
+            return this.getWebDriver().findElement(By.xpath("//span[contains(@style, 'width: 100%')]")).isEnabled();           
         } catch (NoSuchElementException e) {
             return false;
         }
