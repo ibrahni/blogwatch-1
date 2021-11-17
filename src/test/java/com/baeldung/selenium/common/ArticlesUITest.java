@@ -483,20 +483,13 @@ public class ArticlesUITest extends BaseUISeleniumTest {
         do {
             loadNextUrl = false;
             try {
-                givenAllArticles_whenAnArticleLoads_thenArticleHasNoEmptyDiv();
-                logger.info("givenAllArticles_whenAnArticleLoads_thenArticleHasNoEmptyDiv:                             {}",LocalDateTime.now().toString());
-                givenAllArticles_whenAnArticleLoads_thenItHasSingleShortcodeAtTheTop();
-                logger.info("givenAllArticles_whenAnArticleLoads_thenItHasSingleShortcodeAtTheTop:                     {}",LocalDateTime.now().toString());
-                givenAllArticles_whenAnArticleLoads_thenItHasSingleShortcodeAtTheEnd();
-                logger.info("givenAllArticles_whenAnArticleLoads_thenItHasSingleShortcodeAtTheEnd:                     {}",LocalDateTime.now().toString());
-                givenAllArticles_whenAnArticleLoads_thenImagesPointToCorrectEnv();
-                logger.info("givenAllArticles_whenAnArticleLoads_thenImagesPointToCorrectEnv:                          {}",LocalDateTime.now().toString());
-                givenAllArticles_whenAnArticleLoads_thenMetaOGImageAndTwitterImagePointToTheAbsolutePath();
-                logger.info("givenAllArticles_whenAnArticleLoads_thenMetaOGImageAndTwitterImagePointToTheAbsolutePath: {}",LocalDateTime.now().toString());
-                givenAllArticles_whenAnalyzingCodeBlocks_thenCodeBlocksAreRenderedProperly();
-                logger.info("givenAllArticles_whenAnalyzingCodeBlocks_thenCodeBlocksAreRenderedProperly:               {}",LocalDateTime.now().toString());
-                givenAllArticles_whenAnArticleLoads_thenItDoesNotContainOverlappingText();
-                logger.info("givenAllArticles_whenAnArticleLoads_thenItDoesNotContainOverlappingText:                  {}",LocalDateTime.now().toString());
+                givenAllArticles_whenAnArticleLoads_thenArticleHasNoEmptyDiv();                
+                givenAllArticles_whenAnArticleLoads_thenItHasSingleShortcodeAtTheTop();                
+                givenAllArticles_whenAnArticleLoads_thenItHasSingleShortcodeAtTheEnd();                
+                givenAllArticles_whenAnArticleLoads_thenImagesPointToCorrectEnv();                
+                givenAllArticles_whenAnArticleLoads_thenMetaOGImageAndTwitterImagePointToTheAbsolutePath();                
+                givenAllArticles_whenAnalyzingCodeBlocks_thenCodeBlocksAreRenderedProperly();                
+                givenAllArticles_whenAnArticleLoads_thenItDoesNotContainOverlappingText();                
             } catch (Exception e) {
                 logger.error("Error occurened while processing:" + page.getUrl() + " error message:" + StringUtils.substring(e.getMessage(), 0, 100));
             }
