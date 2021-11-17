@@ -15,7 +15,7 @@
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
-            <version>3.141.59</version>
+            <version>4.0.0</version>
             <exclusions>               
                 <exclusion>
                     <groupId>org.seleniumhq.selenium</groupId>
@@ -39,7 +39,7 @@
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>htmlunit-driver</artifactId>
-            <version>2.52.0</version>
+            <version>3.55.0</version>
         </dependency>
 
         <!-- <dependency> <groupId>com.codeborne</groupId> <artifactId>phantomjsdriver</artifactId> <version>1.4.3</version> </dependency> -->
@@ -341,7 +341,7 @@
     </repositories>
 
     <properties>
-        <org.springframework-version>5.3.9</org.springframework-version>
+        <org.springframework-version>5.3.13</org.springframework-version>
         <spring.profiles.active>headless-browser</spring.profiles.active>
 
         <!-- commons and utils -->
@@ -353,15 +353,15 @@
         <snakeyaml.version>1.29</snakeyaml.version>
 
         <!-- logging -->
-        <org.slf4j.version>1.7.31</org.slf4j.version>
-        <logback.version>1.2.3</logback.version>
+        <org.slf4j.version>1.7.32</org.slf4j.version>
+        <logback.version>1.2.7</logback.version>
 
         <!-- marshalling -->
-        <jackson.version>2.12.4</jackson.version>
+        <jackson.version>2.13.0</jackson.version>
 
         <!-- testing -->
         <rest-assured.version>4.4.0</rest-assured.version>
-        <junit.jupiter.version>5.7.2</junit.jupiter.version>
+        <junit.jupiter.version>5.8.1</junit.jupiter.version>
         <junit.platform.version>1.4.2</junit.platform.version>
         <org.hamcrest.version>2.2</org.hamcrest.version>
         <mockito.version>3.11.2</mockito.version>
