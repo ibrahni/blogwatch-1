@@ -1,6 +1,7 @@
 package com.baeldung.selenium.common;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ListIterator;
@@ -483,12 +484,19 @@ public class ArticlesUITest extends BaseUISeleniumTest {
             loadNextUrl = false;
             try {
                 givenAllArticles_whenAnArticleLoads_thenArticleHasNoEmptyDiv();
+                logger.info("givenAllArticles_whenAnArticleLoads_thenArticleHasNoEmptyDiv:                             {}",LocalDateTime.now().toString());
                 givenAllArticles_whenAnArticleLoads_thenItHasSingleShortcodeAtTheTop();
+                logger.info("givenAllArticles_whenAnArticleLoads_thenItHasSingleShortcodeAtTheTop:                     {}",LocalDateTime.now().toString());
                 givenAllArticles_whenAnArticleLoads_thenItHasSingleShortcodeAtTheEnd();
+                logger.info("givenAllArticles_whenAnArticleLoads_thenItHasSingleShortcodeAtTheEnd:                     {}",LocalDateTime.now().toString());
                 givenAllArticles_whenAnArticleLoads_thenImagesPointToCorrectEnv();
+                logger.info("givenAllArticles_whenAnArticleLoads_thenImagesPointToCorrectEnv:                          {}",LocalDateTime.now().toString());
                 givenAllArticles_whenAnArticleLoads_thenMetaOGImageAndTwitterImagePointToTheAbsolutePath();
+                logger.info("givenAllArticles_whenAnArticleLoads_thenMetaOGImageAndTwitterImagePointToTheAbsolutePath: {}",LocalDateTime.now().toString());
                 givenAllArticles_whenAnalyzingCodeBlocks_thenCodeBlocksAreRenderedProperly();
+                logger.info("givenAllArticles_whenAnalyzingCodeBlocks_thenCodeBlocksAreRenderedProperly:               {}",LocalDateTime.now().toString());
                 givenAllArticles_whenAnArticleLoads_thenItDoesNotContainOverlappingText();
+                logger.info("givenAllArticles_whenAnArticleLoads_thenItDoesNotContainOverlappingText:                  {}",LocalDateTime.now().toString());
             } catch (Exception e) {
                 logger.error("Error occurened while processing:" + page.getUrl() + " error message:" + StringUtils.substring(e.getMessage(), 0, 100));
             }
