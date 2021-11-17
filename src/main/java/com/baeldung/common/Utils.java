@@ -678,7 +678,7 @@ public class Utils {
         for (String domain : domainToExclude) {
             excludeCluse.append("and not(contains(@href, '" + domain + "'))");
         }
-        System.out.println(excludeCluse.toString());
+        //System.out.println(excludeCluse.toString());
         return excludeCluse.toString();
     }
 
