@@ -62,9 +62,7 @@ public class headlessBrowserConfig extends browserConfig {
             // firefoxOptions.setHeadless(true);
             webDriver = new ChromeDriver(chromeOptions);           
             
-        }
-        webDriver.manage().timeouts().implicitlyWait(Duration.ofMillis(500));
-        
+        }                
     }
 
     @Override
@@ -109,7 +107,6 @@ public class headlessBrowserConfig extends browserConfig {
             chomeDriver.register(UsernameAndPassword.of(proxyUsername, proxyPassword));            
             webDriver = chomeDriver;
         }     
-        webDriver.manage().timeouts().implicitlyWait(Duration.ofMillis(500));
 
     }    
 }
