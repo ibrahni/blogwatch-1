@@ -4,6 +4,8 @@ package com.baeldung.selenium.config;
 
 
 
+import java.time.Duration;
+
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.NTCredentials;
 
@@ -61,6 +63,8 @@ public class headlessBrowserConfig extends browserConfig {
             webDriver = new ChromeDriver(chromeOptions);           
             
         }
+        webDriver.manage().timeouts().implicitlyWait(Duration.ofMillis(500));
+        
     }
 
     @Override
@@ -104,7 +108,8 @@ public class headlessBrowserConfig extends browserConfig {
             ChromeDriver chomeDriver = new ChromeDriver(chromeOptions);   
             chomeDriver.register(UsernameAndPassword.of(proxyUsername, proxyPassword));            
             webDriver = chomeDriver;
-        }        
+        }     
+        webDriver.manage().timeouts().implicitlyWait(Duration.ofMillis(500));
 
     }    
 }
