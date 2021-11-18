@@ -14,6 +14,7 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.Duration;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -495,7 +496,7 @@ public class CommonUITest extends BaseUISeleniumTest {
         page.getWebDriver().findElement(By.xpath("//input[contains(@value, 'Send your message')] | //button//*[contains(text(), 'Send')]")).click();
 
         // verify
-        WebDriverWait wait = new WebDriverWait(page.getWebDriver(), 30);
+        WebDriverWait wait = new WebDriverWait(page.getWebDriver(), Duration.ofSeconds(30));
         try {
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[contains(text(), 'Thank you for your message. It has been sent') or contains(text(), 'The form was sent successfully.')]")));
         } catch (Exception e) {
