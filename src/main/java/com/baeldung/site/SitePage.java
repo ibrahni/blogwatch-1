@@ -2,6 +2,7 @@ package com.baeldung.site;
 
 import static java.util.stream.Collectors.toList;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
@@ -383,7 +384,7 @@ public class SitePage extends BlogBaseDriver {
     public boolean vatPricesAvailableThePage() throws Exception {
         logger.info("wait for element with VAT");
         try {
-            WebDriverWait wait = new WebDriverWait(this.getWebDriver(), 300);
+            WebDriverWait wait = new WebDriverWait(this.getWebDriver(), Duration.ofSeconds(300));
             WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[contains(text(), 'with VAT')]")));
         } catch (Exception e) {
 
@@ -415,7 +416,7 @@ public class SitePage extends BlogBaseDriver {
 
     public boolean geoIPProviderAPILoaded() {
         try {
-            WebDriverWait wait = new WebDriverWait(this.getWebDriver(), 60);
+            WebDriverWait wait = new WebDriverWait(this.getWebDriver(), Duration.ofSeconds(60));
             WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("geovat-info")));
             String geoApiMessage = element.getAttribute("innerHTML");
             if (StringUtils.isBlank(geoApiMessage)) {
@@ -611,7 +612,7 @@ public class SitePage extends BlogBaseDriver {
 
     public void acceptCookie() {
         try {
-            WebDriverWait wait = new WebDriverWait(this.getWebDriver(), 10);
+            WebDriverWait wait = new WebDriverWait(this.getWebDriver(), Duration.ofSeconds(10));
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("cn-accept-cookie"))).click();
             wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("cn-accept-cookie")));
         } catch (Exception e) {
