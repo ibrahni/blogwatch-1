@@ -4708,7 +4708,6 @@
 /java-generate-alphanumeric-uuid
 /java-collection-toarray-methods
 /spring-native-intro
-/spring-security-authentication-and-registration-thrive
 /linux/validate-bash-script
 /linux/delete-empty-files-dirs
 /linux/zip-avoiding-unwanted-directories
