@@ -123,7 +123,7 @@ givenAllArticles_whenAnArticleLoads_thenItDoesNotLinkToOldJavaDocs:
 givenTutorialsRepo_whenAllModulesAnalysed_thenFolderNameAndArtifiactIdAndModuleNameMatch:
  - /spring-cloud/spring-cloud-zuul-eureka-integration/bin
  - /guest/slf4j/guide
- - /maven-archetype
+ - /maven-archetype/src/main/resources/archetype-resources
 givenAGitHubModuleReadme_whenAnalysingTheReadme_thenLinksToAndFromGithubMatch:
  - https://github.com/eugenp/tutorials/blob/master/README.md
  
