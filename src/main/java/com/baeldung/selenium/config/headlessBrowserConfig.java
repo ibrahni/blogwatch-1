@@ -4,7 +4,6 @@ package com.baeldung.selenium.config;
 
 
 
-import java.time.Duration;
 
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.NTCredentials;
