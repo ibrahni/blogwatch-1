@@ -454,6 +454,9 @@ public class ArticlesUITest extends BaseUISeleniumTest {
     @Test
     public final void givenAllArticles_whenAnArticleLoads_thenItIsHasASingleOptinInTheSideBar() throws IOException {
         do {
+            if (shouldSkipUrl(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenItIsHasASingleOptinInTheSideBar)) {
+                continue;
+            }
             if (page.getOptinsFromTheSideBar() != 1) {
                 logger.info("page found which doesn't have a single Opt-in in the sidebar " + page.getUrl());
                 recordMetrics(1, TestMetricTypes.FAILED);
@@ -469,6 +472,11 @@ public class ArticlesUITest extends BaseUISeleniumTest {
     @Test
     public final void givenAllArticles_whenAnArticleLoads_thenItIsHasASingleOptinInTheAfterPostContent() throws IOException {
         do {
+
+            if (shouldSkipUrl(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenItIsHasASingleOptinInTheAfterPostContent)) {
+                continue;
+            }
+
             if (page.getOptinsFromTheAfterPostContent() != 1) {
                 logger.info("page found which doesn't have a single Opt-in in the after post content " + page.getUrl());
                 recordMetrics(1, TestMetricTypes.FAILED);
@@ -479,7 +487,7 @@ public class ArticlesUITest extends BaseUISeleniumTest {
         if (!allTestsFlag && badURLs.size() > 0) {
             triggerTestFailure(badURLs);
         }
-    }       
+    }      
 
     @Test
     @Tag(GlobalConstants.TAG_EDITORIAL)
