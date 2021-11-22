@@ -126,6 +126,16 @@ givenTutorialsRepo_whenAllModulesAnalysed_thenFolderNameAndArtifiactIdAndModuleN
 givenAGitHubModuleReadme_whenAnalysingTheReadme_thenLinksToAndFromGithubMatch:
  - https://github.com/eugenp/tutorials/blob/master/README.md
  
+givenAllArticles_whenAnArticleLoads_thenItIsHasASingleOptinInTheSideBar:
+  - /linux/
+  - /kotlin/
+  - /cs/
+  - /scala/
+givenAllArticles_whenAnArticleLoads_thenItIsHasASingleOptinInTheAfterPostContent: 
+  - /linux/
+  - /kotlin/
+  - /cs/
+  - /scala/
 
 
 

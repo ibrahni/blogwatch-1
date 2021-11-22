@@ -450,6 +450,36 @@ public class ArticlesUITest extends BaseUISeleniumTest {
             triggerTestFailure(badURLs);
         }
     }
+    
+    @Test
+    public final void givenAllArticles_whenAnArticleLoads_thenItIsHasASingleOptinInTheSideBar() throws IOException {
+        do {
+            if (page.getOptinsFromTheSideBar() != 1) {
+                logger.info("page found which doesn't have a single Opt-in in the sidebar " + page.getUrl());
+                recordMetrics(1, TestMetricTypes.FAILED);
+                badURLs.put(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenItIsHasASingleOptinInTheSideBar, page.getUrlWithNewLineFeed());
+            }
+        } while (loadNextURL());
+
+        if (!allTestsFlag && badURLs.size() > 0) {
+            triggerTestFailure(badURLs);
+        }
+    }
+    
+    @Test
+    public final void givenAllArticles_whenAnArticleLoads_thenItIsHasASingleOptinInTheAfterPostContent() throws IOException {
+        do {
+            if (page.getOptinsFromTheAfterPostContent() != 1) {
+                logger.info("page found which doesn't have a single Opt-in in the after post content " + page.getUrl());
+                recordMetrics(1, TestMetricTypes.FAILED);
+                badURLs.put(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenItIsHasASingleOptinInTheAfterPostContent, page.getUrlWithNewLineFeed());
+            }
+        } while (loadNextURL());
+
+        if (!allTestsFlag && badURLs.size() > 0) {
+            triggerTestFailure(badURLs);
+        }
+    }       
 
     @Test
     @Tag(GlobalConstants.TAG_EDITORIAL)
@@ -481,14 +511,34 @@ public class ArticlesUITest extends BaseUISeleniumTest {
         allTestsFlag = true;
         do {
             loadNextUrl = false;
-            try {
+            try {               
                 givenAllArticles_whenAnArticleLoads_thenArticleHasNoEmptyDiv();                
                 givenAllArticles_whenAnArticleLoads_thenItHasSingleShortcodeAtTheTop();                
                 givenAllArticles_whenAnArticleLoads_thenItHasSingleShortcodeAtTheEnd();                
                 givenAllArticles_whenAnArticleLoads_thenImagesPointToCorrectEnv();                
                 givenAllArticles_whenAnArticleLoads_thenMetaOGImageAndTwitterImagePointToTheAbsolutePath();                
                 givenAllArticles_whenAnalyzingCodeBlocks_thenCodeBlocksAreRenderedProperly();                
-                givenAllArticles_whenAnArticleLoads_thenItDoesNotContainOverlappingText();                
+                givenAllArticles_whenAnArticleLoads_thenItDoesNotContainOverlappingText();               
+            } catch (Exception e) {
+                logger.error("Error occurened while processing:" + page.getUrl() + " error message:" + StringUtils.substring(e.getMessage(), 0, 100));
+            }
+            loadNextUrl = true;
+        } while (loadNextURL());
+
+        if (badURLs.size() > 0) {
+            triggerTestFailure(badURLs);
+        }
+    }
+    
+    @Test
+    @Tag("opt-ins")
+    public final void givenAllTestsRelatedToOptins_whenHittingAllArticles_thenOK() throws IOException {
+        allTestsFlag = true;
+        do {
+            loadNextUrl = false;
+            try {
+                givenAllArticles_whenAnArticleLoads_thenItIsHasASingleOptinInTheSideBar();
+                givenAllArticles_whenAnArticleLoads_thenItIsHasASingleOptinInTheAfterPostContent();
             } catch (Exception e) {
                 logger.error("Error occurened while processing:" + page.getUrl() + " error message:" + StringUtils.substring(e.getMessage(), 0, 100));
             }

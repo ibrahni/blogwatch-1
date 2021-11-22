@@ -23,6 +23,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.stereotype.Component;
 
+import com.baeldung.common.ConsoleColors;
 import com.baeldung.common.GlobalConstants;
 import com.baeldung.common.Utils;
 import com.baeldung.common.vo.CoursePurchaseLinksVO.PurchaseLink;
@@ -706,6 +707,24 @@ public class SitePage extends BlogBaseDriver {
             return this.getWebDriver().findElement(By.xpath("//script[contains(text(), '"+text+"')]")).isEnabled();
         } catch (NoSuchElementException e) {
             return false;
+        }
+    }
+
+    public int getOptinsFromTheSideBar() {
+        try {
+            return this.getWebDriver().findElements(By.xpath("//div[@id='sidebar1']//span[contains(@class, 'optin-button')]")).size();
+        } catch (Exception e) {
+            logger.error(ConsoleColors.redBoldMessage("Error fetching optin-in details from the sidebar :{} "), this.getWebDriver().getCurrentUrl());
+            return 1;
+        }
+    }
+
+    public int getOptinsFromTheAfterPostContent() {
+        try {
+            return this.getWebDriver().findElements(By.xpath("//div[contains(@class, 'footer-html-banner')]//span[contains(@class, 'optin-button')]")).size();
+        } catch (Exception e) {
+            logger.error(ConsoleColors.redBoldMessage("Error fetching optin-in details from the after post content :{} "), this.getWebDriver().getCurrentUrl());
+            return 1;
         }
     }
 }
