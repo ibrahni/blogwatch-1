@@ -42,7 +42,6 @@
 /thanks-course-call
 /editors
 /work-with-me
-/webinar-idiomatic-functional-programming-in-java
 /rest-with-spring-faq
 /learn-spring-security-faq
 /lss-why

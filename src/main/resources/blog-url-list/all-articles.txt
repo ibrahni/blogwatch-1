@@ -3172,7 +3172,6 @@
 /spring-boot-groovy-web-app
 /spring-beans-factory-methods
 /spring-security-check-user-role
-/transactions-intro
 /java-string-encode-utf-8
 /mockito-mock-jackson-read-value
 /java-atomicstampedreference
