@@ -135,6 +135,7 @@ givenAllArticles_whenAnArticleLoads_thenItIsHasASingleOptinInTheSidebar:
   - /codota
   - /cassandra-astra-rest-dashboard-updates
   - /job/java-engineer-with-spring-security-experience-remote-part-time
+  - /job/java-lead
   - /java-weekly
   - /java-web-weekly
 givenAllArticles_whenAnArticleLoads_thenItIsHasASingleOptinInTheAfterPostContent: 
@@ -145,6 +146,7 @@ givenAllArticles_whenAnArticleLoads_thenItIsHasASingleOptinInTheAfterPostContent
   - /codota
   - /cassandra-astra-rest-dashboard-updates
   - /job/java-engineer-with-spring-security-experience-remote-part-time
+  - /job/java-lead
   - /java-weekly
   - /java-web-weekly
 
