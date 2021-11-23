@@ -452,15 +452,15 @@ public class ArticlesUITest extends BaseUISeleniumTest {
     }
     
     @Test
-    public final void givenAllArticles_whenAnArticleLoads_thenItIsHasASingleOptinInTheSideBar() throws IOException {
+    public final void givenAllArticles_whenAnArticleLoads_thenItIsHasASingleOptinInTheSidebar() throws IOException {
         do {
-            if (shouldSkipUrl(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenItIsHasASingleOptinInTheSideBar)) {
+            if (shouldSkipUrl(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenItIsHasASingleOptinInTheSidebar, false)) {
                 continue;
             }
             if (page.getOptinsFromTheSideBar() != 1) {
                 logger.info("page found which doesn't have a single Opt-in in the sidebar " + page.getUrl());
                 recordMetrics(1, TestMetricTypes.FAILED);
-                badURLs.put(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenItIsHasASingleOptinInTheSideBar, page.getUrlWithNewLineFeed());
+                badURLs.put(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenItIsHasASingleOptinInTheSidebar, page.getUrlWithNewLineFeed());
             }
         } while (loadNextURL());
 
@@ -473,7 +473,7 @@ public class ArticlesUITest extends BaseUISeleniumTest {
     public final void givenAllArticles_whenAnArticleLoads_thenItIsHasASingleOptinInTheAfterPostContent() throws IOException {
         do {
 
-            if (shouldSkipUrl(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenItIsHasASingleOptinInTheAfterPostContent)) {
+            if (shouldSkipUrl(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenItIsHasASingleOptinInTheAfterPostContent,false)) {
                 continue;
             }
 
@@ -519,7 +519,9 @@ public class ArticlesUITest extends BaseUISeleniumTest {
         allTestsFlag = true;
         do {
             loadNextUrl = false;
-            try {               
+            try {     
+                givenAllArticles_whenAnArticleLoads_thenItIsHasASingleOptinInTheSidebar();
+                givenAllArticles_whenAnArticleLoads_thenItIsHasASingleOptinInTheAfterPostContent();
                 givenAllArticles_whenAnArticleLoads_thenArticleHasNoEmptyDiv();                
                 givenAllArticles_whenAnArticleLoads_thenItHasSingleShortcodeAtTheTop();                
                 givenAllArticles_whenAnArticleLoads_thenItHasSingleShortcodeAtTheEnd();                
@@ -536,27 +538,7 @@ public class ArticlesUITest extends BaseUISeleniumTest {
         if (badURLs.size() > 0) {
             triggerTestFailure(badURLs);
         }
-    }
-    
-    @Test
-    @Tag("opt-ins")
-    public final void givenAllTestsRelatedToOptins_whenHittingAllArticles_thenOK() throws IOException {
-        allTestsFlag = true;
-        do {
-            loadNextUrl = false;
-            try {
-                givenAllArticles_whenAnArticleLoads_thenItIsHasASingleOptinInTheSideBar();
-                givenAllArticles_whenAnArticleLoads_thenItIsHasASingleOptinInTheAfterPostContent();
-            } catch (Exception e) {
-                logger.error("Error occurened while processing:" + page.getUrl() + " error message:" + StringUtils.substring(e.getMessage(), 0, 100));
-            }
-            loadNextUrl = true;
-        } while (loadNextURL());
-
-        if (badURLs.size() > 0) {
-            triggerTestFailure(badURLs);
-        }
-    }
+    }      
 
     private boolean loadNextURL() {
         if (!allArticlesList.hasNext() || !loadNextUrl) {
@@ -593,6 +575,14 @@ public class ArticlesUITest extends BaseUISeleniumTest {
 
     protected boolean shouldSkipUrl(String testName) {
         if (!testingSingleURL && Utils.excludePage(page.getUrl(), YAMLProperties.exceptionsForTests.get(testName), true)) {
+            logger.info("Skipping {} for test: {}", page.getUrl(), testName);
+            return true;
+        }
+        return false;
+    }
+    
+    protected boolean shouldSkipUrl(String testName, boolean compareAfterAddingTrailingSlash) {
+        if (!testingSingleURL && Utils.excludePage(page.getUrl(), YAMLProperties.exceptionsForTests.get(testName), compareAfterAddingTrailingSlash)) {
             logger.info("Skipping {} for test: {}", page.getUrl(), testName);
             return true;
         }

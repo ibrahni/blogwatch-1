@@ -126,16 +126,26 @@ givenTutorialsRepo_whenAllModulesAnalysed_thenFolderNameAndArtifiactIdAndModuleN
 givenAGitHubModuleReadme_whenAnalysingTheReadme_thenLinksToAndFromGithubMatch:
  - https://github.com/eugenp/tutorials/blob/master/README.md
  
-givenAllArticles_whenAnArticleLoads_thenItIsHasASingleOptinInTheSideBar:
+givenAllArticles_whenAnArticleLoads_thenItIsHasASingleOptinInTheSidebar:
   - /linux/
   - /kotlin/
   - /cs/
   - /scala/
+  - /codota
+  - /cassandra-astra-rest-dashboard-updates
+  - /job/java-engineer-with-spring-security-experience-remote-part-time
+  - /java-weekly
+  - /java-web-weekly
 givenAllArticles_whenAnArticleLoads_thenItIsHasASingleOptinInTheAfterPostContent: 
   - /linux/
   - /kotlin/
   - /cs/
   - /scala/
+  - /codota
+  - /cassandra-astra-rest-dashboard-updates
+  - /job/java-engineer-with-spring-security-experience-remote-part-time
+  - /java-weekly
+  - /java-web-weekly
 
 
 
