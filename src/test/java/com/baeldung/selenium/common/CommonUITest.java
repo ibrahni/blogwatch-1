@@ -301,15 +301,15 @@ public class CommonUITest extends BaseUISeleniumTest {
         readmeURLs.forEach(readmeURL -> {
             try {
                 
+                if(testExceptions.contains(readmeURL)) {
+                    return;
+                }
+                
                 page.setUrl(readmeURL);
 
                 page.loadUrl(); // loads README in browser
 
-                List<LinkVO> urlsInReadmeFile = page.getLinksToTheBaeldungSite(); // get all the articles linked in this README                               
-                
-                if(testExceptions.contains(readmeURL)) {
-                    return;
-                }
+                List<LinkVO> urlsInReadmeFile = page.getLinksToTheBaeldungSite(); // get all the articles linked in this README                                     
                 
                 String reamdmeParentURL = Utils.getTheParentOfReadme(readmeURL);
                 urlsInReadmeFile.forEach(link -> {                    

@@ -126,6 +126,7 @@ givenTutorialsRepo_whenAllModulesAnalysed_thenFolderNameAndArtifiactIdAndModuleN
  - /maven-archetype
 givenAGitHubModuleReadme_whenAnalysingTheReadme_thenLinksToAndFromGithubMatch:
  - https://github.com/eugenp/tutorials/blob/master/README.md
+ - https://github.com/eugenp/tutorials/tree/master/README.md
  
 givenAllArticles_whenAnArticleLoads_thenItIsHasASingleOptinInTheSidebar:
   - /linux/
