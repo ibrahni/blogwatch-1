@@ -82,18 +82,18 @@
     "purchaseLinks": [
     {
         "linkId": "lsteam-small-tb",
-        "link": "https://courses.baeldung.com/p/learn-spring-team-license",
-        "redirectsTo": "https://courses.baeldung.com/p/learn-spring-team-license"
+        "link": "https://gumroad.com/l/ls-team",
+        "redirectsTo": "https://eugen.gumroad.com/l/ls-team"
     },
     {
         "linkId": "lsteam-medium-tb",
-        "link": "https://courses.baeldung.com/p/learn-spring-team-license",
-        "redirectsTo": "https://courses.baeldung.com/p/learn-spring-team-license"
+        "link": "https://gumroad.com/l/ls-team",
+        "redirectsTo": "https://eugen.gumroad.com/l/ls-team"
     },
     {
         "linkId": "lsteam-large-tb",
-        "link": "https://courses.baeldung.com/p/learn-spring-team-license",
-        "redirectsTo": "https://courses.baeldung.com/p/learn-spring-team-license"
+        "link": "https://gumroad.com/l/ls-team",
+        "redirectsTo": "https://eugen.gumroad.com/l/ls-team"
     }
    ]
   },
