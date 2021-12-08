@@ -62,6 +62,8 @@ ignoreMissingReadmeContaining:
   - /maven-copy-files/
   - /maven-parent-pom-resolution/
   - /plugin-management/
+  - /quarkus-jandex/
+  - /quarkus-vs-springboot/
 ignoreMissingReadmeEndingWith:
   - /first-url/
   - /2ndurl/  
