@@ -79,7 +79,7 @@ public class BlogLinksExtractor {
     public void createArticlesList(WebDriver webDriver) {
         for (String archive : fullArchiveUrls) {
             webDriver.get(baseUrl + archive);
-            List<WebElement> archiveURLElemets = webDriver.findElements(By.xpath("//ul[contains(@class, 'car-list')]//a"));
+            List<WebElement> archiveURLElemets = webDriver.findElements(By.xpath("//ul[contains(@class, 'bca-archive__list')]//a"));
             File file = new File(Utils.getAbsolutePathToFileInSrc(GlobalConstants.ALL_ARTICLES_FILE_NAME));
             Path allArtilcesFilePath = Paths.get(file.getAbsolutePath());
             // Files.write(allArtilcesFilePath, "".getBytes(), StandardOpenOption.TRUNCATE_EXISTING);
