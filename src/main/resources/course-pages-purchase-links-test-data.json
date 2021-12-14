@@ -52,28 +52,28 @@
     "courseUrl": "/learn-spring-course",
     "purchaseLinks": [{
         "linkId": "ls-master-sb",
-        "link": "https://courses.baeldung.com/purchase?product_id=2797176",
-        "redirectsTo": "https://sso.teachable.com/secure/22136/checkout/2797176/ls-master-class"
+        "link": "https://courses.baeldung.com/purchase?product_id=3632591",
+        "redirectsTo": "https://sso.teachable.com/secure/22136/checkout/3632591/ls-master-class"
       },
       {
         "linkId": "ls-cert-sb",
-        "link": "https://courses.baeldung.com/purchase?product_id=2797280",
-        "redirectsTo": "https://sso.teachable.com/secure/22136/checkout/2797280/ls-certification-class"
+        "link": "https://courses.baeldung.com/purchase?product_id=3632601",
+        "redirectsTo": "https://sso.teachable.com/secure/22136/checkout/3632601/ls-certification-class"
       },
       {
         "linkId": "ls-master-tb",
-        "link": "https://courses.baeldung.com/purchase?product_id=2797176",
-        "redirectsTo": "https://sso.teachable.com/secure/22136/checkout/2797176/ls-master-class"
+        "link": "https://courses.baeldung.com/purchase?product_id=3632591",
+        "redirectsTo": "https://sso.teachable.com/secure/22136/checkout/3632591/ls-master-class"
       },
       {
         "linkId": "ls-cert-tb",
-        "link": "https://courses.baeldung.com/purchase?product_id=2797280",
-        "redirectsTo": "https://sso.teachable.com/secure/22136/checkout/2797280/ls-certification-class"
+        "link": "https://courses.baeldung.com/purchase?product_id=3632601",
+        "redirectsTo": "https://sso.teachable.com/secure/22136/checkout/3632601/ls-certification-class"
       },
       {
         "linkId": "ls-coach-tb",
-        "link": "https://courses.baeldung.com/purchase?product_id=2829679",
-        "redirectsTo": "https://sso.teachable.com/secure/22136/checkout/2829679/ls-coaching-class"
+        "link": "https://courses.baeldung.com/purchase?product_id=3632603",
+        "redirectsTo": "https://sso.teachable.com/secure/22136/checkout/3632603/ls-coaching-class"
       }
     ]
   },
