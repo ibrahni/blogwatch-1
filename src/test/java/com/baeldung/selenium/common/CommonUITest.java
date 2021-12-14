@@ -38,6 +38,7 @@ import org.junit.jupiter.api.function.Executable;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.logging.LogEntries;
 import org.openqa.selenium.logging.LogEntry;
 import org.openqa.selenium.logging.LogType;
@@ -172,8 +173,12 @@ public class CommonUITest extends BaseUISeleniumTest {
         page.setUrl(page.getBaseURL() + GlobalConstants.ARTICLE_WITH_PESISTENCE_EBOOK_DOWNLOAD);
 
         page.loadUrl();
+        
+        List<WebElement> images = page.getPathOfPersistenceEBookImages();
+        
+        assertTrue(images.size() > 0, "Couldn't find any images in the after-post-banner-widget on /hibernate-spatial" );
 
-        page.getPathOfPersistenceEBookImages().forEach(image -> {
+        images.forEach(image -> {
             assertEquals(200, RestAssured.given().head(image.getAttribute("src")).getStatusCode());
         });
 

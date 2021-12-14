@@ -90,7 +90,7 @@ public class SitePage extends BlogBaseDriver {
     }
 
     public List<WebElement> getPathOfPersistenceEBookImages() {
-        return this.getWebDriver().findElements(By.xpath("//*[@id='tve_editor']/div/div[1]/span/img"));
+        return this.getWebDriver().findElements(By.xpath("//div[contains(@class, 'after-post-banner-widget')]//img"));
     }
 
     public boolean metaWithRobotsNoindexEists() {
