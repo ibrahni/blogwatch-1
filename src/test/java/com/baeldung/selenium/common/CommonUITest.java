@@ -465,21 +465,7 @@ public class CommonUITest extends BaseUISeleniumTest {
             recordMetrics(badURLs.keySet().size(), FAILED);
             triggerTestFailure(badURLs, "Matching HTML element not found for the following Anchor Links");
         }
-    }
-
-    @ParameterizedTest(name = " {displayName} - Test {0} redirects to {1}")
-    @MethodSource("com.baeldung.utility.TestUtils#redirectsTestDataProvider")
-    @Tag("redirectsTest")
-    @Tag(GlobalConstants.TAG_DAILY)
-    public final void givenTheListOfRedirectedUrls_whenAUrlLoads_thenItRedirectsSuccesfully(String url, String redirectedTo) {
-        String fullUrl = url;
-        if (!url.contains("http://")) {
-            fullUrl = page.getBaseURL() + url;
-        }
-        Response response = RestAssured.given().redirects().follow(false).get(fullUrl);
-
-        assertTrue(Utils.addTrailingSlasIfNotExists(response.getHeader("Location").toLowerCase()).equals(Utils.addTrailingSlasIfNotExists(redirectedTo.toLowerCase())), url + " doesn't redirec to " + redirectedTo);
-    }
+    }    
 
     @Test
     public final void givenTheContactForm_whenAMessageIsSubmitted_thenItIsSentSuccessfully() throws InterruptedException {
