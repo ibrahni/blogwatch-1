@@ -185,7 +185,7 @@ public class GlobalConstants {
     public static final String COURSE_LSS_PAGE = "/learn-spring-security-course/";
 
     // exclude following domain for givenAllTheArticles_whenArticleLoads_thenImagesPointToCorrectEnv
-    public static final ImmutableList<String> DOMAIN_LIST_TO_EXCLUDE = ImmutableList.of("http://cdn", "s.w.org", "postimg.org", "github.com", "githubusercontent.com", "spring.io", "eclipse.org", "://localhost", "wikimedia.org", "js.gleam.io");
+    public static final ImmutableList<String> DOMAIN_LIST_TO_EXCLUDE = ImmutableList.of("http://cdn", "s.w.org", "postimg.org", "github.com", "githubusercontent.com", "spring.io", "eclipse.org", "://localhost", "wikimedia.org", "js.gleam.io","amazonaws.com");
 
     public static final String CONSTRUCT_TYPE_CLASS_OR_INTERFACE = "ClassOrInterface";
     public static final String CONSTRUCT_TYPE_METHOD = "Method";
