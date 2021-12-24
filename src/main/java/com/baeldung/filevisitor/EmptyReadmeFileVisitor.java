@@ -68,7 +68,7 @@ public class EmptyReadmeFileVisitor extends SimpleFileVisitor<Path> {
                                                                                          // linked in this README
             if (baeldungUrlsCount == 0) {
                 logger.info("empty redme found {}", path);
-                emptyReadmeList.add(path.toString());
+                emptyReadmeList.add(expectedReadmePath);
             }
 
         }
