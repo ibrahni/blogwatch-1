@@ -67,17 +67,14 @@ public class EmptyReadmeFileVisitor extends SimpleFileVisitor<Path> {
                 logger.info("module found with missing readme {}", path);
                 missingReadmeList.add(path.getParent()
                     .toString());
+                return FileVisitResult.CONTINUE;
             }
 
-            if (file.isFile() && file.getName()
-                .toLowerCase()
-                .endsWith(GlobalConstants.README_FILE_NAME_LOWERCASE)) {
-                int baeldungUrlsCount = Utils.getLinksToTheBaeldungSite(file.getAbsolutePath()); // get all the articles
-                                                                                                 // linked in this README
-                if (baeldungUrlsCount == 0) {
-                    logger.info("empty redme found {}", path);
-                    emptyReadmeList.add(path.toString());
-                }
+            int baeldungUrlsCount = Utils.getLinksToTheBaeldungSite(expectedReadmePath); // get all the articles
+                                                                                         // linked in this README
+            if (baeldungUrlsCount == 0) {
+                logger.info("empty redme found {}", path);
+                emptyReadmeList.add(path.toString());
             }
 
         }

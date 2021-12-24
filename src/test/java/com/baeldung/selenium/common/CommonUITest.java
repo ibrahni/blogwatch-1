@@ -640,7 +640,7 @@ public class CommonUITest extends BaseUISeleniumTest {
 
         for (GitHubRepoVO gitHubRepoVO : GlobalConstants.tutorialsRepos) {
             Path repoDirectoryPath = Paths.get(gitHubRepoVO.getRepoLoalPath()); // Paths.get("E:\\repos_temp_dir"); 
-            Utils.fetchGitRepo(GlobalConstants.NO, repoDirectoryPath, gitHubRepoVO.getRepoUrl());
+            Utils.fetchGitRepo(GlobalConstants.YES, repoDirectoryPath, gitHubRepoVO.getRepoUrl());
 
             EmptyReadmeFileVisitor emptyReadmeFileVisitor = new EmptyReadmeFileVisitor(gitHubRepoVO.getRepoLoalPath());
             Files.walkFileTree(repoDirectoryPath, emptyReadmeFileVisitor);
