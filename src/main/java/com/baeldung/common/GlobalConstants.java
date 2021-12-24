@@ -160,6 +160,7 @@ public class GlobalConstants {
     
     public static final String README_LINKS_FOLDER_PATH = "./blog-url-list/";
     public static final String README_FILE_NAME_LOWERCASE = "readme.md";
+    public static final String README_FILE_NAME_UPPERCASE = "readme.md";
     public static final String CRAWLER4J_STORAGE_FOLDER = "crawl/root";
     public static final String POM_FILE_NAME_LOWERCASE = "pom.xml";
 

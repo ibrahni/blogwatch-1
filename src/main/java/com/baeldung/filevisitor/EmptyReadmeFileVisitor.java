@@ -34,7 +34,10 @@ public class EmptyReadmeFileVisitor extends SimpleFileVisitor<Path> {
 
     @Override
     public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
-        if (dir.toString().equalsIgnoreCase(repoLocalPath + "/.git/") || dir.toString().equalsIgnoreCase(repoLocalPath + "/.git")) {
+        if (dir.toString()
+            .equalsIgnoreCase(repoLocalPath + "/.git/")
+            || dir.toString()
+                .equalsIgnoreCase(repoLocalPath + "/.git")) {
             return FileVisitResult.SKIP_SUBTREE;
         }
         return super.preVisitDirectory(dir, attrs);
@@ -42,12 +45,13 @@ public class EmptyReadmeFileVisitor extends SimpleFileVisitor<Path> {
 
     @Override
     public FileVisitResult visitFile(Path path, BasicFileAttributes attrs) throws IOException {
-        
+
         String pathAsString = path.toString();
         if (Utils.excludePage(pathAsString, YAMLProperties.exceptionsForEmptyReadmeTest.get(GlobalConstants.IGNORE_EMPTY_README_CONTAINING_LIST_KEY), (theCurrentUrl, anEntryIntheList) -> theCurrentUrl.contains(anEntryIntheList))
             && Utils.excludePage(pathAsString, YAMLProperties.exceptionsForEmptyReadmeTest.get(GlobalConstants.IGNORE_MISSING_README_CONTAINING_LIST_KEY), (theCurrentUrl, anEntryIntheList) -> theCurrentUrl.contains(anEntryIntheList))
             && Utils.excludePage(pathAsString, YAMLProperties.exceptionsForEmptyReadmeTest.get(GlobalConstants.IGNORE_EMPTY_README_ENDING_WITH_LIST_KEY), (theCurrentUrl, anEntryIntheList) -> theCurrentUrl.endsWith(anEntryIntheList))
             && Utils.excludePage(pathAsString, YAMLProperties.exceptionsForEmptyReadmeTest.get(GlobalConstants.IGNORE_MISSING_README_ENDING_WITH_LIST_KEY), (theCurrentUrl, anEntryIntheList) -> theCurrentUrl.endsWith(anEntryIntheList))) {
+            logger.info("skipping as it's in the exception list {}", path);
             return FileVisitResult.CONTINUE;
         }
 
@@ -59,43 +63,43 @@ public class EmptyReadmeFileVisitor extends SimpleFileVisitor<Path> {
             String expectedReadmePath = path.getParent()
                 .toString()
                 .concat(File.separator)
-                .concat(GlobalConstants.README_FILE_NAME_LOWERCASE);
+                .concat(GlobalConstants.README_FILE_NAME_UPPERCASE);
             if (!Files.exists(Paths.get(expectedReadmePath))) {
                 logger.info("module found with missing readme {}", path);
                 missingReadmeList.add(path.getParent()
                     .toString());
             }
 
-        }
-
-        if (file.isFile() && file.getName()
-            .toLowerCase()
-            .endsWith(GlobalConstants.README_FILE_NAME_LOWERCASE)) {
-            int baeldungUrlsCount = Utils.getLinksToTheBaeldungSite(file.getAbsolutePath()); // get all the articles
-                                                                                             // linked in this README
-            if (baeldungUrlsCount == 0) {
-                logger.info("empty redme found {}", path);
-                emptyReadmeList.add(path.toString());
+            if (file.isFile() && file.getName()
+                .toLowerCase()
+                .endsWith(GlobalConstants.README_FILE_NAME_LOWERCASE)) {
+                int baeldungUrlsCount = Utils.getLinksToTheBaeldungSite(file.getAbsolutePath()); // get all the articles
+                                                                                                 // linked in this README
+                if (baeldungUrlsCount == 0) {
+                    logger.info("empty redme found {}", path);
+                    emptyReadmeList.add(path.toString());
+                }
             }
+
         }
 
         return FileVisitResult.CONTINUE;
     }
 
-	public List<String> getEmptyReadmeList() {
-		return emptyReadmeList;
-	}
+    public List<String> getEmptyReadmeList() {
+        return emptyReadmeList;
+    }
 
-	public void setEmptyReadmeList(List<String> emptyReadmeList) {
-		this.emptyReadmeList = emptyReadmeList;
-	}
+    public void setEmptyReadmeList(List<String> emptyReadmeList) {
+        this.emptyReadmeList = emptyReadmeList;
+    }
 
-	public List<String> getMissingReadmeList() {
-		return missingReadmeList;
-	}
+    public List<String> getMissingReadmeList() {
+        return missingReadmeList;
+    }
 
-	public void setMissingReadmeList(List<String> missingReadmeList) {
-		this.missingReadmeList = missingReadmeList;
-	}   
+    public void setMissingReadmeList(List<String> missingReadmeList) {
+        this.missingReadmeList = missingReadmeList;
+    }
 
 }
