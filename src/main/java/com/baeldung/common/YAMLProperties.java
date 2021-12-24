@@ -10,7 +10,7 @@ import org.yaml.snakeyaml.Yaml;
 public class YAMLProperties {
 
     private static Yaml yaml = new Yaml();
-    public static Map<String, List<String>> exceptionsForEmptyReadmeTest = fetchYMLPropertiesMap("ignore-list.yaml");
+    public static Map<String, List<String>> exceptionsForEmptyReadmeTest = fetchYMLPropertiesMap("ignore-list-for-empty-missing-readme-test.yaml");
     public static Map<String, List<String>> exceptionsForTests = fetchYMLPropertiesMap("exceptions-for-tests.yaml");
     public static Map<String, List<String>> exceptionsForTestsLevel2 = fetchYMLPropertiesMap("exceptions-for-tests-level-2.yaml");
     public static Map<String, List<String>> multiSiteTargetUrls = fetchYMLPropertiesMap("multi-site-tests-target-urls.yaml");    

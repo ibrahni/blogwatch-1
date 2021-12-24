@@ -2,6 +2,7 @@ package com.baeldung.selenium.common;
 
 import static com.baeldung.common.ConsoleColors.*;
 import static com.baeldung.common.GlobalConstants.TestMetricTypes.FAILED;
+import static java.util.stream.Collectors.toList;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -22,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.logging.Level;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.apache.commons.lang3.StringUtils;
@@ -60,6 +62,7 @@ import com.baeldung.common.vo.FooterLinksDataVO;
 import com.baeldung.common.vo.GitHubRepoVO;
 import com.baeldung.common.vo.FooterLinksDataVO.FooterLinkCategory;
 import com.baeldung.common.vo.LinkVO;
+import com.baeldung.filevisitor.EmptyReadmeFileVisitor;
 import com.baeldung.filevisitor.ModuleAlignmentValidatorFileVisitor;
 import com.baeldung.filevisitor.TutorialsParentModuleFinderFileVisitor;
 import com.baeldung.utility.TestUtils;
@@ -628,5 +631,34 @@ public class CommonUITest extends BaseUISeleniumTest {
         
         logger.info(ConsoleColors.magentaColordMessage("finished"));
     }    
+    
+    @Test
+    @Tag(GlobalConstants.TAG_GITHUB_RELATED)
+    public final void givenAGitHubModule_whenAnalysingTheModule_thenTheModuleHasANonEmptyReadme() throws IOException, GitAPIException {
+
+        List<String> modulesWithNoneOrEmptyReadme = new ArrayList<>();
+
+        for (GitHubRepoVO gitHubRepoVO : GlobalConstants.tutorialsRepos) {
+            Path repoDirectoryPath = Paths.get(gitHubRepoVO.getRepoLoalPath()); // Paths.get("E:\\repos_temp_dir"); 
+            Utils.fetchGitRepo(GlobalConstants.NO, repoDirectoryPath, gitHubRepoVO.getRepoUrl());
+
+            EmptyReadmeFileVisitor emptyReadmeFileVisitor = new EmptyReadmeFileVisitor(gitHubRepoVO.getRepoLoalPath());
+            Files.walkFileTree(repoDirectoryPath, emptyReadmeFileVisitor);
+            modulesWithNoneOrEmptyReadme.addAll(emptyReadmeFileVisitor.getMissingReadmeList()
+                .stream()
+                .map(Utils.replaceTutorialLocalPathWithHttpUrl(gitHubRepoVO.getRepoLoalPath(), gitHubRepoVO.getRepoMasterHttpPath()))
+                .collect(toList()));
+            modulesWithNoneOrEmptyReadme.addAll(emptyReadmeFileVisitor.getEmptyReadmeList()
+                .stream()
+                .map(Utils.replaceTutorialLocalPathWithHttpUrl(gitHubRepoVO.getRepoLoalPath(), gitHubRepoVO.getRepoMasterHttpPath()))
+                .collect(toList()));
+
+        }
+
+        if (modulesWithNoneOrEmptyReadme.size() > 0) {
+            recordMetrics(modulesWithNoneOrEmptyReadme.size(), TestMetricTypes.FAILED);
+            failTestWithLoggingTotalNoOfFailures("\n Modules found with missing or empty READMEs \n" + modulesWithNoneOrEmptyReadme.stream().collect(Collectors.joining("\n")));
+        }
+    }
     
 }

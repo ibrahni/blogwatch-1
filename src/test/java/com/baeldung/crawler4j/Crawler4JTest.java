@@ -2,18 +2,18 @@ package com.baeldung.crawler4j;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.stream.Collectors;
+
 
 import org.jsoup.nodes.Document;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Value;
 
-import com.baeldung.common.GlobalConstants;
+
 import com.baeldung.common.GlobalConstants.TestMetricTypes;
 import com.baeldung.common.Utils;
 import com.baeldung.common.vo.JavaConstruct;
-import com.baeldung.crawler4j.crawler.CrawlerForFindingGitHubModulesWithNoneOrEmptyReadme;
+
 import com.baeldung.crawler4j.crawler.CrawlerForFindingJavaCode;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
@@ -21,21 +21,7 @@ import com.google.common.collect.Multimap;
 public class Crawler4JTest extends BaseCrawler4JTest {
 
     @Value("${givenAllTheArticles_whenAnArticleLoads_thenJavaClassesAndMethodsCanBeFoundOnGitHub.file-for-javaConstructs-test}")
-    private String fileForJavaConstructsTest;
-
-    @Tag(GlobalConstants.TAG_GITHUB_RELATED)
-    @Tag("empty-or-none-readme")
-    @Test
-    public final void givenAGitHubModule_whenAnalysingTheModule_thenTheModuleHasANonEmptyReadme() throws IOException {
-
-        tutorialsRepoCrawlerController.startCrawlingWithAFreshController(CrawlerForFindingGitHubModulesWithNoneOrEmptyReadme.class, Runtime.getRuntime().availableProcessors());
-
-        List<String> modulesWithNoneOrEmptyReadme = Utils.getDiscoveredLinks(tutorialsRepoCrawlerController.getDiscoveredURLs());
-        if (modulesWithNoneOrEmptyReadme.size() > 0) {
-            recordMetrics(modulesWithNoneOrEmptyReadme.size(), TestMetricTypes.FAILED);
-            failTestWithLoggingTotalNoOfFailures("\n Modules found with missing or empty READMEs \n" + modulesWithNoneOrEmptyReadme.stream().collect(Collectors.joining("\n")));
-        }
-    }
+    private String fileForJavaConstructsTest;   
 
     @Tag("matchJavaConstructs")
     @Test
