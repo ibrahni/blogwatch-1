@@ -18,15 +18,15 @@ import com.baeldung.common.GlobalConstants;
 import com.baeldung.common.Utils;
 import com.baeldung.common.YAMLProperties;
 
-public class EmptyReadmeFileVisitor extends SimpleFileVisitor<Path> {
+public class MissingReadmeFileVisitor extends SimpleFileVisitor<Path> {
 
     private String repoLocalPath;
 
     protected Logger logger = LoggerFactory.getLogger(getClass());
+    
+    private List<String> missingReadmeList = new ArrayList<>();
 
-    private List<String> emptyReadmeList = new ArrayList<>();
-
-    public EmptyReadmeFileVisitor(String repoLocalPath) {
+    public MissingReadmeFileVisitor(String repoLocalPath) {
         super();
         this.repoLocalPath = repoLocalPath;
     }
@@ -34,10 +34,10 @@ public class EmptyReadmeFileVisitor extends SimpleFileVisitor<Path> {
     @Override
     public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
 
-        String pathAsString = dir.toString();       
+        String pathAsString = dir.toString();
 
-        if (Utils.excludePage(pathAsString, YAMLProperties.exceptionsForEmptyReadmeTest.get(GlobalConstants.IGNORE_EMPTY_README_CONTAINING_LIST_KEY), (theCurrentUrl, anEntryIntheList) -> theCurrentUrl.contains(anEntryIntheList))           
-            || Utils.excludePage(pathAsString, YAMLProperties.exceptionsForEmptyReadmeTest.get(GlobalConstants.IGNORE_EMPTY_README_ENDING_WITH_LIST_KEY), (theCurrentUrl, anEntryIntheList) -> theCurrentUrl.endsWith(anEntryIntheList))) {
+        if (Utils.excludePage(pathAsString, YAMLProperties.exceptionsForEmptyReadmeTest.get(GlobalConstants.IGNORE_MISSING_README_CONTAINING_LIST_KEY), (theCurrentUrl, anEntryIntheList) -> theCurrentUrl.contains(anEntryIntheList))
+            || Utils.excludePage(pathAsString, YAMLProperties.exceptionsForEmptyReadmeTest.get(GlobalConstants.IGNORE_MISSING_README_ENDING_WITH_LIST_KEY), (theCurrentUrl, anEntryIntheList) -> theCurrentUrl.endsWith(anEntryIntheList))) {
             logger.info("skipping {}, it's in the exception list", dir);
             return FileVisitResult.SKIP_SUBTREE;
         }
@@ -60,24 +60,20 @@ public class EmptyReadmeFileVisitor extends SimpleFileVisitor<Path> {
                 .toString()
                 .concat("/")
                 .concat(GlobalConstants.README_FILE_NAME_UPPERCASE);
-            if (!Files.exists(Paths.get(expectedReadmePath))) {             
+            if (!Files.exists(Paths.get(expectedReadmePath))) {
+                logger.info("module found with missing readme {}", path);
+                missingReadmeList.add(path.getParent()
+                    .toString());
                 return FileVisitResult.CONTINUE;
-            }
-
-            int baeldungUrlsCount = Utils.getLinksToTheBaeldungSite(expectedReadmePath); // get all the articles
-                                                                                         // linked in this README
-            if (baeldungUrlsCount == 0) {
-                logger.info("empty redme found {}", path);
-                emptyReadmeList.add(path.toString());
-            }
+            }           
 
         }
 
         return FileVisitResult.CONTINUE;
-    }
-
-    public List<String> getEmptyReadmeList() {
-        return emptyReadmeList;
     }    
+
+    public List<String> getMissingReadmeList() {
+        return missingReadmeList;
+    }   
 
 }

@@ -63,6 +63,7 @@ import com.baeldung.common.vo.GitHubRepoVO;
 import com.baeldung.common.vo.FooterLinksDataVO.FooterLinkCategory;
 import com.baeldung.common.vo.LinkVO;
 import com.baeldung.filevisitor.EmptyReadmeFileVisitor;
+import com.baeldung.filevisitor.MissingReadmeFileVisitor;
 import com.baeldung.filevisitor.ModuleAlignmentValidatorFileVisitor;
 import com.baeldung.filevisitor.TutorialsParentModuleFinderFileVisitor;
 import com.baeldung.utility.TestUtils;
@@ -639,20 +640,24 @@ public class CommonUITest extends BaseUISeleniumTest {
         List<String> modulesWithNoneOrEmptyReadme = new ArrayList<>();
 
         for (GitHubRepoVO gitHubRepoVO : GlobalConstants.tutorialsRepos) {
-            Path repoDirectoryPath = Paths.get(gitHubRepoVO.getRepoLoalPath()); // Paths.get("E:\\repos_temp_dir"); 
+            Path repoDirectoryPath =  Paths.get(gitHubRepoVO.getRepoLoalPath()); // Paths.get("E:\\repos_temp_dir"); 
+             
             Utils.fetchGitRepo(GlobalConstants.YES, repoDirectoryPath, gitHubRepoVO.getRepoUrl());
 
             EmptyReadmeFileVisitor emptyReadmeFileVisitor = new EmptyReadmeFileVisitor(gitHubRepoVO.getRepoLoalPath());
             Files.walkFileTree(repoDirectoryPath, emptyReadmeFileVisitor);
-            modulesWithNoneOrEmptyReadme.addAll(emptyReadmeFileVisitor.getMissingReadmeList()
-                .stream()
-                .map(Utils.replaceTutorialLocalPathWithHttpUrl(gitHubRepoVO.getRepoLoalPath(), gitHubRepoVO.getRepoMasterHttpPath()))
-                .collect(toList()));
+           
             modulesWithNoneOrEmptyReadme.addAll(emptyReadmeFileVisitor.getEmptyReadmeList()
                 .stream()
                 .map(Utils.replaceTutorialLocalPathWithHttpUrl(gitHubRepoVO.getRepoLoalPath(), gitHubRepoVO.getRepoMasterHttpPath()))
                 .collect(toList()));
-
+            
+            MissingReadmeFileVisitor missingReadmeFileVisitor = new MissingReadmeFileVisitor(gitHubRepoVO.getRepoLoalPath());
+            Files.walkFileTree(repoDirectoryPath, emptyReadmeFileVisitor);
+            modulesWithNoneOrEmptyReadme.addAll(missingReadmeFileVisitor.getMissingReadmeList()
+                .stream()
+                .map(Utils.replaceTutorialLocalPathWithHttpUrl(gitHubRepoVO.getRepoLoalPath(), gitHubRepoVO.getRepoMasterHttpPath()))
+                .collect(toList()));
         }
 
         if (modulesWithNoneOrEmptyReadme.size() > 0) {
