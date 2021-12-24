@@ -65,6 +65,7 @@ public class EmptyReadmeFileVisitor extends SimpleFileVisitor<Path> {
                 .toString()
                 .concat("/")
                 .concat(GlobalConstants.README_FILE_NAME_UPPERCASE);
+            logger.info("expectedReadmePath {}", expectedReadmePath);
             if (!Files.exists(Paths.get(expectedReadmePath))) {
                 logger.info("module found with missing readme {}", path);
                 missingReadmeList.add(path.getParent()
