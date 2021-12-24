@@ -47,6 +47,7 @@ public class EmptyReadmeFileVisitor extends SimpleFileVisitor<Path> {
     public FileVisitResult visitFile(Path path, BasicFileAttributes attrs) throws IOException {
 
         String pathAsString = path.toString();
+        logger.info("path as string {}", pathAsString);
         if (Utils.excludePage(pathAsString, YAMLProperties.exceptionsForEmptyReadmeTest.get(GlobalConstants.IGNORE_EMPTY_README_CONTAINING_LIST_KEY), (theCurrentUrl, anEntryIntheList) -> theCurrentUrl.contains(anEntryIntheList))
             && Utils.excludePage(pathAsString, YAMLProperties.exceptionsForEmptyReadmeTest.get(GlobalConstants.IGNORE_MISSING_README_CONTAINING_LIST_KEY), (theCurrentUrl, anEntryIntheList) -> theCurrentUrl.contains(anEntryIntheList))
             && Utils.excludePage(pathAsString, YAMLProperties.exceptionsForEmptyReadmeTest.get(GlobalConstants.IGNORE_EMPTY_README_ENDING_WITH_LIST_KEY), (theCurrentUrl, anEntryIntheList) -> theCurrentUrl.endsWith(anEntryIntheList))
@@ -62,7 +63,7 @@ public class EmptyReadmeFileVisitor extends SimpleFileVisitor<Path> {
             .endsWith(GlobalConstants.POM_FILE_NAME_LOWERCASE)) {
             String expectedReadmePath = path.getParent()
                 .toString()
-                .concat(File.separator)
+                .concat("/")
                 .concat(GlobalConstants.README_FILE_NAME_UPPERCASE);
             if (!Files.exists(Paths.get(expectedReadmePath))) {
                 logger.info("module found with missing readme {}", path);
