@@ -161,6 +161,7 @@ public class Utils {
 
     public static boolean excludePage(String url, List<String> entryList, BiPredicate<String, String> p) {
 
+        url = url.replace("\\", "/"); //workaround for windows
         if (CollectionUtils.isEmpty(entryList)) {
             return false;
         }
@@ -183,7 +184,7 @@ public class Utils {
     }
 
     public static boolean excludePage(String url, List<String> entryList, boolean compareAfterAddingTrailingSlash) {
-
+        url = url.replace("\\", "/"); //workaround for windows
         if (CollectionUtils.isEmpty(entryList)) {
             return false;
         }
