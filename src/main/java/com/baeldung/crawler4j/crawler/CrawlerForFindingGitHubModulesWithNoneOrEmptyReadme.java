@@ -29,10 +29,8 @@ public class CrawlerForFindingGitHubModulesWithNoneOrEmptyReadme extends BaseCra
         String referringPageURL = referringPage.getWebURL().getURL();
         // @formatter:off
         return super.commonPredicate(pageURL, referringPageURL)               
-               && !Utils.excludePage(pageURL, YAMLProperties.exceptionsForEmptyReadmeTest.get(GlobalConstants.IGNORE_EMPTY_README_CONTAINING_LIST_KEY), (theCurrentUrl, anEntryIntheList)-> theCurrentUrl.contains(anEntryIntheList))
-               && !Utils.excludePage(pageURL, YAMLProperties.exceptionsForEmptyReadmeTest.get(GlobalConstants.IGNORE_MISSING_README_CONTAINING_LIST_KEY), (theCurrentUrl, anEntryIntheList)-> theCurrentUrl.contains(anEntryIntheList))
-               && !Utils.excludePage(pageURL, YAMLProperties.exceptionsForEmptyReadmeTest.get(GlobalConstants.IGNORE_EMPTY_README_ENDING_WITH_LIST_KEY), (theCurrentUrl, anEntryIntheList)-> theCurrentUrl.endsWith(anEntryIntheList))
-               && !Utils.excludePage(pageURL, YAMLProperties.exceptionsForEmptyReadmeTest.get(GlobalConstants.IGNORE_MISSING_README_ENDING_WITH_LIST_KEY), (theCurrentUrl, anEntryIntheList)-> theCurrentUrl.endsWith(anEntryIntheList))
+               && !Utils.excludePage(pageURL, YAMLProperties.exceptionsForEmptyReadmeTest.get(GlobalConstants.IGNORE_README_CONTAINING_LIST_KEY), (theCurrentUrl, anEntryIntheList)-> theCurrentUrl.contains(anEntryIntheList))
+               && !Utils.excludePage(pageURL, YAMLProperties.exceptionsForEmptyReadmeTest.get(GlobalConstants.IGNORE_README_ENDING_WITH_LIST_KEY), (theCurrentUrl, anEntryIntheList)-> theCurrentUrl.contains(anEntryIntheList))
                && !referringPageURL.contains(GlobalConstants.README_FILE_NAME_LOWERCASE)
                && !FILTER_ADDITIONAL_FILE_EXTENTIONS.matcher(pageURL).matches()
                && !FILTERS_ADDITIONAL_DIRECTORIES.matcher(pageURL).matches();

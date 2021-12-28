@@ -176,10 +176,8 @@ public class GlobalConstants {
             .unmodifiableList(Arrays.asList("VAT CALC NOTICE: GEOIP API PROVIDER IS SET TO IPDATA", "VAT CALC NOTICE: GEOIP API PROVIDER IS SET TO IPINFO.IO", "VAT CALC NOTICE: GEOIP API PROVIDER IS SET TO IPAPI.COM"));
 
     // ignore list for givenTheGitHubModule_theModuleHasANonEmptyReadme
-    public static final String IGNORE_EMPTY_README_CONTAINING_LIST_KEY = "ignoreEmptyReadmeContaining";
-    public static final String IGNORE_MISSING_README_CONTAINING_LIST_KEY = "ignoreMissingReadmeContaining";
-    public static final String IGNORE_EMPTY_README_ENDING_WITH_LIST_KEY = "ignoreEmptyReadmeEndingWith";
-    public static final String IGNORE_MISSING_README_ENDING_WITH_LIST_KEY = "ignoreMissingReadmeEndingWith";
+    public static final String IGNORE_README_CONTAINING_LIST_KEY = "ignoreReadmeContaining";
+    public static final String IGNORE_README_ENDING_WITH_LIST_KEY = "ignoreReadmeEndingWith";
 
     // cource page
 

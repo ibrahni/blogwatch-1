@@ -1,12 +1,5 @@
-ignoreEmptyReadmeContaining:
+ignoreReadmeContaining:
   - /guest/
-  - /2ndurl/  
-ignoreEmptyReadmeEndingWith:
-  - /guest/
-  - /2ndurl/  
-ignoreMissingReadmeContaining:
-  - /first-url/
-  - /2ndurl/
   - /spring-session/
   - /spring-ejb/
   - /java-spi/
@@ -64,9 +57,7 @@ ignoreMissingReadmeContaining:
   - /plugin-management/
   - /quarkus-jandex/
   - /quarkus-vs-springboot/
-ignoreMissingReadmeEndingWith:
-  - /first-url/
-  - /2ndurl/  
+ignoreReadmeEndingWith: 
   - /spring-cloud
   - /guava-modules
   - /patterns

@@ -36,8 +36,8 @@ public class MissingReadmeFileVisitor extends SimpleFileVisitor<Path> {
 
         String pathAsString = dir.toString();
 
-        if (Utils.excludePage(pathAsString, YAMLProperties.exceptionsForEmptyReadmeTest.get(GlobalConstants.IGNORE_MISSING_README_CONTAINING_LIST_KEY), (theCurrentUrl, anEntryIntheList) -> theCurrentUrl.contains(anEntryIntheList))
-            || Utils.excludePage(pathAsString, YAMLProperties.exceptionsForEmptyReadmeTest.get(GlobalConstants.IGNORE_MISSING_README_ENDING_WITH_LIST_KEY), (theCurrentUrl, anEntryIntheList) -> theCurrentUrl.endsWith(anEntryIntheList))) {
+        if (Utils.excludePage(pathAsString, YAMLProperties.exceptionsForEmptyReadmeTest.get(GlobalConstants.IGNORE_README_CONTAINING_LIST_KEY), (theCurrentUrl, anEntryIntheList) -> theCurrentUrl.contains(anEntryIntheList))
+            || Utils.excludePage(pathAsString, YAMLProperties.exceptionsForEmptyReadmeTest.get(GlobalConstants.IGNORE_README_ENDING_WITH_LIST_KEY), (theCurrentUrl, anEntryIntheList) -> theCurrentUrl.endsWith(anEntryIntheList))) {
             logger.info("skipping {}, it's in the exception list", dir);
             return FileVisitResult.SKIP_SUBTREE;
         }
