@@ -1,3 +1,5 @@
+# Eugen (29.12.2021) - only add a module to be ignored with a comment explaining why; thanks
+
 ignoreReadmeContaining:
   - /guest/
   - /spring-session/
