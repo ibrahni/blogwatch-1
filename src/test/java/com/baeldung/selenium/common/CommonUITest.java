@@ -635,6 +635,7 @@ public class CommonUITest extends BaseUISeleniumTest {
     
     @Test
     @Tag(GlobalConstants.TAG_GITHUB_RELATED)
+    @Tag(GlobalConstants.TAG_SKIP_METRICS)
     public final void givenAGitHubModule_whenAnalysingTheModule_thenTheModuleHasANonEmptyReadme() throws IOException, GitAPIException {
 
         List<String> modulesWithNoneOrEmptyReadme = new ArrayList<>();
