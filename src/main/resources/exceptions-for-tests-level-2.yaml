@@ -26,6 +26,8 @@ givenAllArticles_whenAnArticleLoads_thenItDoesNotLinkToOldJavaDocs:
  - https://docs.oracle.com/javase/8/docs/technotes/guides/security/enhancements-8.html
  - https://docs.oracle.com/javase/8/docs/api/javax/xml/bind/annotation/package-summary.html
  - https://docs.oracle.com/javase/1.5.0/docs/tooldocs/windows/javadoc.html
+ - https://docs.oracle.com/javase/8/docs/technotes/guides/sound/programmer_guide/chapter2.html
+ - https://docs.oracle.com/javase/7/docs/technotes/guides/javadoc/whatsnew-1.5.0.html 
  
 givenAllArticles_whenAnArticleLoads_thenTheArticleHasProperTitleCapitalization:
  - jOOQ
