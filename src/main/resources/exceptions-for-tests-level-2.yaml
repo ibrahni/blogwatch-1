@@ -65,4 +65,7 @@ givenAllArticles_whenAnArticleLoads_thenTheArticleHasProperTitleCapitalization:
  - T(n)
  - exp4j
  - mTLS
+ - ping
+ - cp
+ - vmstat
  
