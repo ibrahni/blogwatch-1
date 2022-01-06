@@ -38,6 +38,8 @@ givenArticlesWithALinkToTheGitHubModule_whenTheArticleLoads_thenTheGitHubModuleL
   - /travis-ci-build-pipeline/
   - /rest-api-spring-oauth2-angular/
   - /securing-a-restful-web-service-with-spring-security/
+  - /spring-boot-modules
+  - /core-java-modules/multimodulemavenproject
 givenArticlesWithALinkToTheGitHubModule_whenTheArticleLoads_thenTheArticleTitleAndGitHubLinkMatch:
 
 givenAllTheArticles_whenAnArticleLoads_thenTheAuthorIsNotFromTheExcludedList:
