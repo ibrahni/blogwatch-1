@@ -15,7 +15,9 @@ givenAllArticles_whenAnArticleLoads_thenItHasSingleShortcodeAtTheEnd:
   - /codota/
 givenAllArticles_whenAnArticleLoads_thenImagesPointToCorrectEnv:
   - /javafx/
-  - /java-sms-twilio/    
+  - /java-sms-twilio/
+  - /junit-nosuchmethoderror
+  - /maven-import-eclipse
 givenAllArticles_whenAnArticleLoads_thenTheMetaDescriptionExists: 
   - /start-here/
   - /spring-5/
