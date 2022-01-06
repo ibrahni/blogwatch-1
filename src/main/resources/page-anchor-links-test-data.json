@@ -1,9 +1,9 @@
 [
   {
     "urls": [
-      "/java-asynchronous-programming",
-      "/contribution-guidelines",
-      "/spring-rest-api-query-search-language-tutorial"
+      "/all-courses",
+      "/all-bulk-courses",
+      "https://courses.baeldung.com"
     ],
     "footerTag": "footer",
     "footerLinks": [
