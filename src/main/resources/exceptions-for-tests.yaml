@@ -15,7 +15,9 @@ givenAllArticles_whenAnArticleLoads_thenItHasSingleShortcodeAtTheEnd:
   - /codota/
 givenAllArticles_whenAnArticleLoads_thenImagesPointToCorrectEnv:
   - /javafx/
-  - /java-sms-twilio/    
+  - /java-sms-twilio/
+  - /apache-mesos
+  - /cs/chipset
 givenAllArticles_whenAnArticleLoads_thenTheMetaDescriptionExists: 
   - /start-here/
   - /spring-5/
@@ -38,6 +40,8 @@ givenArticlesWithALinkToTheGitHubModule_whenTheArticleLoads_thenTheGitHubModuleL
   - /travis-ci-build-pipeline/
   - /rest-api-spring-oauth2-angular/
   - /securing-a-restful-web-service-with-spring-security/
+  - /spring-boot-modules
+  - /core-java-modules/multimodulemavenproject
 givenArticlesWithALinkToTheGitHubModule_whenTheArticleLoads_thenTheArticleTitleAndGitHubLinkMatch:
 
 givenAllTheArticles_whenAnArticleLoads_thenTheAuthorIsNotFromTheExcludedList:
