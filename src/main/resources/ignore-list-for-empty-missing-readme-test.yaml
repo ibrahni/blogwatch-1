@@ -1,5 +1,7 @@
-# Eugen (29.12.2021) - only add a module to be ignored with a comment explaining why; thanks
+# if you add a module for a reason different that the comment for each section, also add the reason in a comment
 
+# this list includes parent modules that contain multiple sub-modules for one article
+# we want to ignore the sub-modules as they won't each have a link to the same article in the readme
 ignoreReadmeContaining:
   - /guest/
   - /spring-session/
@@ -59,6 +61,9 @@ ignoreReadmeContaining:
   - /plugin-management/
   - /quarkus-jandex/
   - /quarkus-vs-springboot/
+  
+# parent modules that just group other modules but don't have any article themselves
+# we want to ignore the module itself here
 ignoreReadmeEndingWith: 
   - /spring-cloud
   - /guava-modules
