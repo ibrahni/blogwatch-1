@@ -46,7 +46,7 @@ public class headlessBrowserConfig extends browserConfig {
             };
         } else {
             if (GlobalConstants.TARGET_ENV_WINDOWS.equalsIgnoreCase(this.getTargetEnv())) {
-                // TODO
+            	System.setProperty("webdriver.chrome.driver", Utils.findFile("/chromedriver.exe", this.getTargetEnv()));
             } else {
                 System.setProperty("webdriver.chrome.driver", Utils.findFile("/chromedriver", this.getTargetEnv()));
             }
