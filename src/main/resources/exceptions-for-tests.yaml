@@ -82,6 +82,7 @@ givenAllArticles_whenAnArticleLoads_thenTheArticleHasProperTitleCapitalization:
   - /linux/merge-files-line-by-line
   - /linux/sort-file-in-place
   - /cs/acf-pacf-plots-arma-modeling
+  - /linux/inodes
   
 
 givenAllArticles_whenAnalyzingCategories_thenTheArticleDoesNotContainUnnecessaryCategory:
