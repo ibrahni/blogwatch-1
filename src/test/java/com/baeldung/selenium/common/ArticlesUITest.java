@@ -394,6 +394,7 @@ public class ArticlesUITest extends BaseUISeleniumTest {
 
     @Test
     public final void givenAllArticles_whenAnArticleLoads_thenItDoesNotContainOverlappingText() throws IOException {
+        log(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenItDoesNotContainOverlappingText);
         do {
 
             if (shouldSkipUrl(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenItDoesNotContainOverlappingText)) {
@@ -413,6 +414,7 @@ public class ArticlesUITest extends BaseUISeleniumTest {
     
     @Test
     public final void givenAllArticles_whenAnArticleLoads_thenItIsNotBuiltUsingTheThriveArchtect() throws IOException {
+        log(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenItIsNotBuiltUsingTheThriveArchtect);
         do {           
             if (page.containsThriveArchtectResource()) {
                 logger.info("page found which is build using Thrive Archetect " + page.getUrl());
@@ -453,6 +455,7 @@ public class ArticlesUITest extends BaseUISeleniumTest {
     
     @Test
     public final void givenAllArticles_whenAnArticleLoads_thenItIsHasASingleOptinInTheSidebar() throws IOException {
+        log(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenItIsHasASingleOptinInTheSidebar);
         do {
             if (shouldSkipUrl(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenItIsHasASingleOptinInTheSidebar, false)) {
                 continue;
@@ -471,6 +474,7 @@ public class ArticlesUITest extends BaseUISeleniumTest {
     
     @Test
     public final void givenAllArticles_whenAnArticleLoads_thenItIsHasASingleOptinInTheAfterPostContent() throws IOException {
+        log(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenItIsHasASingleOptinInTheAfterPostContent);
         do {
 
             if (shouldSkipUrl(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenItIsHasASingleOptinInTheAfterPostContent,false)) {
