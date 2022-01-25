@@ -483,7 +483,7 @@ public class SitePage extends BlogBaseDriver {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         LocalDateTime postPublishDatTime = LocalDateTime.parse(publishDate, formatter);
         logger.info("Published Date of the first post: {}", publishDate);
-        int postAge = Period.between(postPublishDatTime.toLocalDate(), LocalDate.now()).getDays();
+        int postAge = Math.toIntExact(ChronoUnit.DAYS.between(postPublishDatTime.toLocalDate(),LocalDate.now()));
         logger.info("Age of the first post: {}", postAge);
         return postAge;
     }
