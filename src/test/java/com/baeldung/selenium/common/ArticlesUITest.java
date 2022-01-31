@@ -27,7 +27,7 @@ import com.google.common.collect.Multimap;
 
 public class ArticlesUITest extends BaseUISeleniumTest {
 
-    @Value("#{'${givenAllArticles_whenAnArticleLoads_thenTheAuthorIsNotFromTheExcludedList.site-excluded-authors}'.split(',')}")
+    @Value("#{'${givenAllArticles_whenWeCheckTheAuthor_thenTheyAreNotOnTheInternalTeam.site-excluded-authors}'.split(',')}")
     private List<String> excludedListOfAuthors;
 
     @Value("${single-url-to-run-all-tests}")
@@ -248,20 +248,20 @@ public class ArticlesUITest extends BaseUISeleniumTest {
     }
 
     @Test
-    public final void givenAllArticles_whenAnArticleLoads_thenTheAuthorIsNotFromTheExcludedList() {
+    public final void givenAllArticles_whenWeCheckTheAuthor_thenTheyAreNotOnTheInternalTeam() {
 
-        log(GlobalConstants.givenAllTheArticles_whenAnArticleLoads_thenTheAuthorIsNotFromTheExcludedList);
+        log(GlobalConstants.givenAllArticles_whenWeCheckTheAuthor_thenTheyAreNotOnTheInternalTeam);
 
         do {
 
-            if (shouldSkipUrl(GlobalConstants.givenAllTheArticles_whenAnArticleLoads_thenTheAuthorIsNotFromTheExcludedList)) {
+            if (shouldSkipUrl(GlobalConstants.givenAllArticles_whenWeCheckTheAuthor_thenTheyAreNotOnTheInternalTeam)) {
                 continue;
             }
 
             String authorName = page.findAuthorOfTheArticle();
             if (excludedListOfAuthors.contains(authorName.toLowerCase())) {
                 recordMetrics(1, TestMetricTypes.FAILED);
-                badURLs.put(GlobalConstants.givenAllTheArticles_whenAnArticleLoads_thenTheAuthorIsNotFromTheExcludedList, page.getUrlWithNewLineFeed());
+                badURLs.put(GlobalConstants.givenAllArticles_whenWeCheckTheAuthor_thenTheyAreNotOnTheInternalTeam, page.getUrlWithNewLineFeed());
             }
         } while (loadNextURL());
 
@@ -501,7 +501,7 @@ public class ArticlesUITest extends BaseUISeleniumTest {
             loadNextUrl = false;
             try {
                 givenAllArticles_whenAnArticleLoads_thenTheMetaDescriptionExists();
-                givenAllArticles_whenAnArticleLoads_thenTheAuthorIsNotFromTheExcludedList();
+                givenAllArticles_whenWeCheckTheAuthor_thenTheyAreNotOnTheInternalTeam();
                 givenAllArticles_whenAnArticleLoads_thenTheArticleDoesNotCotainWrongQuotations();
                 givenAllArticles_whenAnArticleLoads_thenTheArticleHasProperTitleCapitalization();
                 givenAllArticles_whenAnalyzingCategories_thenTheArticleDoesNotContainUnnecessaryCategory();
