@@ -5451,7 +5451,6 @@
 /linux/grep-continuous-streams
 /linux/show-nth-line-after-match
 /linux/values-into-variable-from-pipe
-/linux/content-editor-job
 /linux/pid-tid-ppid
 /linux/command-line-website-screenshots
 /linux/tar-archive-without-directory-structure
@@ -5465,7 +5464,6 @@
 /linux/sed-awk-return-value
 /linux/merging-images-in-terminal
 /linux/lost-found-directory
-/kotlin/content-editor-job
 /kotlin/grpc
 /kotlin/initialize-map
 /kotlin/swagger-spring-rest-api
@@ -5490,7 +5488,6 @@
 /cs/polynomial-interpolation
 /cs/features-parameters-classes-ml
 /cs/learning-rate-batch-size
-/cs/content-editor-job
 /cs/n-tier-architecture
 /cs/latex-flowcharts
 /cs/check-string-periodicity
