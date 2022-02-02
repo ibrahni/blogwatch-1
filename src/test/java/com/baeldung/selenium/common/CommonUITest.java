@@ -654,7 +654,7 @@ public class CommonUITest extends BaseUISeleniumTest {
                 .collect(toList()));
             
             MissingReadmeFileVisitor missingReadmeFileVisitor = new MissingReadmeFileVisitor(gitHubRepoVO.getRepoLoalPath());
-            Files.walkFileTree(repoDirectoryPath, emptyReadmeFileVisitor);
+            Files.walkFileTree(repoDirectoryPath, missingReadmeFileVisitor);
             modulesWithNoneOrEmptyReadme.addAll(missingReadmeFileVisitor.getMissingReadmeList()
                 .stream()
                 .map(Utils.replaceTutorialLocalPathWithHttpUrl(gitHubRepoVO.getRepoLoalPath(), gitHubRepoVO.getRepoMasterHttpPath()))
