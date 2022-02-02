@@ -2,6 +2,7 @@
 
 # this list includes parent modules that contain multiple sub-modules for one article
 # we want to ignore the sub-modules as they won't each have a link to the same article in the readme
+# the exceptions here should be written with a / at the start and the end
 ignoreReadmeContaining:
   - /guest/
   - /spring-session/
@@ -68,6 +69,8 @@ ignoreReadmeContaining:
   - /reactive-systems/
   - /optional-dependencies/
   - /version-collision/
+  - /versions-maven-plugin/
+  - /maven-archetype/
   
 # parent modules that just group other modules but don't have any article themselves
 # we want to ignore the module itself here
