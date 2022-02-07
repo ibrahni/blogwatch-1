@@ -269,6 +269,10 @@ public class SitePage extends BlogBaseDriver {
             if (CollectionUtils.isEmpty(links)) {
                 return gitHubModuleLinks;
             }
+            
+            if(links.size()>1) {
+                gitHubModuleLinks.addAll(links.stream().limit(links.size()-1).collect(Collectors.toList()));
+            }
 
             // firstURL - the URL linked from the article
             String firstURL = links.get(links.size() - 1);
