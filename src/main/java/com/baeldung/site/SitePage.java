@@ -534,8 +534,8 @@ public class SitePage extends BlogBaseDriver {
 
     }
 
-    public List<String> findInvalidTitles(List<String> tokenExceptions) {
-        List<String> invalidTitles = new ArrayList<>();
+    public InvalidTitles findInvalidTitles(List<String> tokenExceptions) {
+        InvalidTitles invalidTitles = new InvalidTitles();
         List<WebElement> webElements = this.getWebDriver().findElements(By.xpath("(//section//h2[not(ancestor::section[contains(@class,'further-reading-posts')] )]) | (//section//h3[not(ancestor::div[contains(@class,'after-post-widgets')] )])"));
         webElements.parallelStream().forEach(webElement -> {
             String title = webElement.getText();
@@ -547,9 +547,14 @@ public class SitePage extends BlogBaseDriver {
                     break;
                 }
                 if (!s.isTitleValid(title, tokens, emphasizedAndItalicTagValues, tokenExceptions)) {
-                    invalidTitles.add(title);
+                    invalidTitles.addInvalidTitle(title);
                     break;
                 }
+            }
+
+            if (!ITitleAnalyzerStrategy.dotsInTitleAnalyzer()
+                .isTitleValid(title, tokens, emphasizedAndItalicTagValues, tokenExceptions)) {
+                invalidTitles.addTitleWithInvalidDots(title);
             }
         });
         return invalidTitles;
