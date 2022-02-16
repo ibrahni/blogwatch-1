@@ -27,15 +27,14 @@ import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static com.baeldung.common.GlobalConstants.tutorialsRepoGitUrl;
+import static com.baeldung.common.GlobalConstants.POM_FILE_NAME_LOWERCASE;
 import static com.baeldung.common.GlobalConstants.tutorialsRepoLocalPath;
+import static com.baeldung.common.Utils.*;
 
 @ContextConfiguration(classes = {CommonConfig.class}, initializers = MyApplicationContextInitializer.class)
 @ExtendWith(TestMetricsExtension.class)
 @ExtendWith(SpringExtension.class)
 public class TutorialsTest extends BaseTest {
-
-    private static final String POM_XML = "/pom.xml";
 
     @Test
     @Tag(GlobalConstants.TAG_GITHUB_RELATED)
@@ -45,8 +44,7 @@ public class TutorialsTest extends BaseTest {
         List<String> testExceptions = getTestExceptions(testInfo);
 
         Path repoLocalPath = Paths.get(tutorialsRepoLocalPath);
-//        Utils.fetchGitRepo(GlobalConstants.NO, repoLocalPath, tutorialsRepoGitUrl);
-
+        Utils.fetchGitRepo(GlobalConstants.NO, repoLocalPath, tutorialsRepoLocalPath);
 
         MavenModulesDetailsFileVisitor modulesFileVisitor = new MavenModulesDetailsFileVisitor(GlobalConstants.tutorialsRepoLocalPath);
         Files.walkFileTree(repoLocalPath, modulesFileVisitor);
@@ -57,7 +55,6 @@ public class TutorialsTest extends BaseTest {
         HashMap<String, List<String>> defaultProfiles = new HashMap<>();
         HashMap<String, List<String>> integrationProfiles = new HashMap<>();
         extractModulesForProfile(defaultProfiles, integrationProfiles, tutorialsRepoLocalPath);
-
 
         markBuiltModules(modules, defaultProfiles, true);
         markBuiltModules(modules, integrationProfiles, false);
@@ -74,15 +71,11 @@ public class TutorialsTest extends BaseTest {
                 .sorted(Comparator.comparing(MavenProjectVO::getPomFileLocation))
                 .collect(Collectors.toList());
 
-        System.out.println("Module Missing in default* profiles");
-        System.out.println("-----------------------------------");
-        modulesMissingInDefault.forEach(module -> System.out.println(removeRepoLocalPath(module.getPomFileLocation())));
-        System.out.println();
 
-        System.out.println("Module Missing in integration* profiles");
-        System.out.println("-----------------------------------");
-        modulesMissingInIntegraiton.forEach(module -> System.out.println(removeRepoLocalPath(module.getPomFileLocation())));
-        System.out.println();
+        if (!modulesMissingInDefault.isEmpty() || !modulesMissingInIntegraiton.isEmpty()) {
+            String results = getErrorMessageForNotBuiltModules(modulesMissingInDefault, modulesMissingInIntegraiton);
+            triggerTestFailure(results, "Not all modules are built.");
+        }
 
         logger.info(ConsoleColors.magentaColordMessage("finished"));
     }
@@ -148,17 +141,16 @@ public class TutorialsTest extends BaseTest {
     private MavenProjectVO findModuleByPath(String childFolder, Map<String, MavenProjectVO> modules) {
         for (MavenProjectVO module : modules.values()) {
             String pomFileLocation = module.getPomFileLocation();
-            if (pomFileLocation.replace(POM_XML, "").endsWith(childFolder)) {
+            if (pomFileLocation.replace("/" + POM_FILE_NAME_LOWERCASE, "").endsWith(childFolder)) {
                 return module;
             }
         }
 
         return null;
-
     }
 
     private void extractModulesForProfile(Map<String, List<String>> defaultProfiles, Map<String, List<String>> integrationProfiles, String repoLocalPath) throws IOException, XmlPullParserException {
-        File parentPom = new File(repoLocalPath + POM_XML);
+        File parentPom = new File(repoLocalPath + "/" + POM_FILE_NAME_LOWERCASE);
 
         MavenXpp3Reader reader = new MavenXpp3Reader();
         Model pomModel = reader.read(new FileReader(parentPom));
@@ -170,9 +162,5 @@ public class TutorialsTest extends BaseTest {
                 integrationProfiles.put(id, profile.getModules());
             }
         }
-    }
-
-    private String removeRepoLocalPath(String directoryName) {
-        return directoryName.replace(tutorialsRepoLocalPath, "").replace(POM_XML, "");
     }
 }
