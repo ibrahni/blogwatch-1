@@ -28,6 +28,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.baeldung.common.GlobalConstants.POM_FILE_NAME_LOWERCASE;
+import static com.baeldung.common.GlobalConstants.tutorialsRepoGitUrl;
 import static com.baeldung.common.GlobalConstants.tutorialsRepoLocalPath;
 import static com.baeldung.common.Utils.*;
 
@@ -44,7 +45,7 @@ public class TutorialsTest extends BaseTest {
         List<String> testExceptions = getTestExceptions(testInfo);
 
         Path repoLocalPath = Paths.get(tutorialsRepoLocalPath);
-        Utils.fetchGitRepo(GlobalConstants.NO, repoLocalPath, tutorialsRepoLocalPath);
+        Utils.fetchGitRepo(GlobalConstants.NO, repoLocalPath, tutorialsRepoGitUrl);
 
         MavenModulesDetailsFileVisitor modulesFileVisitor = new MavenModulesDetailsFileVisitor(GlobalConstants.tutorialsRepoLocalPath);
         Files.walkFileTree(repoLocalPath, modulesFileVisitor);
