@@ -138,7 +138,7 @@ public interface ITitleAnalyzerStrategy {
         return (title, tokens, emphasizedAndItalicTokens, tokenExceptions) -> {
             if(tokens.size()>0){
                 final String firstToken = tokens.get(0);
-                if(!firstToken.matches("^(\\d.)+$")){
+                if(!firstToken.matches("^(\\d+\\.)+$")){
                     return false;
                 }
             }
