@@ -11,7 +11,6 @@ import org.apache.maven.model.Profile;
 import org.apache.maven.model.io.xpp3.MavenXpp3Reader;
 import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
 import org.eclipse.jgit.api.errors.GitAPIException;
-import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -27,9 +26,7 @@ import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static com.baeldung.common.GlobalConstants.POM_FILE_NAME_LOWERCASE;
-import static com.baeldung.common.GlobalConstants.tutorialsRepoGitUrl;
-import static com.baeldung.common.GlobalConstants.tutorialsRepoLocalPath;
+import static com.baeldung.common.GlobalConstants.*;
 import static com.baeldung.common.Utils.*;
 
 @ContextConfiguration(classes = {CommonConfig.class}, initializers = MyApplicationContextInitializer.class)
@@ -38,8 +35,6 @@ import static com.baeldung.common.Utils.*;
 public class TutorialsTest extends BaseTest {
 
     @Test
-    @Tag(GlobalConstants.TAG_GITHUB_RELATED)
-    @Tag(GlobalConstants.TAG_SKIP_METRICS)
     public void givenTheTutorialsRepository_listAllTheModulesThatAreNotBuildInBothDefautlAndIntegrationTests(TestInfo testInfo) throws IOException, GitAPIException, XmlPullParserException {
 
         List<String> testExceptions = getTestExceptions(testInfo);
