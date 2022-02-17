@@ -37,8 +37,7 @@ import static com.baeldung.common.Utils.*;
 @ExtendWith(SpringExtension.class)
 public class TutorialsTest extends BaseTest {
 
-    @Test
-    @Tag(GlobalConstants.TAG_GITHUB_RELATED)
+    @Test    
     @Tag(GlobalConstants.TAG_SKIP_METRICS)
     public void givenTheTutorialsRepository_listAllTheModulesThatAreNotBuildInBothDefautlAndIntegrationTests(TestInfo testInfo) throws IOException, GitAPIException, XmlPullParserException {
 
