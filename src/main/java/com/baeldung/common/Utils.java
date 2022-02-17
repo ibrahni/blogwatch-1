@@ -2,6 +2,8 @@ package com.baeldung.common;
 
 import static com.baeldung.common.ConsoleColors.colordHeading;
 import static com.baeldung.common.ConsoleColors.magentaColordMessage;
+import static com.baeldung.common.GlobalConstants.POM_FILE_NAME_LOWERCASE;
+import static com.baeldung.common.GlobalConstants.tutorialsRepoLocalPath;
 import static com.baeldung.common.GlobalConstants.tutorialsRepos;
 import static java.util.stream.Collectors.toList;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -26,6 +28,7 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import com.baeldung.common.vo.*;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -46,11 +49,6 @@ import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.baeldung.common.vo.AnchorLinksTestDataVO;
-import com.baeldung.common.vo.EventTrackingVO;
-import com.baeldung.common.vo.GitHubRepoVO;
-import com.baeldung.common.vo.JavaConstruct;
-import com.baeldung.common.vo.LinkVO;
 import com.baeldung.filevisitor.ModuleAlignmentValidatorFileVisitor;
 import com.baeldung.filevisitor.ReadmeFileVisitor;
 import com.baeldung.filevisitor.TutorialsParentModuleFinderFileVisitor;
@@ -927,5 +925,24 @@ public class Utils {
     public static List<String> getListOfReadmesFromAllTutorialsRepos(boolean convertPathToHttpUrl) throws InvalidRemoteException, TransportException, IOException, GitAPIException {
         Map<GitHubRepoVO, List<String>> reposReadmes = Utils.getRepoWiseListOfReadmesFromAllTutorialsRepos(convertPathToHttpUrl);
         return reposReadmes.entrySet().stream().flatMap(entryset -> entryset.getValue().stream()).collect(Collectors.toList());
+    }
+
+    public static String getErrorMessageForNotBuiltModules(
+            List<MavenProjectVO> modulesMissingInDefault,
+            List<MavenProjectVO> modulesMissingInIntegration) {
+
+        StringBuilder sb = new StringBuilder("Module Missing in default* profiles ");
+        sb.append("\n----------------------------------- \n");
+        modulesMissingInDefault.forEach(module -> sb.append(removeRepoLocalPath(module.getPomFileLocation())).append("\n"));
+
+        sb.append("\nModule Missing in integration* profiles");
+        sb.append("\n----------------------------------- \n");
+        modulesMissingInIntegration.forEach(module -> sb.append(removeRepoLocalPath(module.getPomFileLocation())).append("\n"));
+
+        return sb.toString();
+    }
+
+    public static String removeRepoLocalPath(String directoryName) {
+        return directoryName.replace(tutorialsRepoLocalPath, "").replace("/" + POM_FILE_NAME_LOWERCASE, "");
     }
 }
