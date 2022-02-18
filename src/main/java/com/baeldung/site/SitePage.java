@@ -10,6 +10,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -577,6 +578,17 @@ public class SitePage extends BlogBaseDriver {
 
         return labels.contains(GlobalConstants.springCategoryOnTheSite.toLowerCase()) && subCategories.size() > 0;
     }
+
+    public boolean hasCategory(String category) {
+        List<WebElement> elements = this.getWebDriver()
+            .findElements(By.xpath("//a[contains(@rel, 'category tag')]"));
+
+        return elements.stream()
+            .map(element -> element.getAttribute("innerHTML"))
+            .map(label -> label == null ? label : label.toLowerCase())
+            .anyMatch(label -> Objects.equals(label, category.toLowerCase()));
+    }
+
 
     public boolean hasBrokenCodeBlock() {
         List<WebElement> elements = this.getWebDriver().findElements(By.xpath("//pre[(contains(@class, 'brush'))]"));

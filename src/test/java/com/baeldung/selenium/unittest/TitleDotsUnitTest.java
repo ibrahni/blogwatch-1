@@ -31,6 +31,14 @@ public class TitleDotsUnitTest {
     }
 
     @Test
+    void givenATitleHavingDotsAtTheEndAndStartsWithQ_WhenTitleAnalysed_thenItIsValid() {
+        String title = "Q14.10. The Let() Method";
+        List<String> tokens = Utils.titleTokenizer(title);
+
+        assertTrue(ITitleAnalyzerStrategy.dotsInTitleAnalyzer().isTitleValid(title, tokens, Collections.emptyList(), Collections.emptyList()));
+    }
+
+    @Test
     void givenATitleHavingMissingDotsAtTheEndAnd_WhenTitleAnalysed_thenItIsNotValid() {
         String title = "4.1 The Let() Method";
         List<String> tokens = Utils.titleTokenizer(title);
