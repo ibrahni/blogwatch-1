@@ -17,7 +17,7 @@ public interface ITitleAnalyzerStrategy {
     Logger logger = LoggerFactory.getLogger(ITitleAnalyzerStrategy.class);
     boolean isTitleValid(String title, List<String> tokens, List<String> emphasizedAndItalicTokens, List<String> tokenExceptions);
 
-    static List<ITitleAnalyzerStrategy> titleAnalyzerStrategies = Arrays.asList(new ITitleAnalyzerStrategy[] { articlesConjunctionsShortPrepositionsAnalyserStrategy(), javaMethodNameAnalyserStrategy(), simpleTitleAnalyserStrategy() });
+    static List<ITitleAnalyzerStrategy> titleAnalyzerStrategies = Arrays.asList(new ITitleAnalyzerStrategy[] { articlesConjunctionsShortPrepositionsAnalyserStrategy(), javaMethodNameAnalyserStrategy(), simpleTitleAnalyserStrategy()});
     static String regexForShortPrepositions = "a|an|and|as|at|but|by|en|for|in|nor|of|on|or|per|the|vs.?|via|out";
     static String regexForExceptions = "with|to|from|up|into|v.?|REST|if|using";
 
@@ -133,7 +133,19 @@ public interface ITitleAnalyzerStrategy {
             return true;
         };
     }
-    
+
+    static ITitleAnalyzerStrategy dotsInTitleAnalyzer(){
+        return (title, tokens, emphasizedAndItalicTokens, tokenExceptions) -> {
+            if(tokens.size()>0){
+                final String firstToken = tokens.get(0);
+                if(!firstToken.matches("^(Q?\\d+\\.)+$")){
+                    return false;
+                }
+            }
+            return true;
+        };
+    }
+
     static boolean isAtStartOrEndOftheTitle(int j, int firstTokenIndexStartingWithACharacter, int totalTokenIntheTitle) {
         if (j == firstTokenIndexStartingWithACharacter || j == totalTokenIntheTitle - 1) {
             return true;

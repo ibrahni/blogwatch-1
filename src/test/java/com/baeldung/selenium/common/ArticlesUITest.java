@@ -21,6 +21,7 @@ import com.baeldung.common.GlobalConstants;
 import com.baeldung.common.GlobalConstants.TestMetricTypes;
 import com.baeldung.common.Utils;
 import com.baeldung.common.YAMLProperties;
+import com.baeldung.site.InvalidTitles;
 import com.baeldung.utility.TestUtils;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
@@ -319,6 +320,7 @@ public class ArticlesUITest extends BaseUISeleniumTest {
     public final void givenAllArticles_whenAnArticleLoads_thenTheArticleHasProperTitleCapitalization() {
 
         log(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenTheArticleHasProperTitleCapitalization);
+        log(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenTheArticleHasProperDotsInTitle);
 
         do {
 
@@ -327,10 +329,19 @@ public class ArticlesUITest extends BaseUISeleniumTest {
             }
 
             try {
-                List<String> invalidTitles = page.findInvalidTitles(level2ExceptionsForTitleCapitalizationTest);
-                if (invalidTitles.size() > 0) {
-                    recordMetrics(invalidTitles.size(), TestMetricTypes.FAILED);
-                    badURLs.put(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenTheArticleHasProperTitleCapitalization, Utils.formatResultsForCapatalizationTest(page.getUrl(), invalidTitles));
+                InvalidTitles titlesWithErrors = page.findInvalidTitles(level2ExceptionsForTitleCapitalizationTest);
+                if (titlesWithErrors.invalidTitles().size() > 0) {
+                    recordMetrics(titlesWithErrors.invalidTitles().size(), TestMetricTypes.FAILED);
+                    badURLs.put(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenTheArticleHasProperTitleCapitalization, Utils.formatResultsForCapatalizationTest(page.getUrl(), titlesWithErrors.invalidTitles()));
+                }
+
+                if (shouldSkipUrl(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenTheArticleHasProperDotsInTitle) || page.hasCategory("series")) {
+                    continue;
+                }
+
+                if (titlesWithErrors.titlesWithInvalidDots().size() > 0) {
+                    recordMetrics(titlesWithErrors.titlesWithInvalidDots().size(), TestMetricTypes.FAILED);
+                    badURLs.put(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenTheArticleHasProperDotsInTitle, Utils.formatResultsForCapatalizationTest(page.getUrl(), titlesWithErrors.titlesWithInvalidDots()));
                 }
             } catch (Exception e) {
                 logger.error("Error occurened in Title Capatilization test for: " + page.getUrl() + " error message:" + e.getMessage());
