@@ -6,11 +6,13 @@ import com.baeldung.common.config.MyApplicationContextInitializer;
 import com.baeldung.common.vo.MavenProjectVO;
 import com.baeldung.filevisitor.MavenModulesDetailsFileVisitor;
 import com.baeldung.utility.TestUtils;
+import com.google.common.collect.Sets;
 import org.apache.maven.model.Model;
 import org.apache.maven.model.Profile;
 import org.apache.maven.model.io.xpp3.MavenXpp3Reader;
 import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
 import org.eclipse.jgit.api.errors.GitAPIException;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -27,6 +29,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.baeldung.common.GlobalConstants.*;
+import static com.baeldung.common.GlobalConstants.TestMetricTypes.FAILED;
 import static com.baeldung.common.Utils.*;
 
 @ContextConfiguration(classes = {CommonConfig.class}, initializers = MyApplicationContextInitializer.class)
@@ -34,7 +37,8 @@ import static com.baeldung.common.Utils.*;
 @ExtendWith(SpringExtension.class)
 public class TutorialsTest extends BaseTest {
 
-    @Test    
+    @Test
+    @Tag(GlobalConstants.TAG_SKIP_METRICS)
     public void givenTheTutorialsRepository_listAllTheModulesThatAreNotBuildInBothDefautlAndIntegrationTests(TestInfo testInfo) throws IOException, GitAPIException, XmlPullParserException {
 
         List<String> testExceptions = getTestExceptions(testInfo);
@@ -70,10 +74,19 @@ public class TutorialsTest extends BaseTest {
 
         if (!modulesMissingInDefault.isEmpty() || !modulesMissingInIntegraiton.isEmpty()) {
             String results = getErrorMessageForNotBuiltModules(modulesMissingInDefault, modulesMissingInIntegraiton);
+            int totalFailuers = countTotalFilaedModules(modulesMissingInDefault, modulesMissingInIntegraiton);
+
+            BaseTest.recordMetrics(totalFailuers, FAILED);
             triggerTestFailure(results, "Not all modules are built.");
         }
 
         logger.info(ConsoleColors.magentaColordMessage("finished"));
+    }
+
+    private int countTotalFilaedModules(List<MavenProjectVO> modulesMissingInDefault, List<MavenProjectVO> modulesMissingInIntegraiton) {
+        Set<String> collect1 = modulesMissingInDefault.stream().map(MavenProjectVO::getArtifactId).collect(Collectors.toSet());
+        Set<String> collect2 = modulesMissingInIntegraiton.stream().map(MavenProjectVO::getArtifactId).collect(Collectors.toSet());
+        return Sets.union(collect1, collect2).size();
     }
 
     private List<String> getTestExceptions(TestInfo testInfo) {
