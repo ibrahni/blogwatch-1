@@ -34,7 +34,7 @@ import static com.baeldung.common.Utils.*;
 @ExtendWith(SpringExtension.class)
 public class TutorialsTest extends BaseTest {
 
-    @Test
+    @Test    
     public void givenTheTutorialsRepository_listAllTheModulesThatAreNotBuildInBothDefautlAndIntegrationTests(TestInfo testInfo) throws IOException, GitAPIException, XmlPullParserException {
 
         List<String> testExceptions = getTestExceptions(testInfo);

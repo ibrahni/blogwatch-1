@@ -154,7 +154,10 @@ givenAllArticles_whenAnArticleLoads_thenItIsHasASingleOptinInTheAfterPostContent
   - /job/
   - /java-weekly
   - /java-web-weekly
+givenAllArticles_whenAnArticleLoads_thenTheArticleHasProperDotsInTitle:
+  - /string/
 givenTheTutorialsRepository_listAllTheModulesThatAreNotBuildInBothDefautlAndIntegrationTests:
+
 
 
 

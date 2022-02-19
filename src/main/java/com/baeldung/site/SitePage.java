@@ -10,6 +10,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -534,8 +535,8 @@ public class SitePage extends BlogBaseDriver {
 
     }
 
-    public List<String> findInvalidTitles(List<String> tokenExceptions) {
-        List<String> invalidTitles = new ArrayList<>();
+    public InvalidTitles findInvalidTitles(List<String> tokenExceptions) {
+        InvalidTitles invalidTitles = new InvalidTitles();
         List<WebElement> webElements = this.getWebDriver().findElements(By.xpath("(//section//h2[not(ancestor::section[contains(@class,'further-reading-posts')] )]) | (//section//h3[not(ancestor::div[contains(@class,'after-post-widgets')] )])"));
         webElements.parallelStream().forEach(webElement -> {
             String title = webElement.getText();
@@ -547,9 +548,14 @@ public class SitePage extends BlogBaseDriver {
                     break;
                 }
                 if (!s.isTitleValid(title, tokens, emphasizedAndItalicTagValues, tokenExceptions)) {
-                    invalidTitles.add(title);
+                    invalidTitles.addInvalidTitle(title);
                     break;
                 }
+            }
+
+            if (!ITitleAnalyzerStrategy.dotsInTitleAnalyzer()
+                .isTitleValid(title, tokens, emphasizedAndItalicTagValues, tokenExceptions)) {
+                invalidTitles.addTitleWithInvalidDots(title);
             }
         });
         return invalidTitles;
@@ -572,6 +578,17 @@ public class SitePage extends BlogBaseDriver {
 
         return labels.contains(GlobalConstants.springCategoryOnTheSite.toLowerCase()) && subCategories.size() > 0;
     }
+
+    public boolean hasCategory(String category) {
+        List<WebElement> elements = this.getWebDriver()
+            .findElements(By.xpath("//a[contains(@rel, 'category tag')]"));
+
+        return elements.stream()
+            .map(element -> element.getAttribute("innerHTML"))
+            .map(label -> label == null ? label : label.toLowerCase())
+            .anyMatch(label -> Objects.equals(label, category.toLowerCase()));
+    }
+
 
     public boolean hasBrokenCodeBlock() {
         List<WebElement> elements = this.getWebDriver().findElements(By.xpath("//pre[(contains(@class, 'brush'))]"));

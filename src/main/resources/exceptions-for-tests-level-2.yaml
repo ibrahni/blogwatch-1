@@ -29,6 +29,9 @@ givenAllArticles_whenAnArticleLoads_thenItDoesNotLinkToOldJavaDocs:
  - https://docs.oracle.com/javase/8/docs/technotes/guides/sound/programmer_guide/chapter2.html
  - https://docs.oracle.com/javase/7/docs/technotes/guides/javadoc/whatsnew-1.5.0.html 
  - https://docs.oracle.com/javase/8/docs/technotes/guides/visualvm/jmx_connections.html
+ - https://docs.oracle.com/javase/9/docs/api/java.xml.bind-summary.html
+ - https://docs.oracle.com/javase/1.5.0/docs/tooldocs/windows/javadoc.html#javadoctags
+ - https://docs.oracle.com/javase/7/docs/technotes/tools/windows/javadoc.html#see
  
 givenAllArticles_whenAnArticleLoads_thenTheArticleHasProperTitleCapitalization:
  - jOOQ
@@ -71,4 +74,5 @@ givenAllArticles_whenAnArticleLoads_thenTheArticleHasProperTitleCapitalization:
  - ping
  - cp
  - vmstat
+ - jQuery
  
