@@ -27,9 +27,8 @@ import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static com.baeldung.common.GlobalConstants.POM_FILE_NAME_LOWERCASE;
-import static com.baeldung.common.GlobalConstants.tutorialsRepoGitUrl;
-import static com.baeldung.common.GlobalConstants.tutorialsRepoLocalPath;
+import static com.baeldung.common.GlobalConstants.*;
+import static com.baeldung.common.GlobalConstants.TestMetricTypes.FAILED;
 import static com.baeldung.common.Utils.*;
 
 @ContextConfiguration(classes = {CommonConfig.class}, initializers = MyApplicationContextInitializer.class)
@@ -37,7 +36,7 @@ import static com.baeldung.common.Utils.*;
 @ExtendWith(SpringExtension.class)
 public class TutorialsTest extends BaseTest {
 
-    @Test    
+    @Test
     @Tag(GlobalConstants.TAG_SKIP_METRICS)
     public void givenTheTutorialsRepository_listAllTheModulesThatAreNotBuildInBothDefautlAndIntegrationTests(TestInfo testInfo) throws IOException, GitAPIException, XmlPullParserException {
 
@@ -74,6 +73,9 @@ public class TutorialsTest extends BaseTest {
 
         if (!modulesMissingInDefault.isEmpty() || !modulesMissingInIntegraiton.isEmpty()) {
             String results = getErrorMessageForNotBuiltModules(modulesMissingInDefault, modulesMissingInIntegraiton);
+            int totalFailures = modulesMissingInDefault.size() + modulesMissingInIntegraiton.size();
+
+            BaseTest.recordMetrics(totalFailures, FAILED);
             triggerTestFailure(results, "Not all modules are built.");
         }
 
