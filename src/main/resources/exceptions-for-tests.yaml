@@ -159,6 +159,9 @@ givenAllArticles_whenAnArticleLoads_thenTheArticleHasProperDotsInTitle:
   - /string/
 givenTheTutorialsRepository_listAllTheModulesThatAreNotBuildInBothDefautlAndIntegrationTests:
 
+givenAGitHubModuleReadme_whenAnalysingTheReadme_thentheReadmeDoesNotLikTooManyArticles:
+
+
 
 
 

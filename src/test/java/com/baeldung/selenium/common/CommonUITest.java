@@ -345,15 +345,18 @@ public class CommonUITest extends BaseUISeleniumTest {
     @Tag(GlobalConstants.TAG_TECHNICAL)
     @Tag(GlobalConstants.TAG_SKIP_METRICS)
     public final void givenAGitHubModuleReadme_whenAnalysingTheReadme_thentheReadmeDoesNotLikTooManyArticles(TestInfo testInfo) throws IOException, InvalidRemoteException, TransportException, GitAPIException {
-
+    List<String> testExceptions= YAMLProperties.exceptionsForTests.get(TestUtils.getMehodName(testInfo.getTestMethod()));
         Map<GitHubRepoVO, List<String>> reposReadmes = Utils.getRepoWiseListOfReadmesFromAllTutorialsRepos(false);
         Map<String, Integer> articleCountByReadme = new HashMap<>();
 
         reposReadmes.forEach((repo, readmesPathList) -> {            
             readmesPathList.forEach(readmePath -> {
-                try {
-                    int baeldungUrlsCount = Utils.getLinksToTheBaeldungSite(readmePath); // get all the articles linked in this README
-
+                try {                     
+                    String replacedPath = readmePath.replace("\\", "/");
+                    if(testExceptions.contains(Utils.replaceJavaTutorialLocalPathWithHttpUrl.apply(replacedPath))) {
+                        return;
+                    }
+                    int baeldungUrlsCount = Utils.getLinksToTheBaeldungSite(readmePath); // get all the articles linked in this README                    
                     // for documenting no of links per README
                     if (readmePath.toLowerCase().contains("spring")) {
                         if (baeldungUrlsCount > limitForSpringRelatedReadmeHavingArticles) {

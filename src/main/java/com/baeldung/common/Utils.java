@@ -5,6 +5,7 @@ import static com.baeldung.common.ConsoleColors.magentaColordMessage;
 import static com.baeldung.common.GlobalConstants.POM_FILE_NAME_LOWERCASE;
 import static com.baeldung.common.GlobalConstants.tutorialsRepoLocalPath;
 import static com.baeldung.common.GlobalConstants.tutorialsRepos;
+import static com.baeldung.common.GlobalConstants.*;
 import static java.util.stream.Collectors.toList;
 import static org.junit.jupiter.api.Assertions.fail;
 
@@ -900,7 +901,7 @@ public class Utils {
             }else {
                 readmeList.addAll(readmeFileVisitor.getReameList());
             }
-            readmes.put(repo, readmeList);
+            readmes.put(repo, readmeList);           
         }
         return readmes;
     }
@@ -909,6 +910,9 @@ public class Utils {
     public static Function<String, String> replaceTutorialLocalPathWithHttpUrl(String repoLocalPath, String repoHttpPath){
         return path -> repoHttpPath.concat(StringUtils.removeStart(path, repoLocalPath));        
     }     
+    
+    public static Function<String, String> replaceJavaTutorialLocalPathWithHttpUrl = path -> tutorialsRepoMasterPath.concat(StringUtils.removeStart(path, tutorialsRepoLocalPath));
+     
     
     public static List<String> getLinksToTheBaeldungSite(Document doc) {
         Elements baeldungUrls = doc.select("a[href*="+GlobalConstants.BAELDUNG_DOMAIN_NAME+"]");
