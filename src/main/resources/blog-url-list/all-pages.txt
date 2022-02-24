@@ -73,3 +73,9 @@
 /learn-spring-data-jpa-for-teams
 /java-contribution-guidelines
 /java-author-contact
+/linux-author-contact
+/partners-internal
+/start-here-draft
+/scala-author-contact
+/kotlin-author-contact
+/cs-author-contact
