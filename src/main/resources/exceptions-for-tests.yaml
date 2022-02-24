@@ -6,6 +6,7 @@ givenAllArticles_whenAnArticleLoads_thenItHasSingleShortcodeAtTheTop:
   - /kotlin/
   - /cs/
   - /scala/
+  - /string/
 givenAllArticles_whenAnArticleLoads_thenItHasSingleShortcodeAtTheEnd:
   - /spring-java-online-courses/ 
   - /kotlin/
