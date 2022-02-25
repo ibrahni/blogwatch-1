@@ -160,6 +160,7 @@ givenAllArticles_whenAnArticleLoads_thenTheArticleHasProperDotsInTitle:
 givenTheTutorialsRepository_listAllTheModulesThatAreNotBuildInBothDefautlAndIntegrationTests:
 
 givenAGitHubModuleReadme_whenAnalysingTheReadme_thentheReadmeDoesNotLikTooManyArticles:
+  - /spring-boot-rest
 
 
 
