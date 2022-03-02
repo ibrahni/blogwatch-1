@@ -276,7 +276,6 @@
 /java-weekly-186
 /java-hyperloglog
 /junit-5-migration
-/awaitlity-testing
 /java-chronicle-queue
 /spring-vavr
 /java-weekly-185
