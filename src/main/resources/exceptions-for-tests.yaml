@@ -161,6 +161,7 @@ givenTheTutorialsRepository_listAllTheModulesThatAreNotBuildInBothDefautlAndInte
 
 givenAGitHubModuleReadme_whenAnalysingTheReadme_thentheReadmeDoesNotLikTooManyArticles:
   - https://github.com/eugenp/tutorials/tree/master/spring-boot-rest/README.md
+  - https://github.com/eugenp/tutorials/tree/master/spring-reactive/README.md
 
 
 
