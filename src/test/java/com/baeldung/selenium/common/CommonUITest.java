@@ -498,6 +498,7 @@ public class CommonUITest extends BaseUISeleniumTest {
         try {
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[contains(text(), 'Thank you for your message. It has been sent') or contains(text(), 'The form was sent successfully.')]")));
         } catch (Exception e) {
+            e.printStackTrace();
             recordMetrics(1, FAILED);
             fail("Contact form not working. Contact Form url: " + fullUrl);
         }
