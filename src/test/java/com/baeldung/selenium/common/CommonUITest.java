@@ -522,7 +522,7 @@ public class CommonUITest extends BaseUISeleniumTest {
                 logger.info("Skipping {}",link.getAnchorLink());
                 continue;
             }
-            tests.add(()-> assertTrue(page.anchorAndAnchorLinkAvailable(footerTag, link), String.format("Countn't find Anchor Text:%s and Anchor Link: %s, on %s", link.getAnchorText(), link.getAnchorLink(), url)));            
+            tests.add(()-> assertTrue(page.anchorAndAnchorLinkAvailable(footerTag, link), String.format("Couldn't find Anchor Text: %s and Anchor Link: %s, on %s", link.getAnchorText(), link.getAnchorLink(), page.getBaseURL() + url)));            
         }
 
         assertAll(tests.stream());
