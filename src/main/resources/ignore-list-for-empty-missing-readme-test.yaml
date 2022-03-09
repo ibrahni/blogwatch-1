@@ -71,6 +71,7 @@ ignoreReadmeContaining:
   - /version-collision/
   - /versions-maven-plugin/
   - /maven-archetype/
+  - /maven-classifier  
   
 # parent modules that just group other modules but don't have any article themselves
 # we want to ignore the module itself here
