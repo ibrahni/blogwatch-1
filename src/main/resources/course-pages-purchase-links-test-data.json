@@ -23,9 +23,9 @@
         "redirectsTo": "https://sso.teachable.com/secure/22136/checkout/784057/rest-with-spring-the-certification-class"
       },
       {
-        "linkId": "rws-coach-tb",
-        "link": "https://courses.baeldung.com/purchase?product_id=784058",
-        "redirectsTo": "https://sso.teachable.com/secure/22136/checkout/784058/rest-with-spring-live-class"
+        "linkId": "rws-ls-cmb-tb",
+        "link": "https://courses.baeldung.com/purchase?product_id=3632679",
+        "redirectsTo": "https://sso.teachable.com/secure/22136/checkout/3632679/ls-rws-certification-class"
       }      
     ]
   },
@@ -71,9 +71,9 @@
         "redirectsTo": "https://sso.teachable.com/secure/22136/checkout/3632601/ls-certification-class"
       },
       {
-        "linkId": "ls-coach-tb",
-        "link": "https://courses.baeldung.com/purchase?product_id=3632603",
-        "redirectsTo": "https://sso.teachable.com/secure/22136/checkout/3632603/ls-coaching-class"
+        "linkId": "ls-lsd-cmb-tb",
+        "link": "https://courses.baeldung.com/purchase?product_id=3632724",
+        "redirectsTo": "https://sso.teachable.com/secure/22136/checkout/3632724/ls-lsd-certification-class"
       }
     ]
   },
@@ -121,9 +121,9 @@
         "redirectsTo": "https://sso.teachable.com/secure/22136/checkout/1547673/learn-spring-security-the-certification-class"
     },
     {
-        "linkId": "lss-coach-tb",
-        "link": "https://courses.baeldung.com/purchase?product_id=1547675",
-        "redirectsTo": "https://sso.teachable.com/secure/22136/checkout/1547675/learn-spring-security-live-class"
+        "linkId": "lss-rws-cmb-tb",
+        "link": "https://courses.baeldung.com/purchase?product_id=2854599",
+        "redirectsTo": "https://sso.teachable.com/secure/22136/checkout/2854599/lss-rws-certification-class"
     }
    ]
   },
@@ -171,9 +171,9 @@
         "redirectsTo": "https://sso.teachable.com/secure/22136/checkout/2854565/learn-spring-security-oauth-the-certification-class"
     },
     {
-        "linkId": "lsso-coach-tb",
-        "link": "https://courses.baeldung.com/purchase?product_id=2854566",
-        "redirectsTo": "https://sso.teachable.com/secure/22136/checkout/2854566/learn-spring-security-oauth-the-coaching-class"
+        "linkId": "lsso-lss-cmb-tb",
+        "link": "https://courses.baeldung.com/purchase?product_id=1547673",
+        "redirectsTo": "https://sso.teachable.com/secure/22136/checkout/1547673/learn-spring-security-the-certification-class"
     } 
    ]
   },
@@ -221,9 +221,9 @@
         "redirectsTo": "https://sso.teachable.com/secure/22136/checkout/2854542/learn-spring-security-core-the-certification-class"
     },
     {
-        "linkId": "lssc-coach-tb",
-        "link": "https://courses.baeldung.com/purchase?product_id=2854544",
-        "redirectsTo": "https://sso.teachable.com/secure/22136/checkout/2854544/learn-spring-security-core-coaching-class"
+        "linkId": "lssc-lss-cmb-tb",
+        "link": "https://courses.baeldung.com/purchase?product_id=1547673",
+        "redirectsTo": "https://sso.teachable.com/secure/22136/checkout/1547673/learn-spring-security-the-certification-class"
     }
    ]
   },
@@ -271,9 +271,9 @@
         "redirectsTo": "https://sso.teachable.com/secure/22136/checkout/2964664/learn-spring-data-jpa-certification-class"
     },
     {
-        "linkId": "lsd-coach-tb",
-        "link": "https://courses.baeldung.com/purchase?product_id=2964665",
-        "redirectsTo": "https://sso.teachable.com/secure/22136/checkout/2964665/learn-spring-data-jpa-coaching-class"
+        "linkId": "lsd-ls-cmb-tb",
+        "link": "https://courses.baeldung.com/purchase?product_id=3632724",
+        "redirectsTo": "https://sso.teachable.com/secure/22136/checkout/3632724/ls-lsd-certification-class"
     }
    ]
   },
