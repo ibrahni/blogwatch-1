@@ -120,15 +120,7 @@ public class SitePage extends BlogBaseDriver {
         } catch (NoSuchElementException e) {
             return false;
         }
-    }
-
-    public boolean findEventGenerationScript() {
-        try {
-            return this.getWebDriver().findElement(By.xpath("//script[contains(text(),\"_dcq.push(['track', DRIP[1], {myProp: DRIP[2]}]);\")]")).isEnabled();
-        } catch (NoSuchElementException e) {
-            return false;
-        }
-    }
+    }    
 
     public List<WebElement> findImagesPointingToInvalidEnvOnTheArticle() {
         String baseURLWithOutHttp = this.getBaseURL().substring(6);

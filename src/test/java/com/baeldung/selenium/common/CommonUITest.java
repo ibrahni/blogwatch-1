@@ -249,10 +249,7 @@ public class CommonUITest extends BaseUISeleniumTest {
                     if (!page.findDivWithEventCalls(eventTrackingVO.getTrackingCodes())) {
                         badURLs.put(page.getBaseURL() + urlKey, "Button/link: " + eventTrackingVO.getLinkText() + "\nTracking code: " + eventTrackingVO.getTrackingCodes());
                     }
-                }
-                if (!page.findEventGenerationScript()) {
-                    badURLs.put(page.getBaseURL() + urlKey, "event generation script not found");
-                }
+                }                
             }
 
         }
