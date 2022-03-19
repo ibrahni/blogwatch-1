@@ -571,14 +571,17 @@ public class SitePage extends BlogBaseDriver {
         return labels.contains(GlobalConstants.springCategoryOnTheSite.toLowerCase()) && subCategories.size() > 0;
     }
 
-    public boolean hasCategory(String category) {
-        List<WebElement> elements = this.getWebDriver()
-            .findElements(By.xpath("//a[contains(@rel, 'category tag')]"));
+    public boolean hasCategoryOrTag(List<String> categoriesAndTags) {
+        final List<WebElement> elements = this.getWebDriver()
+            .findElements(By.xpath("//a[contains(@rel, 'category tag') or contains(@rel, 'post tag')]"));
 
-        return elements.stream()
+        final List<String> pageCategoriesAndTags = elements.stream()
             .map(element -> element.getAttribute("innerHTML"))
             .map(label -> label == null ? label : label.toLowerCase())
-            .anyMatch(label -> Objects.equals(label, category.toLowerCase()));
+            .collect(Collectors.toList());
+
+        return categoriesAndTags.stream()
+            .anyMatch(pageCategoriesAndTags::contains);
     }
 
 
