@@ -4045,7 +4045,6 @@
 /java-jdbc-url-format
 /java-arraylist-vs-linkedlist-vs-hashmap
 /java-weekly-363
-/java-httpclient-parameters
 /java-comparing-doubles
 /java-filename-without-extension
 /java-hibernate-multiplebagfetchexception
@@ -4702,7 +4701,6 @@
 /java-weekly-392
 /ops/docker-expose-more-than-one-port
 /eclipse-shortcuts
-/java-httpclient-enable-logging
 /java-generate-alphanumeric-uuid
 /java-collection-toarray-methods
 /spring-native-intro
@@ -5674,7 +5672,6 @@
 /cs/binary-tree-vs-binary-search-tree
 /cs/selection-sort-stable
 /cs/max-url-length
-/awaitlity-testing
 /mongodb-update-multiple-fields
 /faunadb-spring-web-app
 /java-excel-find-last-row
