@@ -2,6 +2,8 @@ package com.baeldung.common;
 
 import static org.junit.jupiter.api.Assertions.fail;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.junit.jupiter.api.AfterAll;
@@ -18,6 +20,17 @@ public class BaseTest {
     protected static Logger baseLogger = LoggerFactory.getLogger(BaseTest.class);
     protected static AtomicInteger failedTests = new AtomicInteger(0);
 
+    private static Set<String> executedTestsNames = new HashSet<>();
+    private static Set<String> failedTestsNames = new HashSet<>();
+
+    protected static void recordExecution(String name) {
+        executedTestsNames.add(name);
+    }
+
+    protected static void recordFailure(String name) {
+        failedTestsNames.add(name);
+    }
+
     protected static void recordMetrics(int count, TestMetricTypes metricType) {
         if (metricType.equals(TestMetricTypes.FAILED)) {
             failedTests.getAndAdd(count);
@@ -29,6 +42,14 @@ public class BaseTest {
             return failedTests.get();
         }
         return -1;
+    }
+
+    public static Set<String> getExecutedTestsNames() {
+        return executedTestsNames;
+    }
+
+    public static Set<String> getFailedTestsNames() {
+        return failedTestsNames;
     }
 
     protected void failTestWithLoggingTotalNoOfFailures(String fialureMessage) {
