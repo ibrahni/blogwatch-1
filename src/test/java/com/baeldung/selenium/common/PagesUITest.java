@@ -1,10 +1,10 @@
 package com.baeldung.selenium.common;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.ListIterator;
-import java.util.stream.Collectors;
-
+import com.baeldung.common.GlobalConstants;
+import com.baeldung.common.GlobalConstants.TestMetricTypes;
+import com.baeldung.common.Utils;
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.Multimap;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,11 +14,10 @@ import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.baeldung.common.GlobalConstants;
-import com.baeldung.common.GlobalConstants.TestMetricTypes;
-import com.baeldung.common.Utils;
-import com.google.common.collect.ArrayListMultimap;
-import com.google.common.collect.Multimap;
+import java.io.IOException;
+import java.util.List;
+import java.util.ListIterator;
+import java.util.stream.Collectors;
 
 public class PagesUITest extends BaseUISeleniumTest {
 
@@ -47,6 +46,7 @@ public class PagesUITest extends BaseUISeleniumTest {
 
     @Test
     public final void givenAllPages_whenAPageLoads_thenImagesPointToCorrectEnv() throws IOException {
+        recordExecution(GlobalConstants.givenAllPages_whenAPageLoads_thenImagesPointToCorrectEnv);
         do {
 
             if (shouldSkipUrl(GlobalConstants.givenAllPages_whenAPageLoads_thenImagesPointToCorrectEnv)) {
@@ -57,11 +57,13 @@ public class PagesUITest extends BaseUISeleniumTest {
 
             if (imgTags.size() > 0) {
                 recordMetrics(imgTags.size(), TestMetricTypes.FAILED);
+                recordFailure(GlobalConstants.givenAllPages_whenAPageLoads_thenImagesPointToCorrectEnv);
                 badURLs.put(GlobalConstants.givenAllPages_whenAPageLoads_thenImagesPointToCorrectEnv, page.getUrlWithNewLineFeed() + " ( " + imgTags.stream().map(webElement -> webElement.getAttribute("src") + " , ").collect(Collectors.joining()) + " )\n");
             }
 
             if (anchorTags.size() > 0) {
                 recordMetrics(anchorTags.size(), TestMetricTypes.FAILED);
+                recordFailure(GlobalConstants.givenAllPages_whenAPageLoads_thenImagesPointToCorrectEnv);
                 badURLs.put(GlobalConstants.givenAllPages_whenAPageLoads_thenImagesPointToCorrectEnv, page.getUrlWithNewLineFeed() + " ( " + anchorTags.stream().map(webElement -> webElement.getAttribute("href") + " , ").collect(Collectors.joining()) + ")\n");
             }
 
@@ -94,6 +96,7 @@ public class PagesUITest extends BaseUISeleniumTest {
 
     @Test
     public final void givenAllPages_whenAPageLoads_thenMetaOGImageAndTwitterImagePointToTheAbsolutePath() throws IOException {
+        recordExecution(GlobalConstants.givenAllPages_whenAPageLoads_thenMetaOGImageAndTwitterImagePointToTheAbsolutePath);
         do {
 
             if (shouldSkipUrl(GlobalConstants.givenAllPages_whenAPageLoads_thenMetaOGImageAndTwitterImagePointToTheAbsolutePath)) {
@@ -102,6 +105,7 @@ public class PagesUITest extends BaseUISeleniumTest {
 
             if (!page.findMetaTagWithOGImagePointingToTheAbsolutePath() || !page.findMetaTagWithTwitterImagePointingToTheAbsolutePath()) {
                 recordMetrics(1, TestMetricTypes.FAILED);
+                recordFailure(GlobalConstants.givenAllPages_whenAPageLoads_thenMetaOGImageAndTwitterImagePointToTheAbsolutePath);
                 badURLs.put(GlobalConstants.givenAllPages_whenAPageLoads_thenMetaOGImageAndTwitterImagePointToTheAbsolutePath, page.getUrlWithNewLineFeed());
             }
         } while (loadNextURL());
@@ -113,6 +117,7 @@ public class PagesUITest extends BaseUISeleniumTest {
 
     @Test
     public final void givenAllPages_whenAPageLoads_thenItDoesNotContainOverlappingText() throws IOException {
+        recordExecution(GlobalConstants.givenAllPages_whenAPageLoads_thenItDoesNotContainOverlappingText);
         do {
 
             if (shouldSkipUrl(GlobalConstants.givenAllPages_whenAPageLoads_thenItDoesNotContainOverlappingText)) {
@@ -121,6 +126,7 @@ public class PagesUITest extends BaseUISeleniumTest {
 
             if (page.containesOverlappingText()) {
                 recordMetrics(1, TestMetricTypes.FAILED);
+                recordFailure(GlobalConstants.givenAllPages_whenAPageLoads_thenItDoesNotContainOverlappingText);
                 badURLs.put(GlobalConstants.givenAllPages_whenAPageLoads_thenItDoesNotContainOverlappingText, page.getUrlWithNewLineFeed());
             }
         } while (loadNextURL());

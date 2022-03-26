@@ -16,12 +16,7 @@ import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.ListIterator;
-import java.util.Map;
+import java.util.*;
 import java.util.function.BiPredicate;
 import java.util.function.Function;
 import java.util.regex.Matcher;
@@ -948,5 +943,23 @@ public class Utils {
 
     public static String removeRepoLocalPath(String directoryName) {
         return directoryName.replace(tutorialsRepoLocalPath, "").replace("/" + POM_FILE_NAME_LOWERCASE, "");
+    }
+
+    public static String summarizeExecution(Set<String> executedTests, Set<String> failedTests) {
+        StringBuilder sb = new StringBuilder("\n---------------------------------\n");
+        sb.append("Test Execution Summary \n");
+        sb.append("---------------------------------\n");
+
+        if (executedTests != null) {
+            sb.append("---> Executed Tests: ").append(executedTests.size()).append("\n");
+            executedTests.forEach(test -> sb.append(test).append("\n"));
+        }
+        sb.append("\n");
+        if (failedTests != null) {
+            sb.append("---> Failed Tests: ").append(failedTests.size()).append("\n");
+            failedTests.forEach(test -> sb.append(test).append("\n"));
+        }
+
+        return sb.toString();
     }
 }
