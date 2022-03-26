@@ -25,6 +25,26 @@ public class TitleCapitalizationUnitTest {
     }
 
     @Test
+    void givenATitleHavingItalicAndJavaMethodNameCalledOnObject_WhenTitleAnalysed_thenItIsValid() {
+        String title = "4.1. The charset.decode() Method";
+        List<String> tokens = Utils.titleTokenizer(title);
+        List<String> emTokens = Arrays.asList(new String[] { "charset.decode()" });
+
+        assertTrue(ITitleAnalyzerStrategy.javaMethodNameAnalyserStrategy().isTitleValid(title, tokens, emTokens, tokenExceptions));
+
+    }
+
+    @Test
+    void givenATitleHavingMultipleItalicJavaMethodNamesSeparatedWithComma_WhenTitleAnalysed_thenItIsValid() {
+        String title = "4.1. The associateTo, associateByTo Methods";
+        List<String> tokens = Utils.titleTokenizer(title);
+        List<String> emTokens = Arrays.asList(new String[] { "associateTo","associateByTo" });
+
+        assertTrue(ITitleAnalyzerStrategy.javaMethodNameAnalyserStrategy().isTitleValid(title, tokens, emTokens, tokenExceptions));
+
+    }
+
+    @Test
     void givenATitleHavingUpperCaseJavaMethodName_WhenTitleAnalysed_thenItIsNotValid() {
         String title = "4.1. The Let() Method";
         List<String> tokens = Utils.titleTokenizer(title);
