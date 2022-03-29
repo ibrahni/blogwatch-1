@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.junit.jupiter.api.Test;
 
 import com.baeldung.common.Utils;
@@ -22,6 +23,15 @@ public class TitleCapitalizationUnitTest {
 
         assertFalse(ITitleAnalyzerStrategy.javaMethodNameAnalyserStrategy().isTitleValid(title, tokens, emTokens, tokenExceptions));
 
+    }
+
+    @Test
+    void givenATitleHavingItalicFollowedWithPossessionCharacter_WhenTitleAnalysed_thenItIsValid() {
+        String title = "4.1. The tar's Method";
+        List<String> tokens = Utils.titleTokenizer(title);
+        List<String> emTokens = Arrays.asList(new String[] { "tar" });
+
+        assertTrue(ITitleAnalyzerStrategy.simpleTitleAnalyserStrategy().isTitleValid(title, tokens, emTokens, tokenExceptions));
     }
 
     @Test

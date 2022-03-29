@@ -70,6 +70,10 @@ public class Utils {
 
     protected static Logger logger = LoggerFactory.getLogger(Utils.class);
 
+
+    private static final String POSSESSION_CHARACTER = "'s";
+    private static final String EMPTY = "" ;
+
     public static Stream<String> fetchSampleArtilcesList() throws IOException {
         File file = new File(Utils.class.getClassLoader().getResource(GlobalConstants.BLOG_URL_LIST_RESOUCE_FOLDER_PATH + GlobalConstants.SAMPLE_ARTICLES_FILE_NAME).getPath());
         return Files.lines(Paths.get(file.getAbsolutePath()));
@@ -864,13 +868,14 @@ public class Utils {
         return  Character.isDigit(Character.valueOf(title.charAt(0))) || "Q".equals(String.valueOf(title.charAt(0))) || ">".equals(String.valueOf(title.charAt(0)))? 1 : 0;
      }
 
-
     public static boolean isEmpasized(String token, List<String> emphasizedAndItalicTokens) {
-        
-        if (emphasizedAndItalicTokens.contains(removeCommaAtTheEnd(token))) {
+        final String tokenWithoutPossession = token.endsWith(POSSESSION_CHARACTER) ? token.replace(POSSESSION_CHARACTER, EMPTY) : token;
+
+        if (emphasizedAndItalicTokens.contains(removeCommaAtTheEnd(token)) || emphasizedAndItalicTokens.contains(tokenWithoutPossession)) {
             return true;
         }
-        return emphasizedAndItalicTokens.stream().filter(empasizedToken -> empasizedToken.contains(token)).findFirst().isPresent();
+        return emphasizedAndItalicTokens.stream()
+            .anyMatch(emphasizedToken -> emphasizedToken.contains(token));
     }
 
     public static String removeCommaAtTheEnd(String token) {
@@ -970,4 +975,5 @@ public class Utils {
 
         return sb.toString();
     }
+
 }
