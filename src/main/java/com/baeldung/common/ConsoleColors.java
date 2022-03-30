@@ -76,7 +76,8 @@ public class ConsoleColors {
 
     //
     private static final String BLUE_BACKGROUND_AND_BOLD_WHITE = "\033[1;37;104m"; // WHITE
-    
+
+    private static final String RED_BOLD_UNDERLINED = "\033[1;4;31m"; // RED
     private static final String GREEN_BOLD_UNDERLINED = "\033[1;4;32m"; // GREEN
     private static final String YELLOW_BOLD_UNDERLINED = "\033[1;4;33m"; // YELLOW
 
@@ -106,6 +107,10 @@ public class ConsoleColors {
     
     public static String greenBoledUnderlined(String message) {
             return GREEN_BOLD_UNDERLINED + message + RESET;
+    }
+
+    public static String redBoldUnderlined(String message) {
+            return RED_BOLD_UNDERLINED + message + RESET;
     }
     
     public static String greenMessage(String message) {
