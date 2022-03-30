@@ -945,19 +945,27 @@ public class Utils {
         return directoryName.replace(tutorialsRepoLocalPath, "").replace("/" + POM_FILE_NAME_LOWERCASE, "");
     }
 
-    public static String summarizeExecution(Set<String> executedTests, Set<String> failedTests) {
+    public static String summarizeExecution(Map<String, Integer> executedTests, Map<String, Integer> failedTests) {
         StringBuilder sb = new StringBuilder("\n---------------------------------\n");
         sb.append("Test Execution Summary \n");
         sb.append("---------------------------------\n");
 
         if (executedTests != null) {
             sb.append("---> Executed Tests: ").append(executedTests.size()).append("\n");
-            executedTests.forEach(test -> sb.append(test).append("\n"));
+            executedTests.forEach(
+                    (test, count) -> sb.append(test)
+                            .append("(").append(count).append(" executions)")
+                            .append("\n")
+            );
         }
         sb.append("\n");
         if (failedTests != null) {
             sb.append("---> Failed Tests: ").append(failedTests.size()).append("\n");
-            failedTests.forEach(test -> sb.append(test).append("\n"));
+            failedTests.forEach(
+                    (test, count) -> sb.append(test)
+                            .append("(").append(count).append(" failures)")
+                            .append("\n")
+            );
         }
 
         return sb.toString();

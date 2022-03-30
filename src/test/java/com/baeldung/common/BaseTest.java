@@ -1,18 +1,17 @@
 package com.baeldung.common;
 
-import static org.junit.jupiter.api.Assertions.fail;
-
-import java.util.HashSet;
-import java.util.Set;
-import java.util.concurrent.atomic.AtomicInteger;
-
+import com.baeldung.common.GlobalConstants.TestMetricTypes;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.baeldung.common.GlobalConstants.TestMetricTypes;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
+
+import static org.junit.jupiter.api.Assertions.fail;
 
 public class BaseTest {
 
@@ -20,15 +19,17 @@ public class BaseTest {
     protected static Logger baseLogger = LoggerFactory.getLogger(BaseTest.class);
     protected static AtomicInteger failedTests = new AtomicInteger(0);
 
-    private static Set<String> executedTestsNames = new HashSet<>();
-    private static Set<String> failedTestsNames = new HashSet<>();
+    private static Map<String, Integer> executedTestsNames = new HashMap<>();
+    private static Map<String, Integer> failedTestsNames = new HashMap<>();
 
     protected static void recordExecution(String name) {
-        executedTestsNames.add(name);
+        Integer existing = executedTestsNames.getOrDefault(name, 0);
+        executedTestsNames.put(name, existing + 1);
     }
 
     protected static void recordFailure(String name) {
-        failedTestsNames.add(name);
+        Integer existing = failedTestsNames.getOrDefault(name, 0);
+        failedTestsNames.put(name, existing + 1);
     }
 
     protected static void recordMetrics(int count, TestMetricTypes metricType) {
@@ -44,11 +45,11 @@ public class BaseTest {
         return -1;
     }
 
-    public static Set<String> getExecutedTestsNames() {
+    public static Map<String, Integer> getExecutedTestsNames() {
         return executedTestsNames;
     }
 
-    public static Set<String> getFailedTestsNames() {
+    public static Map<String, Integer> getFailedTestsNames() {
         return failedTestsNames;
     }
 
