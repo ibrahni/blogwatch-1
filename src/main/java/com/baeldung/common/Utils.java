@@ -985,6 +985,7 @@ public class Utils {
             );
         }
 
+        sb.append(blueColordMessage("=============================End of the Summary===============================")).append(separator);
         return sb.toString();
     }
 
