@@ -8,17 +8,13 @@ public class JVMShutdownHook {
     private static Logger logger = LoggerFactory.getLogger(JVMShutdownHook.class);
     static {
         Thread hook = new Thread(() -> {
-            StringBuilder resultBuilder = new StringBuilder();
-            resultBuilder.append(System.lineSeparator());
-            resultBuilder.append("============================================================================");
-            resultBuilder.append(System.lineSeparator());
-            resultBuilder.append("Total failures = " + BaseTest.getMetrics(TestMetricTypes.FAILED));
-            resultBuilder.append(System.lineSeparator());
-            resultBuilder.append("============================================================================");
-            resultBuilder.append(System.lineSeparator());
-            resultBuilder.append(Utils.summarizeExecution(BaseTest.getExecutedTestsNames(), BaseTest.getFailedTestsNames()));
 
-            logger.info(resultBuilder.toString());
+            String summary = Utils.summarizeExecution(
+                    BaseTest.getMetrics(TestMetricTypes.FAILED),
+                    BaseTest.getExecutedTestsNames(),
+                    BaseTest.getFailedTestsNames()
+            );
+            logger.info(summary);
         });
         Runtime.getRuntime().addShutdownHook(hook);
     }

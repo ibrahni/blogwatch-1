@@ -1,7 +1,6 @@
 package com.baeldung.common;
 
-import static com.baeldung.common.ConsoleColors.colordHeading;
-import static com.baeldung.common.ConsoleColors.magentaColordMessage;
+import static com.baeldung.common.ConsoleColors.*;
 import static com.baeldung.common.GlobalConstants.POM_FILE_NAME_LOWERCASE;
 import static com.baeldung.common.GlobalConstants.tutorialsRepoLocalPath;
 import static com.baeldung.common.GlobalConstants.tutorialsRepos;
@@ -958,26 +957,31 @@ public class Utils {
         return directoryName.replace(tutorialsRepoLocalPath, "").replace("/" + POM_FILE_NAME_LOWERCASE, "");
     }
 
-    public static String summarizeExecution(Map<String, Integer> executedTests, Map<String, Integer> failedTests) {
-        StringBuilder sb = new StringBuilder("\n---------------------------------\n");
-        sb.append("Test Execution Summary \n");
-        sb.append("---------------------------------\n");
+    public static String summarizeExecution(int metrics, Map<String, Integer> executedTests, Map<String, Integer> failedTests) {
+        StringBuilder sb = new StringBuilder();
+        String separator = System.lineSeparator();
+        sb.append(separator);
+        sb.append(blueColordMessage("============================================================================")).append(separator);
+        sb.append(blueColordMessage("Test Execution Summary")).append(separator);
+        sb.append(blueColordMessage("============================================================================")).append(separator);
+
+        sb.append(redBoldUnderlined("Total Failures: ")).append(metrics).append(separator).append(separator);
 
         if (executedTests != null) {
-            sb.append("---> Executed Tests: ").append(executedTests.size()).append("\n");
+            sb.append(greenBoledUnderlined("Executed Tests: ")).append(executedTests.size()).append(separator);
             executedTests.forEach(
-                    (test, count) -> sb.append(test)
+                    (test, count) -> sb.append(greenMessage(test))
                             .append("(").append(count).append(" executions)")
-                            .append("\n")
+                            .append(separator)
             );
         }
-        sb.append("\n");
+        sb.append(separator);
         if (failedTests != null) {
-            sb.append("---> Failed Tests: ").append(failedTests.size()).append("\n");
+            sb.append(redBoldUnderlined("Failed Tests: ")).append(failedTests.size()).append(separator);
             failedTests.forEach(
-                    (test, count) -> sb.append(test)
+                    (test, count) -> sb.append(redBoldMessage(test))
                             .append("(").append(count).append(" failures)")
-                            .append("\n")
+                            .append(separator)
             );
         }
 
