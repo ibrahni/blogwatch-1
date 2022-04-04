@@ -2,6 +2,7 @@ package com.baeldung.site.strategy;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
@@ -69,8 +70,10 @@ public interface ITitleAnalyzerStrategy {
                         continue;
                     }
                     if (token.contains(".")) {
-                        String expectedToken = WordUtils.capitalize(Arrays.asList(token.split("\\.")).stream().map(WordUtils::uncapitalize).collect(Collectors.joining(".")));
-                        if (!expectedToken.equals(token)) {
+                        final String expectedToken = Arrays.stream(token.split("\\."))
+                            .map(WordUtils::uncapitalize)
+                            .collect(Collectors.joining("."));
+                        if (!Objects.equals(expectedToken, token) && !Objects.equals(WordUtils.capitalize(expectedToken), token)) {
                             logFailure(title, expectedToken, token);
                             return false;
                         }
@@ -123,7 +126,7 @@ public interface ITitleAnalyzerStrategy {
                     continue;
                 }
                 
-                String expectedToken =WordUtils.capitalize(token);
+                String expectedToken = WordUtils.capitalize(token);
                 if (!expectedToken.equals(token)) {
                     logFailure(title, expectedToken, token);
                     return false;

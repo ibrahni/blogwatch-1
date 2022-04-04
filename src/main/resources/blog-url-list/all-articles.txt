@@ -1256,7 +1256,6 @@
 /2014-week-review-7
 /2014-week-review-6
 /2014-week-review-5
-/httpclient-4-basic-authentication
 /2014-week-review-4
 /httpclient-custom-http-header
 /2014-week-review-3
@@ -1273,7 +1272,6 @@
 /java-read-lines-large-file
 /java-8-sort-lambda
 /jackson-jsonmappingexception
-/httpclient-4-cookies
 /jackson-serialize-enums
 /httpclient-status-code
 /java-immutable-list
