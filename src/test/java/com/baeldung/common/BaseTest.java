@@ -28,8 +28,12 @@ public class BaseTest {
     }
 
     protected static void recordFailure(String name) {
+        recordFailure(name, 1);
+    }
+
+    protected static void recordFailure(String name, int count) {
         Integer existing = failedTestsNames.getOrDefault(name, 0);
-        failedTestsNames.put(name, existing + 1);
+        failedTestsNames.put(name, existing + count);
     }
 
     protected static void recordMetrics(int count, TestMetricTypes metricType) {
