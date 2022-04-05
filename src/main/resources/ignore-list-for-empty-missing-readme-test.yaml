@@ -98,3 +98,5 @@ ignoreReadmeEndingWith:
   - /maven-plugins/
   - /kubernetes
   - /spring-web-modules
+  - /maven-simple
+  - /apache-tomcat
