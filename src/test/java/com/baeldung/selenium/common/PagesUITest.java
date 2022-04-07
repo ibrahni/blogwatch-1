@@ -57,13 +57,13 @@ public class PagesUITest extends BaseUISeleniumTest {
 
             if (imgTags.size() > 0) {
                 recordMetrics(imgTags.size(), TestMetricTypes.FAILED);
-                recordFailure(GlobalConstants.givenAllPages_whenAPageLoads_thenImagesPointToCorrectEnv);
+                recordFailure(GlobalConstants.givenAllPages_whenAPageLoads_thenImagesPointToCorrectEnv, imgTags.size());
                 badURLs.put(GlobalConstants.givenAllPages_whenAPageLoads_thenImagesPointToCorrectEnv, page.getUrlWithNewLineFeed() + " ( " + imgTags.stream().map(webElement -> webElement.getAttribute("src") + " , ").collect(Collectors.joining()) + " )\n");
             }
 
             if (anchorTags.size() > 0) {
                 recordMetrics(anchorTags.size(), TestMetricTypes.FAILED);
-                recordFailure(GlobalConstants.givenAllPages_whenAPageLoads_thenImagesPointToCorrectEnv);
+                recordFailure(GlobalConstants.givenAllPages_whenAPageLoads_thenImagesPointToCorrectEnv, anchorTags.size());
                 badURLs.put(GlobalConstants.givenAllPages_whenAPageLoads_thenImagesPointToCorrectEnv, page.getUrlWithNewLineFeed() + " ( " + anchorTags.stream().map(webElement -> webElement.getAttribute("href") + " , ").collect(Collectors.joining()) + ")\n");
             }
 

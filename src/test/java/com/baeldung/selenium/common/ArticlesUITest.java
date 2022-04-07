@@ -151,7 +151,7 @@ public class ArticlesUITest extends BaseUISeleniumTest {
 
             if (imgTags.size() > 0) {
                 recordMetrics(imgTags.size(), TestMetricTypes.FAILED);
-                recordFailure(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenImagesPointToCorrectEnv);
+                recordFailure(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenImagesPointToCorrectEnv, imgTags.size());
                 badURLs.put(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenImagesPointToCorrectEnv,
                         page.getUrlWithNewLineFeed() + " ( " + imgTags.stream().map(webElement -> webElement.getAttribute("src") + " , ").collect(Collectors.joining()) + ")\n");
             }
@@ -159,7 +159,7 @@ public class ArticlesUITest extends BaseUISeleniumTest {
             List<WebElement> anchorTags = page.findAnchorsPointingToAnImageAndInvalidEnvOnTheArticle();
             if (anchorTags.size() > 0) {
                 recordMetrics(anchorTags.size(), TestMetricTypes.FAILED);
-                recordFailure(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenImagesPointToCorrectEnv);
+                recordFailure(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenImagesPointToCorrectEnv, anchorTags.size());
                 badURLs.put(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenImagesPointToCorrectEnv,
                         page.getUrlWithNewLineFeed() + " ( " + anchorTags.stream().map(webElement -> webElement.getAttribute("href") + " , ").collect(Collectors.joining()) + ")\n");
             }
@@ -345,7 +345,7 @@ public class ArticlesUITest extends BaseUISeleniumTest {
                 InvalidTitles titlesWithErrors = page.findInvalidTitles(level2ExceptionsForTitleCapitalizationTest);
                 if (titlesWithErrors.invalidTitles().size() > 0) {
                     recordMetrics(titlesWithErrors.invalidTitles().size(), TestMetricTypes.FAILED);
-                    recordFailure(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenTheArticleHasProperTitleCapitalization);
+                    recordFailure(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenTheArticleHasProperTitleCapitalization, titlesWithErrors.invalidTitles().size());
                     badURLs.put(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenTheArticleHasProperTitleCapitalization, Utils.formatResultsForCapatalizationTest(page.getUrl(), titlesWithErrors.invalidTitles()));
                 }
 
@@ -357,7 +357,7 @@ public class ArticlesUITest extends BaseUISeleniumTest {
 
                 if (titlesWithErrors.titlesWithInvalidDots().size() > 0) {
                     recordMetrics(titlesWithErrors.titlesWithInvalidDots().size(), TestMetricTypes.FAILED);
-                    recordFailure(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenTheArticleHasProperDotsInTitle);
+                    recordFailure(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenTheArticleHasProperDotsInTitle, titlesWithErrors.titlesWithInvalidDots().size());
                     badURLs.put(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenTheArticleHasProperDotsInTitle, Utils.formatResultsForCapatalizationTest(page.getUrl(), titlesWithErrors.titlesWithInvalidDots()));
                 }
             } catch (Exception e) {
