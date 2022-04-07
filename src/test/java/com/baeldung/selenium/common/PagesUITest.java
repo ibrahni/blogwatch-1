@@ -77,6 +77,7 @@ public class PagesUITest extends BaseUISeleniumTest {
     @Test
     @Tag(GlobalConstants.TAG_EDITORIAL)
     public final void givenAllPages_whenAPageLoads_thenTheMetaDescriptionExists() throws IOException {
+        recordExecution(GlobalConstants.givenAllPages_whenAPageLoads_thenTheMetaDescriptionExists);
         do {
 
             if (shouldSkipUrl(GlobalConstants.givenAllPages_whenAPageLoads_thenTheMetaDescriptionExists)) {
@@ -85,6 +86,7 @@ public class PagesUITest extends BaseUISeleniumTest {
 
             if (!Utils.excludePage(page.getUrl(), GlobalConstants.PAGES_THANK_YOU, false) && !Utils.excludePage(page.getUrl(), GlobalConstants.URLS_EXCLUDED_FROM_META_DESCRIPTION_TEST, false) && !page.findMetaDescriptionTag()) {
                 recordMetrics(1, TestMetricTypes.FAILED);
+                recordFailure(GlobalConstants.givenAllPages_whenAPageLoads_thenTheMetaDescriptionExists);
                 badURLs.put(GlobalConstants.givenAllPages_whenAPageLoads_thenTheMetaDescriptionExists, page.getUrlWithNewLineFeed());
             }
         } while (loadNextURL());

@@ -39,6 +39,7 @@ public class TutorialsTest extends BaseTest {
     @Test
     @Tag(GlobalConstants.TAG_SKIP_METRICS)
     public void givenTheTutorialsRepository_listAllTheModulesThatAreNotBuildInBothDefautlAndIntegrationTests(TestInfo testInfo) throws IOException, GitAPIException, XmlPullParserException {
+        recordExecution(GlobalConstants.givenTheTutorialsRepository_listAllTheModulesThatAreNotBuildInBothDefautlAndIntegrationTests);
 
         List<String> testExceptions = getTestExceptions(testInfo);
 
@@ -76,6 +77,7 @@ public class TutorialsTest extends BaseTest {
             int totalFailures = modulesMissingInDefault.size() + modulesMissingInIntegraiton.size();
 
             BaseTest.recordMetrics(totalFailures, FAILED);
+            recordFailure(GlobalConstants.givenTheTutorialsRepository_listAllTheModulesThatAreNotBuildInBothDefautlAndIntegrationTests, totalFailures);
             triggerTestFailure(results, "Not all modules are built.");
         }
 
