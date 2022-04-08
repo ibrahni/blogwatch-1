@@ -26,7 +26,7 @@ Three Maven profiles are available for running tests:
   - _headless-browser-linux_ 
   - _ui-brower-windows_
 
-The target URL for all profiles is https://www.baeldung.com. The can be changed using following property
+The target URL for all profiles is https://www.baeldung.com. This can be changed using following property
 
 - _base.url_ - to target base URL, for example _http://www.baeldung.com_
 
@@ -59,12 +59,43 @@ Following tags are available for running tests selectively. Refer Java docs in _
 
 ### Excluding a URL for tests running in the bi-monthly bild
 
-URLs can be added to the follwoing file to skip a specific test from the bi-monthly build - https://github.com/eugenp/blogwatch/blob/master/src/main/resources/exceptions-for-tests.yaml
+URLs can be added to the following file to skip a specific test from the bi-monthly build - https://github.com/eugenp/blogwatch/blob/master/src/main/resources/exceptions-for-tests.yaml
 
 ### Launch Mode
  
 Set environment variable "LAUNCH_FLAG" to either _true_ or _false_ to set launch mode. Default is _false_
 
+### Execution Summary
+
+After all the tests have finished, a test execution summary is logged, with the following format:
+
+    ============================================================================
+    Test Execution Summary
+    ============================================================================
+    Total Failures: X
+
+    Executed Tests: Y
+    testName_1(y1 executions)
+    testName_2(y2 executions)
+    ...
+
+    Failed Tests: Z
+    failedTest_1(z1 failures)
+    failedTest_2(z2 failures)
+    ...
+    =============================End of the Summary===============================
+
+Test execution and test failure counts are automatically collected with the TestMetricsExtension.
+
+For specific situation where this can not be used, we can explicitly collect these numbers inside the test, by invoking:
+
+    BaseTest.recordExecution("<TEST_NAME>");
+    BaseTest.recordFailure("<TEST_NAME>", <COUNT>);
+
+Explicit invocation of these methods is needed in the following situations:
+- the test is annotated with GlobalConstants.TAG_SKIP_METRICS
+- we want to record multiple failures inside the same test
+- the test is invoked from another test  (eg: PagesUITest.givenTestsRelatedTechnicalArea_whenHittingAllPages_thenOK)
 
 ### On Jenkins
  
