@@ -75,6 +75,8 @@ givenAllArticles_whenAnArticleLoads_thenTheArticleHasProperTitleCapitalization:
  - cp
  - vmstat
  - jQuery
+ - k-Nearest
+ - k-NN
 givenAllArticles_whenAnArticleLoads_thenTheArticleHasProperDotsInTitle:
  - job
  - series
