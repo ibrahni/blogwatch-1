@@ -223,6 +223,14 @@ public class TestUtils {
 
     }
 
+    public static Stream<Arguments> pagesPurchaseLinksTestDataProviderForNonTeams() throws JsonParseException, JsonMappingException, IOException {
+
+        List<CoursePurchaseLinksVO> coursePurchaseLinksVOs = ObjectMapper.readValue(Utils.getJsonResourceFile("./course-pages-purchase-links-test-data.json"), new TypeReference<List<CoursePurchaseLinksVO>>() {
+        });
+
+        return coursePurchaseLinksVOs.stream().filter(link -> !link.isForTeams()).map(entry -> Arguments.of(entry.getCourseUrl(), entry.getPurchaseLinks(), entry.isForTeams()));
+
+    }
     public static boolean veirfyRedirect(RestAssuredConfig restAssuredConfig, String link, String exprectRedirectTo) {
         try {
             return RestAssured.given().config(restAssuredConfig).get(link).getHeader("Location").toLowerCase().contains(exprectRedirectTo);

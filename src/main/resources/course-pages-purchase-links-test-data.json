@@ -46,7 +46,8 @@
         "link": "https://courses.baeldung.com/p/rest-with-spring-team-license/",
         "redirectsTo": "https://courses.baeldung.com/p/rest-with-spring-team-license/"
       }
-    ]
+    ],
+    "isForTeams": true
   },
   {
     "courseUrl": "/learn-spring-course",
@@ -95,7 +96,8 @@
         "link": "https://courses.baeldung.com/p/learn-spring-team-license/",
         "redirectsTo": "https://courses.baeldung.com/p/learn-spring-team-license/"
     }
-   ]
+   ],
+    "isForTeams": true
   },
   {
     "courseUrl": "/learn-spring-security-course",
@@ -145,7 +147,9 @@
         "link": "https://courses.baeldung.com/p/learn-spring-security-team-license",
         "redirectsTo": "https://courses.baeldung.com/p/learn-spring-security-team-license"
     }
-   ]
+   ],
+    "isForTeams": true
+
   },
   {
     "courseUrl": "/learn-spring-security-oauth-course",
@@ -174,7 +178,7 @@
         "linkId": "lsso-lss-cmb-tb",
         "link": "https://courses.baeldung.com/purchase?product_id=1547673",
         "redirectsTo": "https://sso.teachable.com/secure/22136/checkout/1547673/learn-spring-security-the-certification-class"
-    } 
+    }
    ]
   },
   {
@@ -195,7 +199,8 @@
         "link": "https://courses.baeldung.com/p/learn-spring-security-oauth-team-license/",
         "redirectsTo": "https://courses.baeldung.com/p/learn-spring-security-oauth-team-license/"
     }
-   ]
+   ],
+    "isForTeams": true
   },
   {
     "courseUrl": "/learn-spring-security-core-course",
@@ -245,7 +250,9 @@
         "link": "https://courses.baeldung.com/p/learn-spring-security-core-team-license",
         "redirectsTo": "https://courses.baeldung.com/p/learn-spring-security-core-team-license"
     }
-   ]
+   ],
+    "isForTeams": true
+
   },
   {
     "courseUrl": "/learn-spring-data-jpa-course",
@@ -275,7 +282,9 @@
         "link": "https://courses.baeldung.com/purchase?product_id=3632724",
         "redirectsTo": "https://sso.teachable.com/secure/22136/checkout/3632724/ls-lsd-certification-class"
     }
-   ]
+   ],
+    "isForTeams": true
+
   },
   {
     "courseUrl": "/learn-spring-data-jpa-for-teams",
@@ -294,7 +303,9 @@
         "linkId": "lsdteam-coach-tb",
         "link": "https://courses.baeldung.com/p/learn-spring-data-jpa-team",
         "redirectsTo": "https://courses.baeldung.com/p/learn-spring-data-jpa-team"
-    }    
-   ]
+    }
+   ],
+    "isForTeams": true
+
   }
 ]

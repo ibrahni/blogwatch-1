@@ -5,12 +5,10 @@ import static java.util.stream.Collectors.toList;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -72,6 +70,26 @@ public class SitePage extends BlogBaseDriver {
 
     public WebElement findBodyElement() {
         return this.getWebDriver().findElement(By.xpath("//body"));
+    }
+
+    public WebElement findById(String blockId){
+        return this.getWebDriver().findElement(By.xpath(String.format(".//*[@id='%s']", blockId)));
+    }
+
+    public String findTotalOnTeachable(){
+        WebDriverWait wait = new WebDriverWait(this.getWebDriver(), 20);
+        WebElement button = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(".//*[@data-testid='total-display']")));
+        return button.getText();
+    }
+
+    public boolean containsTotalOnTeachable() {
+        try {
+            WebDriverWait wait = new WebDriverWait(this.getWebDriver(), 20);
+            WebElement button = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(".//*[@data-testid='total-display']")));
+            return button.isDisplayed();
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     public boolean pageNotFoundElementDisplayed() {
@@ -669,6 +687,15 @@ public class SitePage extends BlogBaseDriver {
     public boolean linkIdAndLinkAvailable(PurchaseLink link) {
         WebElement element = this.getWebDriver().findElement(By.id(link.getLinkId()));
         return element.getAttribute("href").contains(link.getLink());        
+    }
+
+    public void clickOnPurchaseButton(PurchaseLink link) throws InterruptedException {
+        Thread.sleep(2000);
+        WebDriverWait wait = new WebDriverWait(this.getWebDriver(), 20);
+        WebElement button = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(link.getLinkId())));
+        logger.info(button.getAttribute("href"));
+        setUrl(button.getAttribute("href"));
+        loadUrl();
     }
 
     public String getDisplayNameOfLoggedInUser() {
