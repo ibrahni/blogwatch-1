@@ -57,6 +57,7 @@ givenAllArticles_whenAnArticleLoads_thenTheArticleDoesNotCotainWrongQuotations:
   - /spring-security-thymeleaf/
   - /thymeleaf-list/
   - /spring-security-taglibs/
+  - /javadoc-see-vs-link/
 givenAllArticles_whenAnArticleLoads_thenTheArticleHasProperTitleCapitalization:
   - /spring-security-registration-captcha
   - /spring-boot-interview-questions 
