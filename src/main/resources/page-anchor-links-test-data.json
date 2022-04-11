@@ -28,7 +28,7 @@
         "anchorLink": "/jackson"
       },
       {
-        "anchorText": "HTTPCLIENT 4 TUTORIAL",
+        "anchorText": "APACHE HTTPCLIENT TUTORIAL",
         "anchorLink": "/httpclient-guide"
       },
       {
@@ -56,11 +56,6 @@
         "anchorLink": "/full_archive"
       },
       {
-        "anchorText": "WRITE FOR BAELDUNG",
-        "anchorLink": "/contribution-guidelines",
-        "linkCategory": "WRITE_FOR_BAELDUNG"
-      },
-      {
         "anchorText": "EDITORS",
         "anchorLink": "/editors"
       },
@@ -73,7 +68,7 @@
         "anchorLink": "/partners"
       },
       {
-        "anchorText": "ADVERTISE ON BAELDUNG",
+        "anchorText": "PARTNER WITH BAELDUNG",
         "anchorLink": "/advertise"
       },
       {
