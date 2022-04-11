@@ -134,6 +134,8 @@ public class CommonUITest extends BaseUISeleniumTest {
     @Tag(GlobalConstants.TAG_SKIP_METRICS)
     public final void givenAListOfUrls_whenAUrlLoads_thenItReturns200OK() throws IOException {
 
+        recordExecution(GlobalConstants.givenAListOfUrls_whenAUrlLoads_thenItReturns200OK);
+
         logger.info("Configured retires: {}", retriesFor200OKTest);
         logger.info("configure timeout for REST Assured: {}", timeOutFor200OKTest);
         logger.info("Input files:{}", pageStausCheckUrlFileNames);
@@ -156,6 +158,7 @@ public class CommonUITest extends BaseUISeleniumTest {
 
         if (badURLs.size() > 0) {
             recordMetrics(badURLs.keySet().size(), FAILED);
+            recordFailure(GlobalConstants.givenAListOfUrls_whenAUrlLoads_thenItReturns200OK, badURLs.keySet().size());
             fail("200OK Not received from following URLs:\n" + Utils.http200OKTestResultBuilder(badURLs));
         }
     }
@@ -237,6 +240,8 @@ public class CommonUITest extends BaseUISeleniumTest {
     @Tag(GlobalConstants.TAG_SKIP_METRICS)
     public final void givenOnTheCoursePage_whenPageLoads_thenTrackingIsSetupCorrectly() throws JsonProcessingException, IOException {
 
+        recordExecution(GlobalConstants.givenOnTheCoursePage_whenPageLoads_thenTrackingIsSetupCorrectly);
+
         Multimap<String, String> badURLs = ArrayListMultimap.create();
         Multimap<String, List<EventTrackingVO>> testData = Utils.getCoursePagesGATrackingTestData(objectMapper);
         for (String urlKey : testData.keySet()) {
@@ -256,6 +261,7 @@ public class CommonUITest extends BaseUISeleniumTest {
 
         if (badURLs.size() > 0) {
             recordMetrics(badURLs.size(), FAILED);
+            recordFailure(GlobalConstants.givenOnTheCoursePage_whenPageLoads_thenTrackingIsSetupCorrectly, badURLs.size());
             triggerTestFailure(Utils.gaTrackingSetopResultBuilder(badURLs), "Couldn't find the tracking code  on the below pages");
         }
     }
@@ -297,7 +303,8 @@ public class CommonUITest extends BaseUISeleniumTest {
     @Tag(GlobalConstants.TAG_GITHUB_RELATED)
     @Tag(GlobalConstants.TAG_SKIP_METRICS)
     public final void givenAGitHubModuleReadme_whenAnalysingTheReadme_thenLinksToAndFromGithubMatch(TestInfo testInfo) throws IOException, InvalidRemoteException, TransportException, GitAPIException {
-        
+
+        recordExecution(GlobalConstants.givenAGitHubModuleReadme_whenAnalysingTheReadme_thenLinksToAndFromGithubMatch);
         List<String> testExceptions= YAMLProperties.exceptionsForTests.get(TestUtils.getMehodName(testInfo.getTestMethod()));
 
         List<String> readmeURLs = Utils.getListOfReadmesFromAllTutorialsRepos(true);
@@ -333,7 +340,8 @@ public class CommonUITest extends BaseUISeleniumTest {
         });
 
         if (badURLs.size() > 0 ) {
-            recordMetrics(badURLs.size(), TestMetricTypes.FAILED);            
+            recordMetrics(badURLs.size(), TestMetricTypes.FAILED);
+            recordFailure(GlobalConstants.givenAGitHubModuleReadme_whenAnalysingTheReadme_thenLinksToAndFromGithubMatch, badURLs.size());
             failTestWithLoggingTotalNoOfFailures("\nwe found issues with following READMEs" + Utils.getErrorMessageForInvalidLinksInReadmeFiles(badURLs));
         }
     }
@@ -342,7 +350,10 @@ public class CommonUITest extends BaseUISeleniumTest {
     @Tag(GlobalConstants.TAG_TECHNICAL)
     @Tag(GlobalConstants.TAG_SKIP_METRICS)
     public final void givenAGitHubModuleReadme_whenAnalysingTheReadme_thentheReadmeDoesNotLikTooManyArticles(TestInfo testInfo) throws IOException, InvalidRemoteException, TransportException, GitAPIException {
-    List<String> testExceptions= YAMLProperties.exceptionsForTests.get(TestUtils.getMehodName(testInfo.getTestMethod()));
+
+        recordExecution(GlobalConstants.givenAGitHubModuleReadme_whenAnalysingTheReadme_thentheReadmeDoesNotLikTooManyArticles);
+
+        List<String> testExceptions= YAMLProperties.exceptionsForTests.get(TestUtils.getMehodName(testInfo.getTestMethod()));
         Map<GitHubRepoVO, List<String>> reposReadmes = Utils.getRepoWiseListOfReadmesFromAllTutorialsRepos(false);
         Map<String, Integer> articleCountByReadme = new HashMap<>();
 
@@ -369,6 +380,7 @@ public class CommonUITest extends BaseUISeleniumTest {
         });
         if (articleCountByReadme.size() > 0) {
             recordMetrics(articleCountByReadme.size(), TestMetricTypes.FAILED);
+            recordFailure(GlobalConstants.givenAGitHubModuleReadme_whenAnalysingTheReadme_thentheReadmeDoesNotLikTooManyArticles, articleCountByReadme.size());
             failTestWithLoggingTotalNoOfFailures(Utils.compileReadmeCountResults(articleCountByReadme, GlobalConstants.givenAGitHubModuleReadme_whenAnalysingTheReadme_thentheReadmeDoesNotLikTooManyArticles));
         }
     }
@@ -450,6 +462,8 @@ public class CommonUITest extends BaseUISeleniumTest {
     @Tag(GlobalConstants.TAG_SKIP_METRICS)
     public final void givenURLsWithAnchorsLinkingWithinSamePage_whenAnaysingPage_thenAnHtmlElementExistsForEachAnchor() throws JsonProcessingException, IOException {
 
+        recordExecution(GlobalConstants.givenURLsWithAnchorsLinkingWithinSamePage_whenAnaysingPage_thenAnHtmlElementExistsForEachAnchor);
+
         List<AnchorLinksTestDataVO> AnchorLinksTestDataVOs = Utils.getAnchorLinksTestData(objectMapper);
         Multimap<String, String> badURLs = ArrayListMultimap.create();
 
@@ -467,12 +481,14 @@ public class CommonUITest extends BaseUISeleniumTest {
 
         if (badURLs.size() > 0) {
             recordMetrics(badURLs.keySet().size(), FAILED);
+            recordFailure(GlobalConstants.givenURLsWithAnchorsLinkingWithinSamePage_whenAnaysingPage_thenAnHtmlElementExistsForEachAnchor, badURLs.size());
             triggerTestFailure(badURLs, "Matching HTML element not found for the following Anchor Links");
         }
     }    
 
     @Test
     public final void givenTheContactForm_whenAMessageIsSubmitted_thenItIsSentSuccessfully() throws InterruptedException {
+        recordExecution(GlobalConstants.givenTheContactForm_whenAMessageIsSubmitted_thenItIsSentSuccessfully);
 
         // load contact form
         String fullUrl = page.getBaseURL() + GlobalConstants.CONTACT_US_FORM_URL;
@@ -497,6 +513,7 @@ public class CommonUITest extends BaseUISeleniumTest {
         } catch (Exception e) {
             e.printStackTrace();
             recordMetrics(1, FAILED);
+            recordFailure(GlobalConstants.givenTheContactForm_whenAMessageIsSubmitted_thenItIsSentSuccessfully);
             fail("Contact form not working. Contact Form url: " + fullUrl);
         }
         logger.info("message sent successfully from {}", fullUrl);
@@ -616,6 +633,8 @@ public class CommonUITest extends BaseUISeleniumTest {
 
     @Test    
     public final void givenTutorialsRepo_whenAllModulesAnalysed_thenFolderNameAndArtifiactIdAndModuleNameMatch() throws IOException, GitAPIException {
+        recordExecution(GlobalConstants.givenTutorialsRepo_whenAllModulesAnalysed_thenFolderNameAndArtifiactIdAndModuleNameMatch);
+
         //fetch tutorials repo
         String repoLocalDirectory = GlobalConstants.tutorialsRepoLocalPath;
         Path repoDirectoryPath = Paths.get(repoLocalDirectory);
@@ -628,6 +647,7 @@ public class CommonUITest extends BaseUISeleniumTest {
         Utils.logUnparsableModulesResults(moduleAlignmentValidatorFileVisitor);
         if (moduleAlignmentValidatorFileVisitor.getInvalidModules().size() > 0) {
             recordMetrics(moduleAlignmentValidatorFileVisitor.getInvalidModules().size(), FAILED);
+            recordFailure(GlobalConstants.givenTutorialsRepo_whenAllModulesAnalysed_thenFolderNameAndArtifiactIdAndModuleNameMatch, moduleAlignmentValidatorFileVisitor.getInvalidModules().size());
             fail("Unaligned modules found. Please refer to the console log for details");
         }                
         
@@ -639,6 +659,7 @@ public class CommonUITest extends BaseUISeleniumTest {
     @Tag(GlobalConstants.TAG_SKIP_METRICS)
     public final void givenAGitHubModule_whenAnalysingTheModule_thenTheModuleHasANonEmptyReadme() throws IOException, GitAPIException {
 
+        recordExecution(GlobalConstants.givenAGitHubModule_whenAnalysingTheModule_thenTheModuleHasANonEmptyReadme);
         List<String> modulesWithNoneOrEmptyReadme = new ArrayList<>();
 
         for (GitHubRepoVO gitHubRepoVO : GlobalConstants.tutorialsRepos) {
@@ -664,6 +685,7 @@ public class CommonUITest extends BaseUISeleniumTest {
 
         if (modulesWithNoneOrEmptyReadme.size() > 0) {
             recordMetrics(modulesWithNoneOrEmptyReadme.size(), TestMetricTypes.FAILED);
+            recordFailure(GlobalConstants.givenAGitHubModule_whenAnalysingTheModule_thenTheModuleHasANonEmptyReadme, modulesWithNoneOrEmptyReadme.size());
             failTestWithLoggingTotalNoOfFailures("\n Modules found with missing or empty READMEs \n" + modulesWithNoneOrEmptyReadme.stream().collect(Collectors.joining("\n")));
         }
     }

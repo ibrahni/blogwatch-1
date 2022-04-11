@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 
+import com.baeldung.common.GlobalConstants;
 import org.jsoup.nodes.Document;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -26,6 +27,8 @@ public class Crawler4JTest extends BaseCrawler4JTest {
     @Tag("matchJavaConstructs")
     @Test
     public final void givenAllTheArticles_whenAnArticleLoads_thenJavaClassesAndMethodsCanBeFoundOnGitHub() throws IOException {
+
+        recordExecution(GlobalConstants.givenAllTheArticles_whenAnArticleLoads_thenJavaClassesAndMethodsCanBeFoundOnGitHub);
 
         logger.info("Using article file: " + fileForJavaConstructsTest);
         Multimap<String, JavaConstruct> results = ArrayListMultimap.create();
@@ -66,6 +69,7 @@ public class Crawler4JTest extends BaseCrawler4JTest {
 
         if (Utils.hasArticlesWithProblems(results)) {
             recordMetrics(results.size(), TestMetricTypes.FAILED);
+            recordFailure(GlobalConstants.givenAllTheArticles_whenAnArticleLoads_thenJavaClassesAndMethodsCanBeFoundOnGitHub, results.size());
             failTestWithLoggingTotalNoOfFailures("\n\nTest Results-->" + Utils.getErrorMessageForJavaConstructsTest(results, codeSnippetCrawlerController.getBaseURL()));
         }
 

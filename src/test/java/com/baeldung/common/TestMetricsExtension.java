@@ -12,9 +12,9 @@ public class TestMetricsExtension implements AfterTestExecutionCallback {
         BaseTest.recordExecution(context.getTestMethod().get().getName());
 
         if (context.getExecutionException().isPresent()) {
-            BaseTest.recordFailure(context.getTestMethod().get().getName());
             if (!context.getTags().contains(GlobalConstants.TAG_SKIP_METRICS)) {
                 BaseTest.recordMetrics(1, FAILED);
+                BaseTest.recordFailure(context.getTestMethod().get().getName());
             }
         }
     }
