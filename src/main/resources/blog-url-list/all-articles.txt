@@ -1297,7 +1297,7 @@
 /properties-with-spring
 /spring-dao-jpa
 /hibernate-mappingexception-unknown-entity
-/unshorten-url-httpclient
+/apache-httpclient-expand-url
 /httpclient-ssl
 /resttemplate-digest-authentication
 /httpsessionlistener_with_metrics
