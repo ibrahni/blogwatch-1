@@ -107,8 +107,8 @@
     },
     {
         "linkId": "lss-cert-sb",
-        "link": "https://courses.baeldung.com/purchase?product_id=1547673",
-        "redirectsTo": "https://sso.teachable.com/secure/22136/checkout/1547673/learn-spring-security-the-certification-class"
+        "link": "https://courses.baeldung.com/purchase?product_id=1547674",
+        "redirectsTo": "https://sso.teachable.com/secure/22136/checkout/1547674/learn-spring-security-the-certification-class"
     },
     {
         "linkId": "lss-master-tb",
@@ -117,8 +117,8 @@
     },
     {
         "linkId": "lss-cert-tb",
-        "link": "https://courses.baeldung.com/purchase?product_id=1547673",
-        "redirectsTo": "https://sso.teachable.com/secure/22136/checkout/1547673/learn-spring-security-the-certification-class"
+        "link": "https://courses.baeldung.com/purchase?product_id=1547674",
+        "redirectsTo": "https://sso.teachable.com/secure/22136/checkout/1547674/learn-spring-security-the-certification-class"
     },
     {
         "linkId": "lss-rws-cmb-tb",
@@ -172,8 +172,8 @@
     },
     {
         "linkId": "lsso-lss-cmb-tb",
-        "link": "https://courses.baeldung.com/purchase?product_id=1547673",
-        "redirectsTo": "https://sso.teachable.com/secure/22136/checkout/1547673/learn-spring-security-the-certification-class"
+        "link": "https://courses.baeldung.com/purchase?product_id=1547674",
+        "redirectsTo": "https://sso.teachable.com/secure/22136/checkout/1547674/learn-spring-security-the-certification-class"
     } 
    ]
   },
@@ -222,8 +222,8 @@
     },
     {
         "linkId": "lssc-lss-cmb-tb",
-        "link": "https://courses.baeldung.com/purchase?product_id=1547673",
-        "redirectsTo": "https://sso.teachable.com/secure/22136/checkout/1547673/learn-spring-security-the-certification-class"
+        "link": "https://courses.baeldung.com/purchase?product_id=1547674",
+        "redirectsTo": "https://sso.teachable.com/secure/22136/checkout/1547674/learn-spring-security-the-certification-class"
     }
    ]
   },
