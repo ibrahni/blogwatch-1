@@ -1,5 +1,6 @@
 package com.baeldung.selenium.page;
 
+import static com.baeldung.common.ConsoleColors.magentaColordMessage;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.stream.Stream;
@@ -34,7 +35,7 @@ public class EbookPopupUITest extends BaseUISeleniumTest {
     @Tag("DownloadEbookPopupTest")
     public final void givenAnEbookPage_whenThePopupAreOpened_thenTheDownloadPopupsWorksFine(String ebookUrl) {
         try {
-            logger.info("checking ebook page {}", ebookUrl);
+            logger.info(magentaColordMessage("checking ebook page {}"), ebookUrl);
             ebookPageDriver.setUrl(ebookUrl);
             ebookPageDriver.loadUrl();
             ebookPageDriver.clickOnDownloadEbook();
