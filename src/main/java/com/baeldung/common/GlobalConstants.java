@@ -255,7 +255,7 @@ public class GlobalConstants {
     public static final String givenTestsTargetedToAllUrls_whenTheTestRuns_thenItPasses = "givenTestsTargetedToAllUrls_whenTheTestRuns_thenItPasses";
     public static final String givenTestsTargetedToAllArticlesUrls_whenTheTestRuns_thenItPasses = "givenTestsTargetedToAllArticlesUrls_whenTheTestRuns_thenItPasses";
     public static final String givenTestsTargetedToAllPages_whenTheTestRuns_thenItPasses = "givenTestsTargetedToAllPages_whenTheTestRuns_thenItPasses";
-    public static final String givenAllArticles_whenAnArticleLoads_thenArticleHasNoEmptyDiv = "givenAllArticles_whenAnArticleLoads_thenArticleHasNoEmptyDiv";
+    public static final String givenAllArticles_whenAnArticleLoads_thenArticleHasNoEmptySpanInCode = "givenAllArticles_whenAnArticleLoads_thenArticleHasNoEmptySpanInCode";
     public static final String givenAllArticles_whenAnArticleLoads_thenItHasSingleShortcodeAtTheTop = "givenAllArticles_whenAnArticleLoads_thenItHasSingleShortcodeAtTheTop";
     public static final String givenAllArticles_whenAnArticleLoads_thenItHasSingleShortcodeAtTheEnd = "givenAllArticles_whenAnArticleLoads_thenItHasSingleShortcodeAtTheEnd";
     public static final String givenAllArticles_whenAnArticleLoads_thenTheMetaDescriptionExists = "givenAllArticles_whenAnArticleLoads_thenTheMetaDescriptionExists";
