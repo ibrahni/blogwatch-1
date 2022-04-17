@@ -72,17 +72,18 @@ public class SitePage extends BlogBaseDriver {
         return this.getWebDriver().findElement(By.xpath("//body"));
     }
 
-    public WebElement findById(String blockId){
-        return this.getWebDriver().findElement(By.xpath(String.format(".//*[@id='%s']", blockId)));
-    }
 
     public String findTotalOnTeachable(){
+        logger.info("executing findTotalOnTeachable()");
+
         WebDriverWait wait = new WebDriverWait(this.getWebDriver(), 20);
         WebElement button = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(".//*[@data-testid='total-display']")));
         return button.getText();
     }
 
     public boolean containsTotalOnTeachable() {
+        logger.info("executing containsTotalOnTeachable()");
+
         try {
             WebDriverWait wait = new WebDriverWait(this.getWebDriver(), 20);
             WebElement button = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(".//*[@data-testid='total-display']")));
@@ -690,7 +691,7 @@ public class SitePage extends BlogBaseDriver {
     }
 
     public void clickOnPurchaseButton(PurchaseLink link) throws InterruptedException {
-        Thread.sleep(2000);
+        logger.info("executing clickOnPurchaseButton()");
         WebDriverWait wait = new WebDriverWait(this.getWebDriver(), 20);
         WebElement button = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(link.getLinkId())));
         logger.info(button.getAttribute("href"));
