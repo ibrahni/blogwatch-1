@@ -1,5 +1,7 @@
 package com.baeldung.selenium.common;
 
+import static com.baeldung.common.ConsoleColors.magentaColordMessage;
+
 import java.io.IOException;
 
 import org.junit.jupiter.api.AfterEach;
@@ -47,7 +49,7 @@ public class BaseUISeleniumTest extends BaseTest {
 
     protected boolean shouldSkipUrl(String testName) {
         if (Utils.excludePage(page.getUrl(), YAMLProperties.exceptionsForTests.get(testName), true)) {
-            logger.info("Skipping {} for test: {}", page.getUrl(), testName);
+            logger.info(magentaColordMessage("Skipping {} for test: {}"), page.getUrl(), testName);
             return true;
         }
         return false;

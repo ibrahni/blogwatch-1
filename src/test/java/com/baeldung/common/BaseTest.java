@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import static com.baeldung.common.ConsoleColors.magentaColordMessage;
 import static org.junit.jupiter.api.Assertions.fail;
 
 public class BaseTest {
@@ -69,7 +70,7 @@ public class BaseTest {
     @BeforeEach
     public final void logTestname(TestInfo testInfo) throws ClassNotFoundException {
         Class.forName("com.baeldung.common.JVMShutdownHook");
-        logger.info("Executing Test: {}", testInfo.getDisplayName());
+        logger.info(magentaColordMessage("Executing Test: {}"), testInfo.getDisplayName());
     }
 
     @AfterAll
