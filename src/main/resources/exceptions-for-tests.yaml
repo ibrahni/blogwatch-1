@@ -109,6 +109,13 @@ givenAllPages_whenAPageLoads_thenTheMetaDescriptionExists:
   - /cqrs-and-event-sourcing-implementation-with-spring-and-spring-boot-workshop
   - /coaching-call
   - /idiomatic-functional-programming-in-java
+  - /start-here/
+  - /spring-5/
+  - /swagger-test-on-a-page/
+  - /follow/
+  - /baeldung-company-info/
+  - /contact/
+  - /rest-course-almost-done/
 
 givenAllPages_whenAPageLoads_thenMetaOGImageAndTwitterImagePointToTheAbsolutePath:
 

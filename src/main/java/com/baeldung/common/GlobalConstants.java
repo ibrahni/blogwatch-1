@@ -134,8 +134,6 @@ public class GlobalConstants {
     // thank-you page
     public static final List<String> PAGES_THANK_YOU = Arrays.asList(new String[] { "thank-you", "thanks" });
 
-    public static final List<String> URLS_EXCLUDED_FROM_META_DESCRIPTION_TEST = Arrays.asList(new String[] { "/start-here/", "/spring-5/", "/swagger-test-on-a-page/", "/follow/", "/baeldung-company-info/", "/contact/", "/rest-course-almost-done/" });
-
     // Baeldung GitHub repos
 
     public static final String GITHUB_REPO_EUGENP = "github.com/eugenp";

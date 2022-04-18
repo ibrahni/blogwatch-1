@@ -84,7 +84,7 @@ public class PagesUITest extends BaseUISeleniumTest {
                 continue;
             }
 
-            if (!Utils.excludePage(page.getUrl(), GlobalConstants.PAGES_THANK_YOU, false) && !Utils.excludePage(page.getUrl(), GlobalConstants.URLS_EXCLUDED_FROM_META_DESCRIPTION_TEST, false) && !page.findMetaDescriptionTag()) {
+            if (!Utils.excludePage(page.getUrl(), GlobalConstants.PAGES_THANK_YOU, false) && !page.findMetaDescriptionTag()) {
                 recordMetrics(1, TestMetricTypes.FAILED);
                 recordFailure(GlobalConstants.givenAllPages_whenAPageLoads_thenTheMetaDescriptionExists);
                 badURLs.put(GlobalConstants.givenAllPages_whenAPageLoads_thenTheMetaDescriptionExists, page.getUrlWithNewLineFeed());
