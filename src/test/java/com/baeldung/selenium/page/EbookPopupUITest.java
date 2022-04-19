@@ -2,6 +2,7 @@ package com.baeldung.selenium.page;
 
 import static com.baeldung.common.ConsoleColors.magentaColordMessage;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.stream.Stream;
 
@@ -42,6 +43,7 @@ public class EbookPopupUITest extends BaseUISeleniumTest {
             assertTrue(ebookPageDriver.emailInputFieldIsDisplayed(), String.format("Problem with download ebook pop-up in %s", ebookUrl));
         } catch (Exception e) {
             logger.error(e.getMessage());
+            fail(e.getMessage());
         }
     }
 
