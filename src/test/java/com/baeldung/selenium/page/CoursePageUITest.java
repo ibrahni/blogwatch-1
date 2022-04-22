@@ -19,7 +19,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import com.baeldung.common.TestMetricsExtension;
-import com.baeldung.common.vo.CoursePurchaseLinksVO;
+import com.baeldung.common.vo.CoursePurchaseLinksVO.PurchaseLink;
 import com.baeldung.selenium.common.BaseUISeleniumTest;
 import com.baeldung.utility.TestUtils;
 
@@ -37,7 +37,7 @@ public class CoursePageUITest extends BaseUISeleniumTest {
 
     @ParameterizedTest(name = " {displayName} - verify purchase links on {0}")
     @MethodSource("com.baeldung.utility.TestUtils#pagesPurchaseLinksTestDataProvider()")
-    public final void givenOnTheCoursePage_whenAnaysingThePage_thenThePurchaseLinksAreSetupCorrectly(String courseUrl, List<CoursePurchaseLinksVO.PurchaseLink> purchaseLinks) {
+    public final void givenOnTheCoursePage_whenAnaysingThePage_thenThePurchaseLinksAreSetupCorrectly(String courseUrl, List<PurchaseLink> purchaseLinks) {
 
         String fullURL = page.getBaseURL() + courseUrl;
 
@@ -47,7 +47,7 @@ public class CoursePageUITest extends BaseUISeleniumTest {
         List<Executable> testLikIds = new ArrayList<>();
         List<Executable> testLikRedirects = new ArrayList<>();
 
-        for (CoursePurchaseLinksVO.PurchaseLink link : purchaseLinks) {
+        for (PurchaseLink link : purchaseLinks) {
             logger.info(magentaColordMessage("veryfing that link:{} exists and redirects to {} "), link.getLink(), link.getRedirectsTo());
             testLikIds.add(() -> assertTrue(page.linkIdAndLinkAvailable(link, fullURL), String.format("Countn't find Purchse link with id:%s and Link: %s, on %s", link.getLinkId(), link.getLink(), fullURL)));
             testLikRedirects.add(() -> assertTrue(TestUtils.veirfyRedirect(restAssuredConfig, link.getLink(), link.getRedirectsTo(), page), link.getLinkId() + " (" + link.getLink() + ") on " + fullURL + " doesn't redirec to " + link.getRedirectsTo()));
@@ -59,7 +59,7 @@ public class CoursePageUITest extends BaseUISeleniumTest {
 
     @ParameterizedTest(name = " {displayName} - verify purchase price on {0}")
     @MethodSource("com.baeldung.utility.TestUtils#pagesPurchaseLinksTestDataProviderForNonTeams()")
-    public void should_verify_courses_prices_with_teachable(String url, List<CoursePurchaseLinksVO.PurchaseLink> purchaseLinks) {
+    public void givenOnTheCoursePage_whenAnaysingThePage_thePricesMatchWithTheTeachable(String url, List<PurchaseLink> purchaseLinks) {
         logger.info(magentaColordMessage("checking prices for courses in page {} "), url);
 
         final List<Executable> comparePrices = new ArrayList<>();
