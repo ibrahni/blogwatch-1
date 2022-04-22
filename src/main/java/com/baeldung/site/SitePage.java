@@ -1,5 +1,6 @@
 package com.baeldung.site;
 
+import static com.baeldung.common.ConsoleColors.redBoldMessage;
 import static java.util.stream.Collectors.toList;
 
 import java.time.Duration;
@@ -685,9 +686,14 @@ public class SitePage extends BlogBaseDriver {
         return false;
     }
 
-    public boolean linkIdAndLinkAvailable(PurchaseLink link) {
-        WebElement element = this.getWebDriver().findElement(By.id(link.getLinkId()));
-        return element.getAttribute("href").contains(link.getLink());        
+    public boolean linkIdAndLinkAvailable(PurchaseLink link, String url) {
+        try {
+            WebElement element = this.getWebDriver().findElement(By.id(link.getLinkId()));
+            return element.getAttribute("href").contains(link.getLink());        
+        } catch (NoSuchElementException e) {
+            logger.info(redBoldMessage("Couldn't find id: {} on") + " {}", link.getLinkId(), url);
+            return false;
+        }
     }
 
     public void clickOnPurchaseButton(PurchaseLink link) throws InterruptedException {
