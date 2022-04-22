@@ -2,6 +2,7 @@ package com.baeldung.site;
 
 import static com.baeldung.common.ConsoleColors.magentaColordMessage;
 
+import java.time.Duration;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,7 +28,7 @@ public class EbookPageDriver extends BlogBaseDriver {
 
     public void clickOnDownloadEbook() {
         logger.info(magentaColordMessage("executing clickOnDownloadEbook()"));
-        WebDriverWait wait = new WebDriverWait(this.getWebDriver(), 20);
+        WebDriverWait wait = new WebDriverWait(this.getWebDriver(), Duration.ofSeconds(20));
         WebElement button = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[contains(@class,'popup-trigger')]")));
         button.click();
     }
@@ -39,7 +40,7 @@ public class EbookPageDriver extends BlogBaseDriver {
 
     public boolean emailInputFieldIsDisplayed() {
         logger.info(magentaColordMessage("executing emailInputFieldIsDisplayed()"));
-        WebDriverWait wait = new WebDriverWait(this.getWebDriver(), 20);
+        WebDriverWait wait = new WebDriverWait(this.getWebDriver(), Duration.ofSeconds(20));
         WebElement button = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("drip-email")));
         return button.isDisplayed();
     }
