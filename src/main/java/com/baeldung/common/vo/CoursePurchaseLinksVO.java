@@ -2,10 +2,13 @@ package com.baeldung.common.vo;
 
 import java.util.List;
 
+import org.apache.commons.lang3.BooleanUtils;
+
 public class CoursePurchaseLinksVO {
     private String courseUrl;
     private List<PurchaseLink> purchaseLinks;
-        
+    private Boolean isForTeams;
+
     public String getCourseUrl() {
         return courseUrl;
     }
@@ -22,7 +25,14 @@ public class CoursePurchaseLinksVO {
         this.purchaseLinks = purchaseLinks;
     }
 
+    public boolean isForTeams(){
+        return BooleanUtils.isTrue(isForTeams);
+    }
 
+    public void setIsForTeams(Boolean isForTeams){
+        this.isForTeams = isForTeams;
+    }
+    
     public static class PurchaseLink {
         private String linkId;
         private String link;

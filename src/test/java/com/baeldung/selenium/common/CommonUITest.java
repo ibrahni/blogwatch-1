@@ -116,7 +116,6 @@ public class CommonUITest extends BaseUISeleniumTest {
     @Autowired
     ObjectMapper objectMapper;
     
-    RestAssuredConfig restAssuredConfig = TestUtils.getRestAssuredCustomConfig(5000);
 
     @Test
     @Tag(GlobalConstants.TAG_DAILY)
@@ -565,29 +564,6 @@ public class CommonUITest extends BaseUISeleniumTest {
                 fail("Error with Severe Level-->" + logEntry.getMessage());
             }
         }
-    }
-
-    @ParameterizedTest(name = " {displayName} - verify purchase links on {0}")
-    @MethodSource("com.baeldung.utility.TestUtils#pagesPurchaseLinksTestDataProvider()")    
-    @Tag(GlobalConstants.TAG_DAILY)
-    public final void givenOnTheCoursePage_whenAnaysingThePage_thenThePurchaseLinksAreSetupCorrectly(String courseUrl, List<PurchaseLink> purchaseLinks) {
-
-        String fullURL = page.getBaseURL() + courseUrl;
-
-        page.setUrl(fullURL);
-        page.loadUrl();       
-        
-        List<Executable> testLikIds = new ArrayList<>();
-        List<Executable> testLikRedirects = new ArrayList<>();
-        
-        for (PurchaseLink link : purchaseLinks) {
-            logger.info(magentaColordMessage("veryfing that link:{} exists and redirects to {} "), link.getLink(), link.getRedirectsTo());
-            testLikIds.add(() -> assertTrue(page.linkIdAndLinkAvailable(link), String.format("Countn't find Purchse link with id:%s and Link: %s, on %s", link.getLinkId(), link.getLink(), fullURL)));            
-            testLikRedirects.add(() -> assertTrue(TestUtils.veirfyRedirect(restAssuredConfig, link.getLink(), link.getRedirectsTo(), page), link.getLinkId() + " (" + link.getLink() + ") on " + fullURL + " doesn't redirec to " + link.getRedirectsTo()));
-            
-        }
-        assertAll(testLikIds.stream());
-        assertAll(testLikRedirects.stream());
     }
     
     @ParameterizedTest(name = " {displayName} - on {0}")

@@ -5,6 +5,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
@@ -61,6 +62,20 @@ public abstract class BlogBaseDriver {
     public void quiet() {
         if (null != this.browserConfig.getDriver()) {
             this.browserConfig.getDriver().quit();
+        }
+    }
+
+    public WebElement findById(String id){
+        return this.getWebDriver().findElement(By.xpath(String.format(".//*[@id='%s']", id)));
+    }
+
+    public boolean containsById(String id) {
+        try {
+            return this.getWebDriver()
+                .findElement(By.xpath(String.format(".//*[@id='%s']", id)))
+                .isDisplayed();
+        } catch (NoSuchElementException ex) {
+            return false;
         }
     }
 
