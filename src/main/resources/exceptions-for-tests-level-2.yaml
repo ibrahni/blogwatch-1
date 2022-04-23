@@ -32,6 +32,7 @@ givenAllArticles_whenAnArticleLoads_thenItDoesNotLinkToOldJavaDocs:
  - https://docs.oracle.com/javase/9/docs/api/java.xml.bind-summary.html
  - https://docs.oracle.com/javase/1.5.0/docs/tooldocs/windows/javadoc.html#javadoctags
  - https://docs.oracle.com/javase/7/docs/technotes/tools/windows/javadoc.html#see
+ - https://docs.oracle.com/javase/8/docs/api/javax/xml/soap/SOAPMessage.html
  
 givenAllArticles_whenAnArticleLoads_thenTheArticleHasProperTitleCapitalization:
  - jOOQ
