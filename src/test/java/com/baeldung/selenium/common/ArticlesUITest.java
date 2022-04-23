@@ -69,19 +69,19 @@ public class ArticlesUITest extends BaseUISeleniumTest {
     }
 
     @Test
-    public final void givenAllArticles_whenAnArticleLoads_thenArticleHasNoEmptySpanInCode() {
+    public final void givenAllArticles_whenAnArticleLoads_thenArticleHasNoEmptyCodeBlock() {
 
-        log(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenArticleHasNoEmptySpanInCode);
-        recordExecution(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenArticleHasNoEmptySpanInCode);
+        log(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenArticleHasNoEmptyCodeBlock);
+        recordExecution(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenArticleHasNoEmptyCodeBlock);
 
         do {
-            if (shouldSkipUrl(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenArticleHasNoEmptySpanInCode)) {
+            if (shouldSkipUrl(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenArticleHasNoEmptyCodeBlock)) {
                 continue;
             }
-            if (page.findEmptySpanInCodeBlock().size() > 0) {
+            if (page.findEmptyCodeBlocks().size() > 0) {
                 recordMetrics(1, TestMetricTypes.FAILED);
-                recordFailure(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenArticleHasNoEmptySpanInCode);
-                badURLs.put(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenArticleHasNoEmptySpanInCode, page.getUrlWithNewLineFeed());
+                recordFailure(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenArticleHasNoEmptyCodeBlock);
+                badURLs.put(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenArticleHasNoEmptyCodeBlock, page.getUrlWithNewLineFeed());
             }
         } while (loadNextURL());
 
@@ -575,7 +575,7 @@ public class ArticlesUITest extends BaseUISeleniumTest {
             try {     
                 givenAllArticles_whenAnArticleLoads_thenItIsHasASingleOptinInTheSidebar();
                 givenAllArticles_whenAnArticleLoads_thenItIsHasASingleOptinInTheAfterPostContent();
-                givenAllArticles_whenAnArticleLoads_thenArticleHasNoEmptySpanInCode();
+                givenAllArticles_whenAnArticleLoads_thenArticleHasNoEmptyCodeBlock();
                 givenAllArticles_whenAnArticleLoads_thenItHasSingleShortcodeAtTheTop();                
                 givenAllArticles_whenAnArticleLoads_thenItHasSingleShortcodeAtTheEnd();                
                 givenAllArticles_whenAnArticleLoads_thenImagesPointToCorrectEnv();                
