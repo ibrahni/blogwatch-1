@@ -171,10 +171,7 @@ givenAGitHubModuleReadme_whenAnalysingTheReadme_thentheReadmeDoesNotLikTooManyAr
   - https://github.com/eugenp/tutorials/tree/master/spring-boot-rest/README.md
   - https://github.com/eugenp/tutorials/tree/master/spring-reactive/README.md
 
-
-
-
-
+givenAllArticles_whenAnalyzingImages_thenImagesDoNotHaveEmptyAltAttribute:
 
   
 

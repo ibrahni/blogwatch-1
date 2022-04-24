@@ -777,4 +777,8 @@ public class SitePage extends BlogBaseDriver {
             return 1;
         }
     }
+
+    public List<WebElement> findImagesWithEmptyAltAttribute() {
+        return this.getWebDriver().findElements(By.xpath("//section//img[ not(@alt) or normalize-space(@alt)='' or @alt='\u00a0' ]"));
+    }
 }
