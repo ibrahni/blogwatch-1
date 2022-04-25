@@ -1,4 +1,4 @@
-givenAllArticles_whenAnArticleLoads_thenArticleHasNoEmptySpanInCode:
+givenAllArticles_whenAnArticleLoads_thenArticleHasNoEmptyCodeBlock:
   - /jpa-composite-primary-keys/  
 givenAllArticles_whenAnArticleLoads_thenItHasSingleShortcodeAtTheTop:
   - /spring-java-online-courses/  

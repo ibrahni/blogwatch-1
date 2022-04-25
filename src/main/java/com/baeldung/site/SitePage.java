@@ -57,8 +57,8 @@ public class SitePage extends BlogBaseDriver {
         return this.getWebDriver().findElement(By.xpath(".//*[@id='tve_editor']/div[1][contains(@class, 'tve_ea_thrive_leads_form_close')]"));
     }
 
-    public List<WebElement> findEmptySpanInCodeBlock(){
-        return this.getWebDriver().findElements(By.xpath("//code//span[((.='\\u00a0')  or (normalize-space(.)=''))]"));
+    public List<WebElement> findEmptyCodeBlocks(){
+        return this.getWebDriver().findElements(By.xpath("//code[((.='\\u00a0')  or (normalize-space(.)=''))]"));
     }
 
     public List<WebElement> elementsWithNotitleText() {
