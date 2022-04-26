@@ -46,8 +46,8 @@ public class PagesUITest extends BaseUISeleniumTest {
 
     @Test
     public final void givenAllPages_whenAPageLoads_thenImagesPointToCorrectEnv() throws IOException {
-        recordExecution(GlobalConstants.givenAllPages_whenAPageLoads_thenImagesPointToCorrectEnv);
         do {
+            recordExecution(GlobalConstants.givenAllPages_whenAPageLoads_thenImagesPointToCorrectEnv);
 
             if (shouldSkipUrl(GlobalConstants.givenAllPages_whenAPageLoads_thenImagesPointToCorrectEnv)) {
                 continue;
@@ -77,8 +77,8 @@ public class PagesUITest extends BaseUISeleniumTest {
     @Test
     @Tag(GlobalConstants.TAG_EDITORIAL)
     public final void givenAllPages_whenAPageLoads_thenTheMetaDescriptionExists() throws IOException {
-        recordExecution(GlobalConstants.givenAllPages_whenAPageLoads_thenTheMetaDescriptionExists);
         do {
+            recordExecution(GlobalConstants.givenAllPages_whenAPageLoads_thenTheMetaDescriptionExists);
 
             if (shouldSkipUrl(GlobalConstants.givenAllPages_whenAPageLoads_thenTheMetaDescriptionExists)) {
                 continue;
@@ -98,8 +98,8 @@ public class PagesUITest extends BaseUISeleniumTest {
 
     @Test
     public final void givenAllPages_whenAPageLoads_thenMetaOGImageAndTwitterImagePointToTheAbsolutePath() throws IOException {
-        recordExecution(GlobalConstants.givenAllPages_whenAPageLoads_thenMetaOGImageAndTwitterImagePointToTheAbsolutePath);
         do {
+            recordExecution(GlobalConstants.givenAllPages_whenAPageLoads_thenMetaOGImageAndTwitterImagePointToTheAbsolutePath);
 
             if (shouldSkipUrl(GlobalConstants.givenAllPages_whenAPageLoads_thenMetaOGImageAndTwitterImagePointToTheAbsolutePath)) {
                 continue;
@@ -119,8 +119,8 @@ public class PagesUITest extends BaseUISeleniumTest {
 
     @Test
     public final void givenAllPages_whenAPageLoads_thenItDoesNotContainOverlappingText() throws IOException {
-        recordExecution(GlobalConstants.givenAllPages_whenAPageLoads_thenItDoesNotContainOverlappingText);
         do {
+            recordExecution(GlobalConstants.givenAllPages_whenAPageLoads_thenItDoesNotContainOverlappingText);
 
             if (shouldSkipUrl(GlobalConstants.givenAllPages_whenAPageLoads_thenItDoesNotContainOverlappingText)) {
                 continue;
