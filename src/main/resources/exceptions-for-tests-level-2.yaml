@@ -78,6 +78,9 @@ givenAllArticles_whenAnArticleLoads_thenTheArticleHasProperTitleCapitalization:
  - jQuery
  - k-Nearest
  - k-NN
+ - TIDs
+ - IDs
+ 
 givenAllArticles_whenAnArticleLoads_thenTheArticleHasProperDotsInTitle:
  - job
  - series
