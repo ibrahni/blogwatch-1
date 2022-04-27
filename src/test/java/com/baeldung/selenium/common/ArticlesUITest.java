@@ -72,9 +72,10 @@ public class ArticlesUITest extends BaseUISeleniumTest {
     public final void givenAllArticles_whenAnArticleLoads_thenArticleHasNoEmptyCodeBlock() {
 
         log(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenArticleHasNoEmptyCodeBlock);
-        recordExecution(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenArticleHasNoEmptyCodeBlock);
 
         do {
+            recordExecution(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenArticleHasNoEmptyCodeBlock);
+
             if (shouldSkipUrl(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenArticleHasNoEmptyCodeBlock)) {
                 continue;
             }
@@ -94,9 +95,9 @@ public class ArticlesUITest extends BaseUISeleniumTest {
     public final void givenAllArticles_whenAnArticleLoads_thenItHasSingleShortcodeAtTheTop() {
 
         log(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenItHasSingleShortcodeAtTheTop);
-        recordExecution(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenItHasSingleShortcodeAtTheTop);
 
         do {
+            recordExecution(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenItHasSingleShortcodeAtTheTop);
 
             if (shouldSkipUrl(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenItHasSingleShortcodeAtTheTop) || Utils.excludePage(page.getUrl(), GlobalConstants.ARTILCE_JAVA_WEEKLY, false)) {
                 continue;
@@ -118,9 +119,10 @@ public class ArticlesUITest extends BaseUISeleniumTest {
     public final void givenAllArticles_whenAnArticleLoads_thenItHasSingleShortcodeAtTheEnd() throws IOException {
 
         log(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenItHasSingleShortcodeAtTheEnd);
-        recordExecution(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenItHasSingleShortcodeAtTheEnd);
 
         do {
+            recordExecution(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenItHasSingleShortcodeAtTheEnd);
+
             if (shouldSkipUrl(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenItHasSingleShortcodeAtTheEnd) || Utils.excludePage(page.getUrl(), GlobalConstants.ARTILCE_JAVA_WEEKLY, false)) {
                 continue;
             }
@@ -140,9 +142,10 @@ public class ArticlesUITest extends BaseUISeleniumTest {
     public final void givenAllArticles_whenAnArticleLoads_thenImagesPointToCorrectEnv() {
 
         log(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenImagesPointToCorrectEnv);
-        recordExecution(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenImagesPointToCorrectEnv);
 
         do {
+            recordExecution(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenImagesPointToCorrectEnv);
+
             List<WebElement> imgTags = page.findImagesPointingToInvalidEnvOnTheArticle();
 
             if (shouldSkipUrl(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenImagesPointToCorrectEnv)) {
@@ -175,9 +178,10 @@ public class ArticlesUITest extends BaseUISeleniumTest {
     public final void givenAllArticles_whenAnArticleLoads_thenTheMetaDescriptionExists() {
 
         log(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenTheMetaDescriptionExists);
-        recordExecution(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenTheMetaDescriptionExists);
 
         do {
+            recordExecution(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenTheMetaDescriptionExists);
+
             if (shouldSkipUrl(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenTheMetaDescriptionExists)) {
                 continue;
             }
@@ -206,11 +210,8 @@ public class ArticlesUITest extends BaseUISeleniumTest {
     public final void givenArticlesWithALinkToTheGitHubModule_whenTheArticleLoads_thenTheGitHubModuleLinksBackToTheArticle() {
 
         log(GlobalConstants.givenArticlesWithALinkToTheGitHubModule_whenTheArticleLoads_thenTheGitHubModuleLinksBackToTheArticle);
-        recordExecution(GlobalConstants.givenArticlesWithALinkToTheGitHubModule_whenTheArticleLoads_thenTheGitHubModuleLinksBackToTheArticle);
         log(GlobalConstants.givenArticlesWithALinkToTheGitHubModule_whenTheArticleLoads_thenTheArticleTitleAndGitHubLinkMatch);
-        recordExecution(GlobalConstants.givenArticlesWithALinkToTheGitHubModule_whenTheArticleLoads_thenTheArticleTitleAndGitHubLinkMatch);
         log(GlobalConstants.givenAllArticlesLinkingToGitHubModule_whenAnArticleLoads_thenLinkedGitHubModulesReturns200OK);
-        recordExecution(GlobalConstants.givenAllArticlesLinkingToGitHubModule_whenAnArticleLoads_thenLinkedGitHubModulesReturns200OK);
 
         String articleHeading = null;
         String articleRelativeUrl = null;
@@ -218,6 +219,9 @@ public class ArticlesUITest extends BaseUISeleniumTest {
         List<String> gitHubModulesLinkedOntheArticle = null;
         Map<Integer, String> httpStatusCodesOtherThan200OK = null;
         do {
+            recordExecution(GlobalConstants.givenArticlesWithALinkToTheGitHubModule_whenTheArticleLoads_thenTheGitHubModuleLinksBackToTheArticle);
+            recordExecution(GlobalConstants.givenArticlesWithALinkToTheGitHubModule_whenTheArticleLoads_thenTheArticleTitleAndGitHubLinkMatch);
+            recordExecution(GlobalConstants.givenAllArticlesLinkingToGitHubModule_whenAnArticleLoads_thenLinkedGitHubModulesReturns200OK);
 
             gitHubModulesLinkedOntheArticle = page.gitHubModulesLinkedOnTheArticle();
 
@@ -263,9 +267,9 @@ public class ArticlesUITest extends BaseUISeleniumTest {
     public final void givenAllArticles_whenWeCheckTheAuthor_thenTheyAreNotOnTheInternalTeam() {
 
         log(GlobalConstants.givenAllArticles_whenWeCheckTheAuthor_thenTheyAreNotOnTheInternalTeam);
-        recordExecution(GlobalConstants.givenAllArticles_whenWeCheckTheAuthor_thenTheyAreNotOnTheInternalTeam);
 
         do {
+            recordExecution(GlobalConstants.givenAllArticles_whenWeCheckTheAuthor_thenTheyAreNotOnTheInternalTeam);
 
             if (shouldSkipUrl(GlobalConstants.givenAllArticles_whenWeCheckTheAuthor_thenTheyAreNotOnTheInternalTeam)) {
                 continue;
@@ -288,9 +292,9 @@ public class ArticlesUITest extends BaseUISeleniumTest {
     public final void givenAllArticles_whenAnArticleLoads_thenMetaOGImageAndTwitterImagePointToTheAbsolutePath() {
 
         log(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenMetaOGImageAndTwitterImagePointToTheAbsolutePath);
-        recordExecution(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenMetaOGImageAndTwitterImagePointToTheAbsolutePath);
 
         do {
+            recordExecution(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenMetaOGImageAndTwitterImagePointToTheAbsolutePath);
 
             if (shouldSkipUrl(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenMetaOGImageAndTwitterImagePointToTheAbsolutePath)) {
                 continue;
@@ -313,9 +317,9 @@ public class ArticlesUITest extends BaseUISeleniumTest {
     public final void givenAllArticles_whenAnArticleLoads_thenTheArticleDoesNotCotainWrongQuotations() {
 
         log(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenTheArticleDoesNotCotainWrongQuotations);
-        recordExecution(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenTheArticleDoesNotCotainWrongQuotations);
 
         do {
+            recordExecution(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenTheArticleDoesNotCotainWrongQuotations);
 
             if (shouldSkipUrl(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenTheArticleDoesNotCotainWrongQuotations)) {
                 continue;
@@ -338,10 +342,10 @@ public class ArticlesUITest extends BaseUISeleniumTest {
 
         log(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenTheArticleHasProperTitleCapitalization);
         log(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenTheArticleHasProperDotsInTitle);
-        recordExecution(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenTheArticleHasProperTitleCapitalization);
-        recordExecution(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenTheArticleHasProperDotsInTitle);
 
         do {
+            recordExecution(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenTheArticleHasProperTitleCapitalization);
+            recordExecution(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenTheArticleHasProperDotsInTitle);
 
             if (shouldSkipUrl(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenTheArticleHasProperTitleCapitalization)) {
                 continue;
@@ -380,9 +384,9 @@ public class ArticlesUITest extends BaseUISeleniumTest {
     public final void givenAllArticles_whenAnalyzingCategories_thenTheArticleDoesNotContainUnnecessaryCategory() {
 
         log(GlobalConstants.givenAllArticles_whenAnalyzingCategories_thenTheArticleDoesNotContainUnnecessaryCategory);
-        recordExecution(GlobalConstants.givenAllArticles_whenAnalyzingCategories_thenTheArticleDoesNotContainUnnecessaryCategory);
 
         do {
+            recordExecution(GlobalConstants.givenAllArticles_whenAnalyzingCategories_thenTheArticleDoesNotContainUnnecessaryCategory);
 
             if (shouldSkipUrl(GlobalConstants.givenAllArticles_whenAnalyzingCategories_thenTheArticleDoesNotContainUnnecessaryCategory)) {
                 continue;
@@ -406,9 +410,9 @@ public class ArticlesUITest extends BaseUISeleniumTest {
     public final void givenAllArticles_whenAnalyzingCodeBlocks_thenCodeBlocksAreRenderedProperly() throws InterruptedException {
 
         log(GlobalConstants.givenAllArticles_whenAnalyzingCodeBlocks_thenCodeBlocksAreRenderedProperly);
-        recordExecution(GlobalConstants.givenAllArticles_whenAnalyzingCodeBlocks_thenCodeBlocksAreRenderedProperly);
 
         do {
+            recordExecution(GlobalConstants.givenAllArticles_whenAnalyzingCodeBlocks_thenCodeBlocksAreRenderedProperly);
 
             if (shouldSkipUrl(GlobalConstants.givenAllArticles_whenAnalyzingCodeBlocks_thenCodeBlocksAreRenderedProperly) || Utils.excludePage(page.getUrl(), GlobalConstants.ARTILCE_JAVA_WEEKLY, false)) {
                 continue;
@@ -433,8 +437,8 @@ public class ArticlesUITest extends BaseUISeleniumTest {
     @Test
     public final void givenAllArticles_whenAnArticleLoads_thenItDoesNotContainOverlappingText() throws IOException {
         log(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenItDoesNotContainOverlappingText);
-        recordExecution(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenItDoesNotContainOverlappingText);
         do {
+            recordExecution(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenItDoesNotContainOverlappingText);
 
             if (shouldSkipUrl(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenItDoesNotContainOverlappingText)) {
                 continue;
@@ -455,8 +459,9 @@ public class ArticlesUITest extends BaseUISeleniumTest {
     @Test
     public final void givenAllArticles_whenAnArticleLoads_thenItIsNotBuiltUsingTheThriveArchtect() throws IOException {
         log(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenItIsNotBuiltUsingTheThriveArchtect);
-        recordExecution(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenItIsNotBuiltUsingTheThriveArchtect);
-        do {           
+        do {
+            recordExecution(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenItIsNotBuiltUsingTheThriveArchtect);
+
             if (page.containsThriveArchtectResource()) {
                 logger.info("page found which is build using Thrive Archetect " + page.getUrl());
                 recordMetrics(1, TestMetricTypes.FAILED);
@@ -474,9 +479,9 @@ public class ArticlesUITest extends BaseUISeleniumTest {
     public final void givenAllArticles_whenAnArticleLoads_thenItDoesNotLinkToOldJavaDocs() {
 
         log(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenItDoesNotLinkToOldJavaDocs);
-        recordExecution(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenItDoesNotLinkToOldJavaDocs);
 
         do {
+            recordExecution(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenItDoesNotLinkToOldJavaDocs);
 
             if (shouldSkipUrl(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenItDoesNotLinkToOldJavaDocs)) {
                 continue;
@@ -500,9 +505,10 @@ public class ArticlesUITest extends BaseUISeleniumTest {
     @Test
     public final void givenAllArticles_whenAnArticleLoads_thenItIsHasASingleOptinInTheSidebar() throws IOException {
         log(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenItIsHasASingleOptinInTheSidebar);
-        recordExecution(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenItIsHasASingleOptinInTheSidebar);
 
         do {
+            recordExecution(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenItIsHasASingleOptinInTheSidebar);
+
             if (shouldSkipUrl(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenItIsHasASingleOptinInTheSidebar, false)) {
                 continue;
             }
@@ -522,8 +528,8 @@ public class ArticlesUITest extends BaseUISeleniumTest {
     @Test
     public final void givenAllArticles_whenAnArticleLoads_thenItIsHasASingleOptinInTheAfterPostContent() throws IOException {
         log(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenItIsHasASingleOptinInTheAfterPostContent);
-        recordExecution(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenItIsHasASingleOptinInTheAfterPostContent);
         do {
+            recordExecution(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenItIsHasASingleOptinInTheAfterPostContent);
 
             if (shouldSkipUrl(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenItIsHasASingleOptinInTheAfterPostContent,false)) {
                 continue;
