@@ -139,6 +139,32 @@ public class ArticlesUITest extends BaseUISeleniumTest {
     }
 
     @Test
+    public final void givenAllArticles_whenAnalyzingImages_thenImagesDoNotHaveEmptyAltAttribute() {
+        log(GlobalConstants.givenAllArticles_whenAnalyzingImages_thenImagesDoNotHaveEmptyAltAttribute);
+        recordExecution(GlobalConstants.givenAllArticles_whenAnalyzingImages_thenImagesDoNotHaveEmptyAltAttribute);
+
+        do {
+            List<WebElement> imgTags = page.findImagesWithEmptyAltAttribute();
+            if (shouldSkipUrl(GlobalConstants.givenAllArticles_whenAnalyzingImages_thenImagesDoNotHaveEmptyAltAttribute)) {
+                continue;
+            }
+            if (imgTags.size() > 0) {
+                recordMetrics(imgTags.size(), TestMetricTypes.FAILED);
+                recordFailure(GlobalConstants.givenAllArticles_whenAnalyzingImages_thenImagesDoNotHaveEmptyAltAttribute, imgTags.size());
+                badURLs.put(GlobalConstants.givenAllArticles_whenAnalyzingImages_thenImagesDoNotHaveEmptyAltAttribute, page.getUrlWithNewLineFeed() + " ( " + imgTags.stream()
+                    .map(webElement -> webElement.getAttribute("src") + " , ")
+                    .collect(Collectors.joining()) + ")\n");
+
+            }
+        } while (loadNextURL());
+
+        if (!allTestsFlag && badURLs.size() > 0) {
+            triggerTestFailure(badURLs);
+        }
+
+    }
+
+    @Test
     public final void givenAllArticles_whenAnArticleLoads_thenImagesPointToCorrectEnv() {
 
         log(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenImagesPointToCorrectEnv);
@@ -587,7 +613,8 @@ public class ArticlesUITest extends BaseUISeleniumTest {
                 givenAllArticles_whenAnArticleLoads_thenImagesPointToCorrectEnv();                
                 givenAllArticles_whenAnArticleLoads_thenMetaOGImageAndTwitterImagePointToTheAbsolutePath();                
                 givenAllArticles_whenAnalyzingCodeBlocks_thenCodeBlocksAreRenderedProperly();                
-                givenAllArticles_whenAnArticleLoads_thenItDoesNotContainOverlappingText();               
+                givenAllArticles_whenAnArticleLoads_thenItDoesNotContainOverlappingText();
+                givenAllArticles_whenAnalyzingImages_thenImagesDoNotHaveEmptyAltAttribute();
             } catch (Exception e) {
                 logger.error("Error occurened while processing:" + page.getUrl() + " error message:" + StringUtils.substring(e.getMessage(), 0, 100));
             }
