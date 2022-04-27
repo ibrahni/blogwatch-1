@@ -867,27 +867,19 @@ public class Utils {
         return  Character.isDigit(Character.valueOf(title.charAt(0))) || "Q".equals(String.valueOf(title.charAt(0))) || ">".equals(String.valueOf(title.charAt(0)))? 1 : 0;
      }
 
-    public static boolean isEmpasized(String token, List<String> emphasizedAndItalicTokens) {
-        final String tokenWithoutPossession = token.endsWith(POSSESSION_CHARACTER) ? token.replace(POSSESSION_CHARACTER, EMPTY) : token;
-
-        if (emphasizedAndItalicTokens.contains(removeCommaAtTheEnd(token)) || emphasizedAndItalicTokens.contains(tokenWithoutPossession)) {
+    public static boolean isEmphasized(String token, List<String> emphasizedAndItalicTokens, List<String> optionalPunctuation) {
+        if (emphasizedAndItalicTokens.contains(token) || emphasizedAndItalicTokens.contains(removePunctuationAtTheEnd(token, optionalPunctuation))) {
             return true;
         }
         return emphasizedAndItalicTokens.stream()
             .anyMatch(emphasizedToken -> emphasizedToken.contains(token));
     }
 
-    public static String removeCommaAtTheEnd(String token) {
-        if(token.endsWith(",")) {
-            return token.substring(0, token.length()-1);
-        }
-
-        return token;
-    }
-
-    public static String removeSpecialCharacterAtTheEnd(String token) {
-        if(token.endsWith("?")) {
-            return token.substring(0, token.length()-1);
+    public static String removePunctuationAtTheEnd(String token, List<String> supportedPunctuation) {
+        for (String punctuation: supportedPunctuation) {
+            if(token.endsWith(punctuation)){
+                return token.replace(punctuation, EMPTY);
+            }
         }
         return token;
     }
