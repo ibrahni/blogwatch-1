@@ -80,7 +80,9 @@ givenAllArticles_whenAnArticleLoads_thenTheArticleHasProperTitleCapitalization:
  - k-NN
  - TIDs
  - IDs
- 
+ - PIDs
+ - GIDs
+ - UIDs
 givenAllArticles_whenAnArticleLoads_thenTheArticleHasProperDotsInTitle:
  - job
  - series

@@ -86,6 +86,7 @@ givenAllArticles_whenAnArticleLoads_thenTheArticleHasProperTitleCapitalization:
   - /linux/sort-file-in-place
   - /cs/acf-pacf-plots-arma-modeling
   - /linux/inodes
+  - /javadoc-see-vs-link
   
 
 givenAllArticles_whenAnalyzingCategories_thenTheArticleDoesNotContainUnnecessaryCategory:
@@ -171,10 +172,7 @@ givenAGitHubModuleReadme_whenAnalysingTheReadme_thentheReadmeDoesNotLikTooManyAr
   - https://github.com/eugenp/tutorials/tree/master/spring-boot-rest/README.md
   - https://github.com/eugenp/tutorials/tree/master/spring-reactive/README.md
 
-
-
-
-
+givenAllArticles_whenAnalyzingImages_thenImagesDoNotHaveEmptyAltAttribute:
 
   
 

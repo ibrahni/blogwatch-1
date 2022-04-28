@@ -18,9 +18,10 @@ public interface ITitleAnalyzerStrategy {
     Logger logger = LoggerFactory.getLogger(ITitleAnalyzerStrategy.class);
     boolean isTitleValid(String title, List<String> tokens, List<String> emphasizedAndItalicTokens, List<String> tokenExceptions);
 
-    static List<ITitleAnalyzerStrategy> titleAnalyzerStrategies = Arrays.asList(new ITitleAnalyzerStrategy[] { articlesConjunctionsShortPrepositionsAnalyserStrategy(), javaMethodNameAnalyserStrategy(), simpleTitleAnalyserStrategy()});
-    static String regexForShortPrepositions = "a|an|and|as|at|but|by|en|for|in|nor|of|on|or|per|the|vs.?|via|out";
-    static String regexForExceptions = "with|to|from|up|into|v.?|REST|if|using";
+    List<String> OPTIONAL_PUNCTUATION_IN_WORDS = Arrays.asList(",", ":", "?","'s");
+    List<ITitleAnalyzerStrategy> titleAnalyzerStrategies = Arrays.asList(new ITitleAnalyzerStrategy[] { articlesConjunctionsShortPrepositionsAnalyserStrategy(), javaMethodNameAnalyserStrategy(), simpleTitleAnalyserStrategy()});
+    String regexForShortPrepositions = "a|an|and|as|at|but|by|en|for|in|nor|of|on|or|per|the|vs.?|via|out";
+    String regexForExceptions = "with|to|from|up|into|v.?|REST|if|using";
 
     static ITitleAnalyzerStrategy articlesConjunctionsShortPrepositionsAnalyserStrategy() {
         return (title, tokens, emphasizedAndItalicTokens, tokenExceptions) -> {
@@ -29,7 +30,7 @@ public interface ITitleAnalyzerStrategy {
             String expectedToken = null;
             for (int j = 0; j < tokens.size(); j++) {
                 token = tokens.get(j);
-                if (emphasizedAndItalicTokens.contains(Utils.removeSpecialCharacterAtTheEnd(token))) {
+                if (emphasizedAndItalicTokens.contains(Utils.removePunctuationAtTheEnd(token, OPTIONAL_PUNCTUATION_IN_WORDS))) {
                     continue;
                 }
                 if(tokenExceptions.contains(token)) {
@@ -63,7 +64,7 @@ public interface ITitleAnalyzerStrategy {
                     if (token.toUpperCase().equals(token) || token.charAt(0) == '(' || token.contains(GlobalConstants.SPACE_DELIMITER)) {
                         continue;
                     }
-                    if(tokenExceptions.contains(Utils.removeSpecialCharacterAtTheEnd(token))) {
+                    if(tokenExceptions.contains(Utils.removePunctuationAtTheEnd(token, OPTIONAL_PUNCTUATION_IN_WORDS))) {
                         continue;
                     }
                     if(token.matches(".*<.*>.*")) {
@@ -117,12 +118,12 @@ public interface ITitleAnalyzerStrategy {
                     continue;
                 }
 
-                if (Pattern.compile(regexForShortPrepositions, Pattern.CASE_INSENSITIVE).matcher(token).matches() || Utils.isEmpasized(Utils.removeSpecialCharacterAtTheEnd(token), emphasizedAndItalicTokens) || token.contains("(") || token.contains(".") || token.equals(token.toUpperCase())
+                if (Pattern.compile(regexForShortPrepositions, Pattern.CASE_INSENSITIVE).matcher(token).matches() || Utils.isEmphasized(token, emphasizedAndItalicTokens, OPTIONAL_PUNCTUATION_IN_WORDS) || token.contains("(") || token.contains(".") || token.equals(token.toUpperCase())
                         || token.charAt(0) == '@' || (token.contains("-") && token.toLowerCase().equals(token))) {
                     continue;
                 }
                 
-                if(tokenExceptions.contains(Utils.removeSpecialCharacterAtTheEnd(token))) {
+                if(tokenExceptions.contains(Utils.removePunctuationAtTheEnd(token, OPTIONAL_PUNCTUATION_IN_WORDS))) {
                     continue;
                 }
                 
