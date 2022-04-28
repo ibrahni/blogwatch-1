@@ -86,6 +86,7 @@ givenAllArticles_whenAnArticleLoads_thenTheArticleHasProperTitleCapitalization:
   - /linux/sort-file-in-place
   - /cs/acf-pacf-plots-arma-modeling
   - /linux/inodes
+  - /javadoc-see-vs-link
   
 
 givenAllArticles_whenAnalyzingCategories_thenTheArticleDoesNotContainUnnecessaryCategory:
