@@ -5,6 +5,7 @@ import static com.baeldung.common.ConsoleColors.magentaColordMessage;
 import static com.baeldung.common.ConsoleColors.redBoldMessage;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -86,6 +87,7 @@ public class CoursePageUITest extends BaseUISeleniumTest {
 
             } catch (Exception ex) {
                 logger.error("Exception occurred while comparing prices for [{}] in course page [{}] : {}", purchaseLink.getLinkId(), url, ex.getMessage());
+                fail(ex);
             }
         });
 
@@ -93,6 +95,34 @@ public class CoursePageUITest extends BaseUISeleniumTest {
 
     }
 
+    @ParameterizedTest(name = " {displayName} - verify utm parameters on {0}")
+    @MethodSource("com.baeldung.utility.TestUtils#pagesPurchaseLinksTestDataProvider()")
+    public void givenOnTheCoursePage_whenUtmParameterIsPassedToThePage_thenAllLinksOnButtonMustHaveTheSameUtmParameter(String url, List<PurchaseLink> purchaseLinks) {
+        logger.info(magentaColordMessage("checking utm parameter for courses in page {} "), url);
+        final String RANDOM_UTM_PARAMETER = "utm=1234567";
+
+        final List<Executable> containsLinkId = new ArrayList<>();
+        final List<Executable> checkUtmParameter = new ArrayList<>();
+
+        page.setUrl(page.getBaseURL() + url + "?" + RANDOM_UTM_PARAMETER);
+        page.loadUrl();
+
+        purchaseLinks.forEach(purchaseLink -> {
+            try {
+                logger.info(magentaColordMessage("checking utm parameter for course {} in page {} "), purchaseLink.getLinkId(), url);
+                containsLinkId.add(() -> assertTrue(page.containsById(purchaseLink.getLinkId()), String.format("couldn't find id [%s] on page [%s]", purchaseLink.getLinkId(), url)));
+
+                final String redirectUrl = page.getHref(purchaseLink.getLinkId());
+                checkUtmParameter.add(() -> assertTrue(redirectUrl.contains(RANDOM_UTM_PARAMETER), String.format("Course url [%s] for the Id[%s] on page [%s], doesn't have the utm parameter", redirectUrl, purchaseLink.getLinkId(), url)));
+            } catch (Exception ex) {
+                logger.error("Exception occurred while checking utm parameter for [{}] in course page [{}] : {}", purchaseLink.getLinkId(), url, ex.getMessage());
+                fail(ex);
+            }
+        });
+
+        assertAll(containsLinkId);
+        assertAll(checkUtmParameter.stream());
+    }
 
     private String getPriceFromText(String text, String linkId, String url){
         final Matcher priceMatcher = pattern.matcher(text);
