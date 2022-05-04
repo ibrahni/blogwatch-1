@@ -33,7 +33,7 @@ import com.baeldung.site.strategy.ITitleAnalyzerStrategy;
 
 @Component
 public class SitePage extends BlogBaseDriver {
-    private static final Pattern RAW_TAG_PATTERN = Pattern.compile("(?i)<raw.*>|<\\/raw>");
+    private static final Pattern RAW_TAG_PATTERN = Pattern.compile("(?i)\\[raw[^\\]]*\\]|\\[\\/raw\\]");
 
     private static DateTimeFormatter publishedDateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssXXX");
 
