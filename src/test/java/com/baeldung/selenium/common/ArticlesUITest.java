@@ -529,26 +529,6 @@ public class ArticlesUITest extends BaseUISeleniumTest {
         }
     }
 
-    @Test
-    public final void givenAllArticles_whenArticleLoads_thenArticleHasNoRawTag(){
-        log(GlobalConstants.givenAllArticles_whenArticleLoads_thenArticleHasNoRawTag);
-
-        do {
-            recordExecution(GlobalConstants.givenAllArticles_whenArticleLoads_thenArticleHasNoRawTag);
-            if (shouldSkipUrl(GlobalConstants.givenAllArticles_whenArticleLoads_thenArticleHasNoRawTag)) {
-                continue;
-            }
-            if (page.containsRawTag()) {
-                recordMetrics(1, TestMetricTypes.FAILED);
-                recordFailure(GlobalConstants.givenAllArticles_whenArticleLoads_thenArticleHasNoRawTag);
-                badURLs.put(GlobalConstants.givenAllArticles_whenArticleLoads_thenArticleHasNoRawTag, page.getUrlWithNewLineFeed());
-            }
-        } while (loadNextURL());
-
-        if (!allTestsFlag && badURLs.size() > 0) {
-            triggerTestFailure(badURLs);
-        }
-    }
 
     @Test
     public final void givenAllArticles_whenAnArticleLoads_thenItIsHasASingleOptinInTheSidebar() throws IOException {
@@ -636,7 +616,6 @@ public class ArticlesUITest extends BaseUISeleniumTest {
                 givenAllArticles_whenAnArticleLoads_thenMetaOGImageAndTwitterImagePointToTheAbsolutePath();                
                 givenAllArticles_whenAnalyzingCodeBlocks_thenCodeBlocksAreRenderedProperly();                
                 givenAllArticles_whenAnArticleLoads_thenItDoesNotContainOverlappingText();
-                givenAllArticles_whenArticleLoads_thenArticleHasNoRawTag();
                 givenAllArticles_whenAnalyzingImages_thenImagesDoNotHaveEmptyAltAttribute();
             } catch (Exception e) {
                 logger.error("Error occurened while processing:" + page.getUrl() + " error message:" + StringUtils.substring(e.getMessage(), 0, 100));
