@@ -69,6 +69,16 @@ public abstract class BlogBaseDriver {
         return this.getWebDriver().findElement(By.xpath(String.format(".//*[@id='%s']", id)));
     }
 
+    public String getHref(String id) {
+        try {
+            return this.getWebDriver()
+                .findElement(By.xpath(String.format(".//*[@id='%s']", id)))
+                .getAttribute("href");
+        } catch (NoSuchElementException ex) {
+            return "";
+        }
+    }
+
     public boolean containsById(String id) {
         try {
             return this.getWebDriver()
