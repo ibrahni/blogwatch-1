@@ -141,10 +141,10 @@ public class ArticlesUITest extends BaseUISeleniumTest {
     @Test
     public final void givenAllArticles_whenAnalyzingImages_thenImagesDoNotHaveEmptyAltAttribute() {
         log(GlobalConstants.givenAllArticles_whenAnalyzingImages_thenImagesDoNotHaveEmptyAltAttribute);
-        
+
         do {
             recordExecution(GlobalConstants.givenAllArticles_whenAnalyzingImages_thenImagesDoNotHaveEmptyAltAttribute);
-            
+
             List<WebElement> imgTags = page.findImagesWithEmptyAltAttribute();
             if (shouldSkipUrl(GlobalConstants.givenAllArticles_whenAnalyzingImages_thenImagesDoNotHaveEmptyAltAttribute)) {
                 continue;
@@ -528,7 +528,8 @@ public class ArticlesUITest extends BaseUISeleniumTest {
             triggerTestFailure(badURLs);
         }
     }
-    
+
+
     @Test
     public final void givenAllArticles_whenAnArticleLoads_thenItIsHasASingleOptinInTheSidebar() throws IOException {
         log(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenItIsHasASingleOptinInTheSidebar);

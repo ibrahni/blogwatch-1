@@ -33,6 +33,7 @@ import com.baeldung.site.strategy.ITitleAnalyzerStrategy;
 
 @Component
 public class SitePage extends BlogBaseDriver {
+    private static final Pattern RAW_TAG_PATTERN = Pattern.compile("(?i)\\[raw[^\\]]*\\]|\\[\\/raw\\]");
 
     private static DateTimeFormatter publishedDateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssXXX");
 
@@ -59,6 +60,10 @@ public class SitePage extends BlogBaseDriver {
 
     public List<WebElement> findEmptyCodeBlocks(){
         return this.getWebDriver().findElements(By.xpath("//code[((.='\\u00a0')  or (normalize-space(.)=''))]"));
+    }
+
+    public boolean containsRawTag(){
+        return RAW_TAG_PATTERN.matcher(this.getWebDriver().getPageSource()).find();
     }
 
     public List<WebElement> elementsWithNotitleText() {
