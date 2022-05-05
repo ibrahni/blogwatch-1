@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.collections4.CollectionUtils;
@@ -45,13 +46,22 @@ public class TitleCapitalizationUnitTest {
     }
 
     @Test
-    void givenATitleHavingMultipleItalicJavaMethodNamesSeparatedWithComma_WhenTitleAnalysed_thenItIsValid() {
+    void givenATitleHavingMultipleItalicSeparatedWithComma_WhenTitleAnalysed_thenItIsValid() {
         String title = "4.1. The associateTo, associateByTo Methods";
         List<String> tokens = Utils.titleTokenizer(title);
         List<String> emTokens = Arrays.asList(new String[] { "associateTo","associateByTo" });
 
-        assertTrue(ITitleAnalyzerStrategy.javaMethodNameAnalyserStrategy().isTitleValid(title, tokens, emTokens, tokenExceptions));
+        assertTrue(ITitleAnalyzerStrategy.simpleTitleAnalyserStrategy().isTitleValid(title, tokens, emTokens, tokenExceptions));
 
+    }
+
+    @Test
+    void givenATitleHavingItalicFollowedByShippablePunctuation_WhenTitleAnalysed_thenItIsValid() {
+        String title = "3.1. Using the Command cat:: Command";
+        List<String> tokens = Utils.titleTokenizer(title);
+        List<String> emTokens = Collections.singletonList("cat");
+
+        assertTrue(ITitleAnalyzerStrategy.simpleTitleAnalyserStrategy().isTitleValid(title, tokens, emTokens, tokenExceptions));
     }
 
     @Test
