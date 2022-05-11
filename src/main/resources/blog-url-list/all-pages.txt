@@ -53,7 +53,6 @@
 /hiring
 /learn-spring-security-oauth-for-teams
 /learn-spring-security-oauth-course
-/learn-spring-security-for-teams-archived-for-lsso-launch
 /learn-spring-security-core-for-teams
 /learn-spring-security-core-course
 /persistence-with-spring
@@ -68,7 +67,6 @@
 /lsso-why
 /lssc-why
 /all-bulk-courses
-/coaching-call/
 /learn-spring-data-jpa-faq
 /learn-spring-data-jpa-for-teams
 /java-contribution-guidelines
