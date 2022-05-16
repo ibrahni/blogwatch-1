@@ -612,7 +612,7 @@ public class ArticlesUITest extends BaseUISeleniumTest {
                 givenAllArticles_whenAnArticleLoads_thenArticleHasNoEmptyCodeBlock();
                 givenAllArticles_whenAnArticleLoads_thenItHasSingleShortcodeAtTheTop();                
                 givenAllArticles_whenAnArticleLoads_thenItHasSingleShortcodeAtTheEnd();                
-                givenAllArticles_whenAnalysingImages_thenImagesDoNotPointoDraftsSite();
+                givenAllArticles_whenAnalysingImages_thenImagesDoNotPoinToTheDraftsSite();
                 givenAllArticles_whenAnArticleLoads_thenMetaOGImageAndTwitterImagePointToTheAbsolutePath();                
                 givenAllArticles_whenAnalyzingCodeBlocks_thenCodeBlocksAreRenderedProperly();                
                 givenAllArticles_whenAnArticleLoads_thenItDoesNotContainOverlappingText();

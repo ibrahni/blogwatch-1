@@ -145,7 +145,7 @@ public class PagesUITest extends BaseUISeleniumTest {
         do {
             loadNextUrl = false;
             try {
-                givenAllPages_whenAnalysingImages_thenImagesDoNotPointoDraftsSite();
+                givenAllPages_whenAnalysingImages_thenImagesDoNotPoinToTheDraftsSite();
                 givenAllPages_whenAPageLoads_thenMetaOGImageAndTwitterImagePointToTheAbsolutePath();
                 givenAllPages_whenAPageLoads_thenItDoesNotContainOverlappingText();
             } catch (Exception e) {
