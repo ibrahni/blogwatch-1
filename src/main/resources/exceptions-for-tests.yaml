@@ -14,7 +14,7 @@ givenAllArticles_whenAnArticleLoads_thenItHasSingleShortcodeAtTheEnd:
   - /cs/
   - /scala/
   - /codota/
-givenAllArticles_whenAnalysingImages_thenImagesDoNotPointoDraftsSite:
+givenAllArticles_whenAnalysingImages_thenImagesDoNotPoinToTheDraftsSite:
   - /javafx/
   - /java-sms-twilio/
   - /apache-mesos
@@ -97,7 +97,7 @@ givenAllArticles_whenAnalyzingCategories_thenTheArticleDoesNotContainUnnecessary
   - /java-8-spring-4-and-spring-boot-adoption/
   - /spring-adoption-march-2016/
   - /spring-angular-ecommerce/
-givenAllPages_whenAnalysingImages_thenImagesDoNotPointoDraftsSite:
+givenAllPages_whenAnalysingImages_thenImagesDoNotPoinToTheDraftsSite:
   - /learn-spring-security-faq/
   - /rest-with-spring-faq/
 givenAllPages_whenAPageLoads_thenTheMetaDescriptionExists:

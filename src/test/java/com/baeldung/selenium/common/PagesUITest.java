@@ -45,11 +45,11 @@ public class PagesUITest extends BaseUISeleniumTest {
     }
 
     @Test
-    public final void givenAllPages_whenAnalysingImages_thenImagesDoNotPointoDraftsSite() throws IOException {
+    public final void givenAllPages_whenAnalysingImages_thenImagesDoNotPoinToTheDraftsSite() throws IOException {
         do {
-            recordExecution(GlobalConstants.givenAllPages_whenAnalysingImages_thenImagesDoNotPointoDraftsSite);
+            recordExecution(GlobalConstants.givenAllPages_whenAnalysingImages_thenImagesDoNotPoinToTheDraftsSite);
 
-            if (shouldSkipUrl(GlobalConstants.givenAllPages_whenAnalysingImages_thenImagesDoNotPointoDraftsSite)) {
+            if (shouldSkipUrl(GlobalConstants.givenAllPages_whenAnalysingImages_thenImagesDoNotPoinToTheDraftsSite)) {
                 continue;
             }
             List<WebElement> imgTags = page.findImagesPointingToDraftSiteOnThePage();
@@ -57,14 +57,14 @@ public class PagesUITest extends BaseUISeleniumTest {
 
             if (imgTags.size() > 0) {
                 recordMetrics(imgTags.size(), TestMetricTypes.FAILED);
-                recordFailure(GlobalConstants.givenAllPages_whenAnalysingImages_thenImagesDoNotPointoDraftsSite, imgTags.size());
-                badURLs.put(GlobalConstants.givenAllPages_whenAnalysingImages_thenImagesDoNotPointoDraftsSite, page.getUrlWithNewLineFeed() + " ( " + imgTags.stream().map(webElement -> webElement.getAttribute("src") + " , ").collect(Collectors.joining()) + " )\n");
+                recordFailure(GlobalConstants.givenAllPages_whenAnalysingImages_thenImagesDoNotPoinToTheDraftsSite, imgTags.size());
+                badURLs.put(GlobalConstants.givenAllPages_whenAnalysingImages_thenImagesDoNotPoinToTheDraftsSite, page.getUrlWithNewLineFeed() + " ( " + imgTags.stream().map(webElement -> webElement.getAttribute("src") + " , ").collect(Collectors.joining()) + " )\n");
             }
 
             if (anchorTags.size() > 0) {
                 recordMetrics(anchorTags.size(), TestMetricTypes.FAILED);
-                recordFailure(GlobalConstants.givenAllPages_whenAnalysingImages_thenImagesDoNotPointoDraftsSite, anchorTags.size());
-                badURLs.put(GlobalConstants.givenAllPages_whenAnalysingImages_thenImagesDoNotPointoDraftsSite, page.getUrlWithNewLineFeed() + " ( " + anchorTags.stream().map(webElement -> webElement.getAttribute("href") + " , ").collect(Collectors.joining()) + ")\n");
+                recordFailure(GlobalConstants.givenAllPages_whenAnalysingImages_thenImagesDoNotPoinToTheDraftsSite, anchorTags.size());
+                badURLs.put(GlobalConstants.givenAllPages_whenAnalysingImages_thenImagesDoNotPoinToTheDraftsSite, page.getUrlWithNewLineFeed() + " ( " + anchorTags.stream().map(webElement -> webElement.getAttribute("href") + " , ").collect(Collectors.joining()) + ")\n");
             }
 
         } while (loadNextURL());

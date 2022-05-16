@@ -166,31 +166,31 @@ public class ArticlesUITest extends BaseUISeleniumTest {
     }
 
     @Test
-    public final void givenAllArticles_whenAnalysingImages_thenImagesDoNotPointoDraftsSite() {
+    public final void givenAllArticles_whenAnalysingImages_thenImagesDoNotPoinToTheDraftsSite() {
 
-        log(GlobalConstants.givenAllArticles_whenAnalysingImages_thenImagesDoNotPointoDraftsSite);
+        log(GlobalConstants.givenAllArticles_whenAnalysingImages_thenImagesDoNotPoinToTheDraftsSite);
 
         do {
-            recordExecution(GlobalConstants.givenAllArticles_whenAnalysingImages_thenImagesDoNotPointoDraftsSite);
+            recordExecution(GlobalConstants.givenAllArticles_whenAnalysingImages_thenImagesDoNotPoinToTheDraftsSite);
 
             List<WebElement> imgTags = page.findImagesPointingToDraftSiteOnTheArticle();
 
-            if (shouldSkipUrl(GlobalConstants.givenAllArticles_whenAnalysingImages_thenImagesDoNotPointoDraftsSite)) {
+            if (shouldSkipUrl(GlobalConstants.givenAllArticles_whenAnalysingImages_thenImagesDoNotPoinToTheDraftsSite)) {
                 continue;
             }
 
             if (imgTags.size() > 0) {
                 recordMetrics(imgTags.size(), TestMetricTypes.FAILED);
-                recordFailure(GlobalConstants.givenAllArticles_whenAnalysingImages_thenImagesDoNotPointoDraftsSite, imgTags.size());
-                badURLs.put(GlobalConstants.givenAllArticles_whenAnalysingImages_thenImagesDoNotPointoDraftsSite,
+                recordFailure(GlobalConstants.givenAllArticles_whenAnalysingImages_thenImagesDoNotPoinToTheDraftsSite, imgTags.size());
+                badURLs.put(GlobalConstants.givenAllArticles_whenAnalysingImages_thenImagesDoNotPoinToTheDraftsSite,
                         page.getUrlWithNewLineFeed() + " ( " + imgTags.stream().map(webElement -> webElement.getAttribute("src") + " , ").collect(Collectors.joining()) + ")\n");
             }
 
             List<WebElement> anchorTags = page.findAnchorsPointingToAnImageAndInvalidEnvOnTheArticle();
             if (anchorTags.size() > 0) {
                 recordMetrics(anchorTags.size(), TestMetricTypes.FAILED);
-                recordFailure(GlobalConstants.givenAllArticles_whenAnalysingImages_thenImagesDoNotPointoDraftsSite, anchorTags.size());
-                badURLs.put(GlobalConstants.givenAllArticles_whenAnalysingImages_thenImagesDoNotPointoDraftsSite,
+                recordFailure(GlobalConstants.givenAllArticles_whenAnalysingImages_thenImagesDoNotPoinToTheDraftsSite, anchorTags.size());
+                badURLs.put(GlobalConstants.givenAllArticles_whenAnalysingImages_thenImagesDoNotPoinToTheDraftsSite,
                         page.getUrlWithNewLineFeed() + " ( " + anchorTags.stream().map(webElement -> webElement.getAttribute("href") + " , ").collect(Collectors.joining()) + ")\n");
             }
 
