@@ -147,12 +147,9 @@ public class SitePage extends BlogBaseDriver {
         }
     }    
 
-    public List<WebElement> findImagesPointingToInvalidEnvOnTheArticle() {
-        String baseURLWithOutHttp = this.getBaseURL().substring(6);
+    public List<WebElement> findImagesPointingToDraftSiteOnTheArticle() {
         return this.getWebDriver()
-                .findElements(By.xpath("//section//img[( contains(@src, 'www.') or contains(@src, 'http:') or contains(@src, 'https:') ) and not(contains(@src, '" + this.getBaseURL() + "') or contains(@src, '"
-                        + GlobalConstants.BAELDUNG_HOME_PAGE_URL_WITHOUT_WWW_PREFIX + "') or contains(@src, '" + baseURLWithOutHttp + "')) and not(contains(@src, '" + GlobalConstants.BAELDUNG_HOME_PAGE_URL_WITH_WWW_PREFIX + "')) "
-                        + Utils.generateXPathExcludeClauseForImages(GlobalConstants.DOMAIN_LIST_TO_EXCLUDE) + "]"));
+                .findElements(By.xpath("//section//img[contains(@src, 'drafts.baeldung.com')]"));
     }
 
     public List<WebElement> findAnchorsPointingToAnImageAndInvalidEnvOnTheArticle() {
@@ -163,12 +160,9 @@ public class SitePage extends BlogBaseDriver {
                         + GlobalConstants.BAELDUNG_HOME_PAGE_URL_WITH_WWW_PREFIX + "')) " + Utils.generateXPathExcludeClauseForAnchors(GlobalConstants.DOMAIN_LIST_TO_EXCLUDE) + "]"));
     }
 
-    public List<WebElement> findImagesPointingToInvalidEnvOnThePage() {
-        String baseURLWithOutHttp = this.getBaseURL().substring(6);
+    public List<WebElement> findImagesPointingToDraftSiteOnThePage() {
         return this.getWebDriver()
-                .findElements(By.xpath("//article//img[( contains(@src, 'www.') or contains(@src, 'http:')  or contains(@src, 'https:') ) and not(contains(@src, '" + this.getBaseURL() + "') or contains(@src, '" + baseURLWithOutHttp
-                        + "')) and not(contains(@src, '" + GlobalConstants.BAELDUNG_HOME_PAGE_URL_WITH_WWW_PREFIX + "')) and not(contains(@src, '" + GlobalConstants.DOMAIN_LIST_TO_EXCLUDE.get(0) + "')) and not(contains(@src, '"
-                        + GlobalConstants.DOMAIN_LIST_TO_EXCLUDE.get(1) + "'))]"));
+                .findElements(By.xpath("//article//img[contains(@src, 'drafts.baeldung.com')]"));
     }
 
     public List<WebElement> findAnchorsPointingToAnImageAndInvalidEnvOnThePage() {

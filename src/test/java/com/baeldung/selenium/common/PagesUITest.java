@@ -45,26 +45,26 @@ public class PagesUITest extends BaseUISeleniumTest {
     }
 
     @Test
-    public final void givenAllPages_whenAPageLoads_thenImagesPointToCorrectEnv() throws IOException {
+    public final void givenAllPages_whenAnalysingImages_thenImagesDoNotPointoDraftsSite() throws IOException {
         do {
-            recordExecution(GlobalConstants.givenAllPages_whenAPageLoads_thenImagesPointToCorrectEnv);
+            recordExecution(GlobalConstants.givenAllPages_whenAnalysingImages_thenImagesDoNotPointoDraftsSite);
 
-            if (shouldSkipUrl(GlobalConstants.givenAllPages_whenAPageLoads_thenImagesPointToCorrectEnv)) {
+            if (shouldSkipUrl(GlobalConstants.givenAllPages_whenAnalysingImages_thenImagesDoNotPointoDraftsSite)) {
                 continue;
             }
-            List<WebElement> imgTags = page.findImagesPointingToInvalidEnvOnThePage();
+            List<WebElement> imgTags = page.findImagesPointingToDraftSiteOnThePage();
             List<WebElement> anchorTags = page.findAnchorsPointingToAnImageAndInvalidEnvOnTheArticle();
 
             if (imgTags.size() > 0) {
                 recordMetrics(imgTags.size(), TestMetricTypes.FAILED);
-                recordFailure(GlobalConstants.givenAllPages_whenAPageLoads_thenImagesPointToCorrectEnv, imgTags.size());
-                badURLs.put(GlobalConstants.givenAllPages_whenAPageLoads_thenImagesPointToCorrectEnv, page.getUrlWithNewLineFeed() + " ( " + imgTags.stream().map(webElement -> webElement.getAttribute("src") + " , ").collect(Collectors.joining()) + " )\n");
+                recordFailure(GlobalConstants.givenAllPages_whenAnalysingImages_thenImagesDoNotPointoDraftsSite, imgTags.size());
+                badURLs.put(GlobalConstants.givenAllPages_whenAnalysingImages_thenImagesDoNotPointoDraftsSite, page.getUrlWithNewLineFeed() + " ( " + imgTags.stream().map(webElement -> webElement.getAttribute("src") + " , ").collect(Collectors.joining()) + " )\n");
             }
 
             if (anchorTags.size() > 0) {
                 recordMetrics(anchorTags.size(), TestMetricTypes.FAILED);
-                recordFailure(GlobalConstants.givenAllPages_whenAPageLoads_thenImagesPointToCorrectEnv, anchorTags.size());
-                badURLs.put(GlobalConstants.givenAllPages_whenAPageLoads_thenImagesPointToCorrectEnv, page.getUrlWithNewLineFeed() + " ( " + anchorTags.stream().map(webElement -> webElement.getAttribute("href") + " , ").collect(Collectors.joining()) + ")\n");
+                recordFailure(GlobalConstants.givenAllPages_whenAnalysingImages_thenImagesDoNotPointoDraftsSite, anchorTags.size());
+                badURLs.put(GlobalConstants.givenAllPages_whenAnalysingImages_thenImagesDoNotPointoDraftsSite, page.getUrlWithNewLineFeed() + " ( " + anchorTags.stream().map(webElement -> webElement.getAttribute("href") + " , ").collect(Collectors.joining()) + ")\n");
             }
 
         } while (loadNextURL());
@@ -145,7 +145,7 @@ public class PagesUITest extends BaseUISeleniumTest {
         do {
             loadNextUrl = false;
             try {
-                givenAllPages_whenAPageLoads_thenImagesPointToCorrectEnv();
+                givenAllPages_whenAnalysingImages_thenImagesDoNotPointoDraftsSite();
                 givenAllPages_whenAPageLoads_thenMetaOGImageAndTwitterImagePointToTheAbsolutePath();
                 givenAllPages_whenAPageLoads_thenItDoesNotContainOverlappingText();
             } catch (Exception e) {

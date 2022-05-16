@@ -247,10 +247,10 @@ public class GlobalConstants {
     public static final String DRIP_EVENT_CONVERSION_TRACKING_SCRIPT_TKP = "window._dcq.push([\"track\"";
     
     // test names for
-    public static final String givenAllArticles_whenAnArticleLoads_thenImagesPointToCorrectEnv = "givenAllArticles_whenAnArticleLoads_thenImagesPointToCorrectEnv";
+    public static final String givenAllArticles_whenAnalysingImages_thenImagesDoNotPointoDraftsSite = "givenAllArticles_whenAnalysingImages_thenImagesDoNotPointoDraftsSite";
     public static final String givenAllArticles_whenAnalyzingImages_thenImagesDoNotHaveEmptyAltAttribute = "givenAllArticles_whenAnalyzingImages_thenImagesDoNotHaveEmptyAltAttribute";
     public static final String givenAllTheURLs_whenURLLoads_thenImagesPointToCorrectEnv = "givenAllTheURLs_whenURLLoads_thenImagesPointToCorrectEnv";
-    public static final String givenAllPages_whenAPageLoads_thenImagesPointToCorrectEnv = "givenAllPages_whenAPageLoads_thenImagesPointToCorrectEnv";
+    public static final String givenAllPages_whenAnalysingImages_thenImagesDoNotPointoDraftsSite = "givenAllPages_whenAnalysingImages_thenImagesDoNotPointoDraftsSite";
     public static final String givenTestsTargetedToAllUrls_whenTheTestRuns_thenItPasses = "givenTestsTargetedToAllUrls_whenTheTestRuns_thenItPasses";
     public static final String givenTestsTargetedToAllArticlesUrls_whenTheTestRuns_thenItPasses = "givenTestsTargetedToAllArticlesUrls_whenTheTestRuns_thenItPasses";
     public static final String givenTestsTargetedToAllPages_whenTheTestRuns_thenItPasses = "givenTestsTargetedToAllPages_whenTheTestRuns_thenItPasses";
