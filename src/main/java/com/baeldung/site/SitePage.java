@@ -59,7 +59,7 @@ public class SitePage extends BlogBaseDriver {
     }
 
     public List<WebElement> findEmptyCodeBlocks(){
-        return this.getWebDriver().findElements(By.xpath("//code[((.='\\u00a0')  or (normalize-space(.)=''))]"));
+        return this.getWebDriver().findElements(By.xpath("//code[((.='\\u00a0')  or (normalize-space(.)='')) and not(descendant::img) ]"));
     }
 
     public boolean containsRawTag(){
