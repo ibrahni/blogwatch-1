@@ -175,7 +175,8 @@ givenAGitHubModuleReadme_whenAnalysingTheReadme_thentheReadmeDoesNotLikTooManyAr
 
 givenAllArticles_whenAnalyzingImages_thenImagesDoNotHaveEmptyAltAttribute:
 
-  
+
+givenAllArticles_whenAnalyzingExcerpt_thenItShouldNotBeEmptyAndShouldMatchDescription:
 
   
     
