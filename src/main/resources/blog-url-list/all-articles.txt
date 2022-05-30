@@ -5920,7 +5920,6 @@
 /cs/deep-vs-shallow-copy
 /cs/call-stack
 /cs/lambda-functions
-/spring-tutorial-draft
 /java-get-ip-address
 /spring-security-exceptions
 /ops/docker-reduce-build-context

@@ -53,7 +53,7 @@ public class PagesUITest extends BaseUISeleniumTest {
                 continue;
             }
             List<WebElement> imgTags = page.findImagesPointingToDraftSiteOnThePage();
-            List<WebElement> anchorTags = page.findAnchorsPointingToAnImageAndInvalidEnvOnTheArticle();
+            List<WebElement> anchorTags = page.findAnchorsPointingToAnImageAndDraftSiteOnTheArticle();
 
             if (imgTags.size() > 0) {
                 recordMetrics(imgTags.size(), TestMetricTypes.FAILED);

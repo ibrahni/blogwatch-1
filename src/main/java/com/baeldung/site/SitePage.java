@@ -59,7 +59,7 @@ public class SitePage extends BlogBaseDriver {
     }
 
     public List<WebElement> findEmptyCodeBlocks(){
-        return this.getWebDriver().findElements(By.xpath("//code[((.='\\u00a0')  or (normalize-space(.)=''))]"));
+        return this.getWebDriver().findElements(By.xpath("//code[((.='\\u00a0')  or (normalize-space(.)='')) and not(descendant::img) ]"));
     }
 
     public boolean containsRawTag(){
@@ -152,12 +152,9 @@ public class SitePage extends BlogBaseDriver {
                 .findElements(By.xpath("//section//img[contains(@src, 'drafts.baeldung.com')]"));
     }
 
-    public List<WebElement> findAnchorsPointingToAnImageAndInvalidEnvOnTheArticle() {
-        String baseURLWithOutHttp = this.getBaseURL().substring(6);
+    public List<WebElement> findAnchorsPointingToAnImageAndDraftSiteOnTheArticle() {
         return this.getWebDriver()
-                .findElements(By.xpath("//section//a[( contains(@href, 'www.') or contains(@href, 'http:') or contains(@href, 'https:') ) and ( contains(@href, '.jpg') or contains(@href, '.jpeg') or contains(@href, '.png')) and not(contains(@href, '"
-                        + this.getBaseURL() + "') or contains(@href, '" + GlobalConstants.BAELDUNG_HOME_PAGE_URL_WITHOUT_WWW_PREFIX + "') or contains(@href, '" + baseURLWithOutHttp + "')) and not(contains(@href, '"
-                        + GlobalConstants.BAELDUNG_HOME_PAGE_URL_WITH_WWW_PREFIX + "')) " + Utils.generateXPathExcludeClauseForAnchors(GlobalConstants.DOMAIN_LIST_TO_EXCLUDE) + "]"));
+                .findElements(By.xpath("//section//a[contains(@href, 'drafts.baeldung.com')  and ( contains(@href, '.jpg') or contains(@href, '.jpeg') or contains(@href, '.png'))]"));
     }
 
     public List<WebElement> findImagesPointingToDraftSiteOnThePage() {
