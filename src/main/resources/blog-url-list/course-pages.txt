@@ -8,3 +8,4 @@
 /learn-spring-course
 /learn-spring-for-teams
 /learn-spring-security-oauth-course
+/learn-spring-data-jpa-course
