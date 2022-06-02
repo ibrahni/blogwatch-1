@@ -385,8 +385,8 @@ public class Utils {
 
     public static List<JavaConstruct> getJavaConstructsFromPreTagsInTheJSoupDocument(Document doc) throws IOException {
         List<JavaConstruct> javaConstructs = new ArrayList<>();
-        for (Element e : doc.getElementsByClass("brush: java; gutter: true")) {
-            getJavaConstructsFromJavaCode(StringEscapeUtils.unescapeHtml4(e.getElementsByTag("pre").html()), javaConstructs);
+        for (Element e : doc.getElementsByClass("language-java")) {
+            getJavaConstructsFromJavaCode(StringEscapeUtils.unescapeHtml4(e.getElementsByTag("code").html()), javaConstructs);
 
         }
         return javaConstructs;
