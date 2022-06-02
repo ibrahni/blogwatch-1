@@ -248,6 +248,7 @@ public class GlobalConstants {
     
     // test names for
     public static final String givenAllArticles_whenAnalysingImages_thenImagesDoNotPoinToTheDraftsSite = "givenAllArticles_whenAnalysingImages_thenImagesDoNotPoinToTheDraftsSite";
+    public static final String givenAllArticles_whenAnalyzingExcerpt_thenItShouldNotBeEmptyAndShouldMatchDescription = "givenAllArticles_whenAnalyzingExcerpt_thenItShouldNotBeEmptyAndShouldMatchDescription";
     public static final String givenAllArticles_whenAnalyzingImages_thenImagesDoNotHaveEmptyAltAttribute = "givenAllArticles_whenAnalyzingImages_thenImagesDoNotHaveEmptyAltAttribute";
     public static final String givenAllTheURLs_whenURLLoads_thenImagesPointToCorrectEnv = "givenAllTheURLs_whenURLLoads_thenImagesPointToCorrectEnv";
     public static final String givenAllPages_whenAnalysingImages_thenImagesDoNotPoinToTheDraftsSite = "givenAllPages_whenAnalysingImages_thenImagesDoNotPoinToTheDraftsSite";

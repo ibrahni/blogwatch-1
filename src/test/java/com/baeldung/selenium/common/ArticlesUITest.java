@@ -166,6 +166,34 @@ public class ArticlesUITest extends BaseUISeleniumTest {
     }
 
     @Test
+    public void givenAllArticles_whenAnalyzingExcerpt_thenItShouldNotBeEmptyAndShouldMatchDescription() {
+        log(GlobalConstants.givenAllArticles_whenAnalyzingExcerpt_thenItShouldNotBeEmptyAndShouldMatchDescription);
+
+        do {
+            recordExecution(GlobalConstants.givenAllArticles_whenAnalyzingExcerpt_thenItShouldNotBeEmptyAndShouldMatchDescription);
+
+            if (shouldSkipUrl(GlobalConstants.givenAllArticles_whenAnalyzingExcerpt_thenItShouldNotBeEmptyAndShouldMatchDescription)) {
+                continue;
+            }
+
+            final String metaDescriptionTag = page.getMetaDescriptionContent();
+            final String excerptTag = page.getMetaExcerptContent();
+
+            if (StringUtils.isBlank(excerptTag) || !Objects.equals(excerptTag, metaDescriptionTag)) {
+                recordMetrics(1, TestMetricTypes.FAILED);
+                recordFailure(GlobalConstants.givenAllArticles_whenAnalyzingExcerpt_thenItShouldNotBeEmptyAndShouldMatchDescription, 1);
+                badURLs.put(GlobalConstants.givenAllArticles_whenAnalyzingExcerpt_thenItShouldNotBeEmptyAndShouldMatchDescription, page.getUrlWithNewLineFeed() + " ( description : [" + metaDescriptionTag + "], excerpt : [" + excerptTag + "] ) ");
+            }
+
+        } while (loadNextURL());
+
+        if (!allTestsFlag && badURLs.size() > 0) {
+            triggerTestFailure(badURLs);
+        }
+    }
+
+
+    @Test
     public final void givenAllArticles_whenAnalysingImages_thenImagesDoNotPoinToTheDraftsSite() {
 
         log(GlobalConstants.givenAllArticles_whenAnalysingImages_thenImagesDoNotPoinToTheDraftsSite);
@@ -617,6 +645,7 @@ public class ArticlesUITest extends BaseUISeleniumTest {
                 givenAllArticles_whenAnalyzingCodeBlocks_thenCodeBlocksAreRenderedProperly();                
                 givenAllArticles_whenAnArticleLoads_thenItDoesNotContainOverlappingText();
                 givenAllArticles_whenAnalyzingImages_thenImagesDoNotHaveEmptyAltAttribute();
+                givenAllArticles_whenAnalyzingExcerpt_thenItShouldNotBeEmptyAndShouldMatchDescription();
             } catch (Exception e) {
                 logger.error("Error occurened while processing:" + page.getUrl() + " error message:" + StringUtils.substring(e.getMessage(), 0, 100));
             }

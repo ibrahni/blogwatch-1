@@ -178,9 +178,9 @@ public class SitePage extends BlogBaseDriver {
         }
     }
 
-    public String getMetaDescriptionTag() {
+    public String getMetaDescriptionContent() {
         try {
-            return this.getWebDriver().findElement(By.xpath("//meta[@name = 'description']")).getText();
+            return this.getWebDriver().findElement(By.xpath("//meta[@name = 'description']")).getAttribute("content");
         } catch (NoSuchElementException e) {
             return null;
         }
@@ -776,5 +776,13 @@ public class SitePage extends BlogBaseDriver {
 
     public List<WebElement> findImagesWithEmptyAltAttribute() {
         return this.getWebDriver().findElements(By.xpath("//section//img[ not(@alt) or normalize-space(@alt)='' or @alt='\u00a0' ]"));
+    }
+
+    public String getMetaExcerptContent() {
+        try {
+            return this.getWebDriver().findElement(By.xpath("//meta[@name = 'excerpt']")).getAttribute("content");
+        } catch (NoSuchElementException e) {
+            return null;
+        }
     }
 }
