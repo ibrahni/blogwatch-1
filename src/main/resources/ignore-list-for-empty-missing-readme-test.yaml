@@ -53,14 +53,13 @@ ignoreReadmeContaining:
   - /core-java-jpms/
   - /quarkus-extension/
   - /aws-lambda/
-  - /docker/
   - /version-overriding-plugins/
   - /maven-copy-files/
   - /maven-parent-pom-resolution/
   - /plugin-management/
   - /quarkus-jandex/
   - /quarkus-vs-springboot/
-  - /ddd-modules/
+  - /ddd-contexts/
   - /maven-custom-plugin/
   - /spring-boot-config-jpa-error/
   - /bazel/
@@ -72,11 +71,23 @@ ignoreReadmeContaining:
   - /versions-maven-plugin/
   - /maven-archetype/
   - /maven-classifier/
+  - /lightrun/
+  - /docker-caching/
+  - /spring-cloud-bootstrap/
+  - /spring-cloud-dapr/
+  - /spring-cloud-eureka-self-preservation/
+  - /spring-cloud-docker/
+  - /spring-cloud-stream-starters/
+  - /spring-cloud-ribbon-retry/
+  - /spring-cloud-zuul-fallback/
+  - /spring-cloud-netflix-sidecar/
+  - /spring-cloud-loadbalancer/
+  - /spring-cloud-kubernetes/
   
 # parent modules that just group other modules but don't have any article themselves
 # we want to ignore the module itself here
 ignoreReadmeEndingWith: 
-  - /spring-cloud
+  - /spring-cloud-modules
   - /guava-modules
   - /patterns
   - /parent-java
@@ -101,4 +112,6 @@ ignoreReadmeEndingWith:
   - /maven-simple
   - /apache-tomcat
   - /aws-modules
-  - /graphql
+  - /graphql-modules
+  - /algorithms-modules
+  - /groovy-modules
