@@ -33,18 +33,18 @@
     "courseUrl": "/rest-with-spring-for-teams",
     "purchaseLinks": [{
         "linkId": "rwsteam-small-tb",
-        "link": "https://courses.baeldung.com/p/rest-with-spring-team-license/",
-        "redirectsTo": "https://courses.baeldung.com/p/rest-with-spring-team-license/"
+        "link": "https://courses.baeldung.com/purchase?product_id=3323247",
+        "redirectsTo": "https://sso.teachable.com/secure/22136/checkout/3323247/rest-with-spring-team-license"
       },
       {
         "linkId": "rwsteam-medium-tb",
-        "link": "https://courses.baeldung.com/p/rest-with-spring-team-license/",
-        "redirectsTo": "https://courses.baeldung.com/p/rest-with-spring-team-license/"
+        "link": "https://courses.baeldung.com/purchase?product_id=3323248",
+        "redirectsTo": "https://sso.teachable.com/secure/22136/checkout/3323248/rest-with-spring-team-license"
       },
       {
         "linkId": "rwsteam-large-tb",
-        "link": "https://courses.baeldung.com/p/rest-with-spring-team-license/",
-        "redirectsTo": "https://courses.baeldung.com/p/rest-with-spring-team-license/"
+        "link": "https://courses.baeldung.com/purchase?product_id=3323249",
+        "redirectsTo": "https://sso.teachable.com/secure/22136/checkout/3323249/rest-with-spring-team-license"
       }
     ],
     "isForTeams": true
@@ -83,18 +83,18 @@
     "purchaseLinks": [
     {
         "linkId": "lsteam-small-tb",
-        "link": "https://courses.baeldung.com/p/learn-spring-team-license/",
-        "redirectsTo": "https://courses.baeldung.com/p/learn-spring-team-license/"
+        "link": "https://courses.baeldung.com/purchase?product_id=3632767",
+        "redirectsTo": "https://sso.teachable.com/secure/22136/checkout/3632767/learn-spring-team-license"
     },
     {
         "linkId": "lsteam-medium-tb",
-        "link": "https://courses.baeldung.com/p/learn-spring-team-license/",
-        "redirectsTo": "https://courses.baeldung.com/p/learn-spring-team-license/"
+        "link": "https://courses.baeldung.com/purchase?product_id=3632768",
+        "redirectsTo": "https://sso.teachable.com/secure/22136/checkout/3632768/learn-spring-team-license"
     },
     {
         "linkId": "lsteam-large-tb",
-        "link": "https://courses.baeldung.com/p/learn-spring-team-license/",
-        "redirectsTo": "https://courses.baeldung.com/p/learn-spring-team-license/"
+        "link": "https://courses.baeldung.com/purchase?product_id=3632769",
+        "redirectsTo": "https://sso.teachable.com/secure/22136/checkout/3632769/learn-spring-team-license"
     }
    ],
     "isForTeams": true
@@ -134,18 +134,18 @@
     "purchaseLinks": [
     {
         "linkId": "lssteam-small-tb",
-        "link": "https://courses.baeldung.com/p/learn-spring-security-team-license",
-        "redirectsTo": "https://courses.baeldung.com/p/learn-spring-security-team-license"
+        "link": "https://courses.baeldung.com/purchase?product_id=3329356",
+        "redirectsTo": "https://sso.teachable.com/secure/22136/checkout/3329356/learn-spring-security-team-license"
     },
     {
         "linkId": "lssteam-medium-tb",
-        "link": "https://courses.baeldung.com/p/learn-spring-security-team-license",
-        "redirectsTo": "https://courses.baeldung.com/p/learn-spring-security-team-license"
+        "link": "https://courses.baeldung.com/purchase?product_id=3329358",
+        "redirectsTo": "https://sso.teachable.com/secure/22136/checkout/3329358/learn-spring-security-team-license"
     },
     {
         "linkId": "lssteam-large-tb",
-        "link": "https://courses.baeldung.com/p/learn-spring-security-team-license",
-        "redirectsTo": "https://courses.baeldung.com/p/learn-spring-security-team-license"
+        "link": "https://courses.baeldung.com/purchase?product_id=3329361",
+        "redirectsTo": "https://sso.teachable.com/secure/22136/checkout/3329361/learn-spring-security-team-license"
     }
    ],
     "isForTeams": true
@@ -186,18 +186,18 @@
     "purchaseLinks": [
     {
         "linkId": "lssoteam-small-tb",
-        "link": "https://courses.baeldung.com/p/learn-spring-security-oauth-team-license/",
-        "redirectsTo": "https://courses.baeldung.com/p/learn-spring-security-oauth-team-license/"
+        "link": "https://courses.baeldung.com/purchase?product_id=3331397",
+        "redirectsTo": "https://sso.teachable.com/secure/22136/checkout/3331397/learn-spring-security-oauth-team-license"
     },
     {
         "linkId": "lssoteam-medium-tb",
-        "link": "https://courses.baeldung.com/p/learn-spring-security-oauth-team-license/",
-        "redirectsTo": "https://courses.baeldung.com/p/learn-spring-security-oauth-team-license/"
+        "link": "https://courses.baeldung.com/purchase?product_id=3331398",
+        "redirectsTo": "https://sso.teachable.com/secure/22136/checkout/3331398/learn-spring-security-oauth-team-license"
     },
     {
         "linkId": "lssoteam-large-tb",
-        "link": "https://courses.baeldung.com/p/learn-spring-security-oauth-team-license/",
-        "redirectsTo": "https://courses.baeldung.com/p/learn-spring-security-oauth-team-license/"
+        "link": "https://courses.baeldung.com/purchase?product_id=3331399",
+        "redirectsTo": "https://sso.teachable.com/secure/22136/checkout/3331399/learn-spring-security-oauth-team-license"
     }
    ],
     "isForTeams": true
@@ -237,18 +237,18 @@
     "purchaseLinks": [
     {
         "linkId": "lsscteam-small-tb",
-        "link": "https://courses.baeldung.com/p/learn-spring-security-core-team-license",
-        "redirectsTo": "https://courses.baeldung.com/p/learn-spring-security-core-team-license"
+        "link": "https://courses.baeldung.com/purchase?product_id=3331343",
+        "redirectsTo": "https://sso.teachable.com/secure/22136/checkout/3331343/learn-spring-security-core-team-license"
     },
     {
         "linkId": "lsscteam-medium-tb",
-        "link": "https://courses.baeldung.com/p/learn-spring-security-core-team-license",
-        "redirectsTo": "https://courses.baeldung.com/p/learn-spring-security-core-team-license"
+        "link": "https://courses.baeldung.com/purchase?product_id=3331345",
+        "redirectsTo": "https://sso.teachable.com/secure/22136/checkout/3331345/learn-spring-security-core-team-license"
     },
     {
         "linkId": "lsscteam-large-tb",
-        "link": "https://courses.baeldung.com/p/learn-spring-security-core-team-license",
-        "redirectsTo": "https://courses.baeldung.com/p/learn-spring-security-core-team-license"
+        "link": "https://courses.baeldung.com/purchase?product_id=3331346",
+        "redirectsTo": "https://sso.teachable.com/secure/22136/checkout/3331346/learn-spring-security-core-team-license"
     }
    ],
     "isForTeams": true
@@ -291,18 +291,18 @@
     "purchaseLinks": [
     {
         "linkId": "lsdteam-master-tb",
-        "link": "https://courses.baeldung.com/p/learn-spring-data-jpa-team",
-        "redirectsTo": "https://courses.baeldung.com/p/learn-spring-data-jpa-team"
+        "link": "https://courses.baeldung.com/purchase?product_id=2965070",
+        "redirectsTo": "https://sso.teachable.com/secure/22136/checkout/2965070/learn-spring-data-jpa-team"
     },
     {
         "linkId": "lsdteam-cert-tb",
-        "link": "https://courses.baeldung.com/p/learn-spring-data-jpa-team",
-        "redirectsTo": "https://courses.baeldung.com/p/learn-spring-data-jpa-team"
+        "link": "https://courses.baeldung.com/purchase?product_id=2965073",
+        "redirectsTo": "https://sso.teachable.com/secure/22136/checkout/2965073/learn-spring-data-jpa-team"
     },
     {
         "linkId": "lsdteam-coach-tb",
-        "link": "https://courses.baeldung.com/p/learn-spring-data-jpa-team",
-        "redirectsTo": "https://courses.baeldung.com/p/learn-spring-data-jpa-team"
+        "link": "https://courses.baeldung.com/purchase?product_id=2965074",
+        "redirectsTo": "https://sso.teachable.com/secure/22136/checkout/2965074/learn-spring-data-jpa-team"
     }
    ],
     "isForTeams": true
