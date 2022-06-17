@@ -21,8 +21,11 @@ public abstract class BlogBaseDriver {
 
     protected Logger logger = LoggerFactory.getLogger(getClass());
 
-    @Autowired
     private browserConfig browserConfig;
+
+    public BlogBaseDriver(browserConfig browserConfig) {
+        this.browserConfig = browserConfig;
+    }
 
     @Autowired
     private RateLimiter rateLimiter;
@@ -138,7 +141,7 @@ public abstract class BlogBaseDriver {
     public String getRelativeUrl() {
         return this.getUrl().toString().substring(this.getBaseURL().toString().length());
     }
-    
+
     public void acceptCookie() {
         try {
             JavascriptExecutor js = ((JavascriptExecutor) this.getWebDriver());

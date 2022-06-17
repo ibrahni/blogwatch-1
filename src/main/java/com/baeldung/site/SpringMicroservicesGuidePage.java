@@ -16,6 +16,10 @@ public class SpringMicroservicesGuidePage extends BlogBaseDriver {
 
     private final String springMicroserviceGuildeUrl = "/spring-microservices-guide/";
 
+    public SpringMicroservicesGuidePage(com.baeldung.selenium.config.browserConfig browserConfig) {
+        super(browserConfig);
+    }
+
     public void clickAccessTheGuideButton() {
 
         WebDriverWait wait = new WebDriverWait(this.getWebDriver(), 30);

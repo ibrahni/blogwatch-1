@@ -15,6 +15,7 @@ public class GlobalConstants {
     public static final String ENV_PROPERTY_SPRING_PROFILE = "spring.profiles.active";
     public static final String ENV_PROPERTY_TARGET_ENV = "target.env";
     public static final String ENV_PROPERTY_HEADLESS_BROWSER_NAME = "headless.browser.name";
+    public static final String ENV_PROPERTY_CONCURRENCY_LEVEL = "concurrency.level";
 
     public static final String DEFAULT_SPRING_PROFILE = "headless-browser";
 
@@ -67,12 +68,12 @@ public class GlobalConstants {
     public static final String TAG_DAILY = "daily";
 
     /**
-     * Tests using this tag are executed daily on Jenkins with HtmlUnit 
+     * Tests using this tag are executed daily on Jenkins with HtmlUnit
      */
     public static final String TAG_DAILY_HTMLUNIT = "daily-htmlunit";
 
     /**
-     * Tests using this tag are executed daily on Jenkins with EU proxy 
+     * Tests using this tag are executed daily on Jenkins with EU proxy
      */
     public static final String TAG_DAILY_EU_PROXY = "daily-eu-proxy";
 
@@ -84,7 +85,7 @@ public class GlobalConstants {
     public static final String TAG_SITE_SMOKE_TEST = "site-smoke-test";
 
     public static final String TAG_SKIP_METRICS = "skip-metrics";
-    
+
     public static final String THANKYOU_PAGES_EVENT_TRACKING = "thank-you-pages-event-tracking";
 
     /**
@@ -155,7 +156,7 @@ public class GlobalConstants {
     public static final String PAGE_WITH_DRIP_SCRPT = "/spring-tutorial/";
     public static final String DRIP_SCRPT_SEARCH_STRING = "dc.src = '//tag.getdrip.com/9539554.js';";
 
-    
+
     public static final String README_LINKS_FOLDER_PATH = "./blog-url-list/";
     public static final String README_FILE_NAME_LOWERCASE = "readme.md";
     public static final String README_FILE_NAME_UPPERCASE = "README.md";
@@ -206,38 +207,38 @@ public class GlobalConstants {
 
     public static enum TestMetricTypes {
         FAILED;
-    }    
+    }
 
     // contact us form
     public static final String CONTACT_US_FORM_URL = "/contact";
-    
+
     // 200OK test modes
     public static final String MODE_STRICT="STRICT";
     public static final String MODE_RELAXED="RELAXED";
-    
+
     public static final String YES="yes";
     public static final String NO="no";
-    
+
     // for givenAnArtifactId_thenListAllChildModules
     public static final String tutorialsRepoLocalPath = "/var/lib/jenkins/tutorials-source-code";
     public static final String tutorialsRepoGitUrl="https://github.com/eugenp/tutorials.git";
     public static final String tutorialsRepoMasterPath="https://github.com/eugenp/tutorials/tree/master";
-    
+
     public static final String scalaTutorialsRepoLocalPath = "/var/lib/jenkins/scala-tutorials-source-code";
     public static final String scalaTutorialsRepoGitUrl="https://github.com/Baeldung/scala-tutorials.git";
     public static final String scalaTutorialsRepoMasterPath="https://github.com/Baeldung/scala-tutorials/tree/master";
-    
+
     public static final ImmutableList<GitHubRepoVO> tutorialsRepos = ImmutableList.of(new GitHubRepoVO("Java-tutorials", tutorialsRepoGitUrl, tutorialsRepoLocalPath, tutorialsRepoMasterPath),
             new GitHubRepoVO("Scala-tutorials", scalaTutorialsRepoGitUrl, scalaTutorialsRepoLocalPath, scalaTutorialsRepoMasterPath));
-    
-    
+
+
     //for givenAGitHubModuleReadme_whenAnalysingTheReadme_thenLinksToAndFromGithubMatch
     public static final String STAGEING8_HOME_URL="http://staging8.baeldung.com";
-    
+
     //facebook tracking code on thank-you pages
     public static final String FACEBOOK_MAIN_EVENT_TRACKING_SCRIPT_TKP = "fbq('init', '512471148948613')";
     public static final String FACEBOOK_EVENT_CONVERSION_TRACKING_SCRIPT_TKP = "fbq('track', 'Purchase'";
-    
+
   //GOOGLE tracking code on thank-you pages
     public static final String GOOGLE_MAIN_EVENT_TRACKING_SCRIPT_TKP = "ga('create', 'UA-26064837-1', 'auto', {'allowLinker': true});";
     public static final String GOOGLE_EVENT_CONVERSION_TRACKING_SCRIPT_TKP = "gtag('event', 'conversion', {";
@@ -245,7 +246,7 @@ public class GlobalConstants {
     //drip tracking on thank-you pages
     public static final String DRIP_MAIN_EVENT_TRACKING_SCRIPT_TKP = "tag.getdrip.com/9539554.js";
     public static final String DRIP_EVENT_CONVERSION_TRACKING_SCRIPT_TKP = "window._dcq.push([\"track\"";
-    
+
     // test names for
     public static final String givenAllArticles_whenAnalysingImages_thenImagesDoNotPoinToTheDraftsSite = "givenAllArticles_whenAnalysingImages_thenImagesDoNotPoinToTheDraftsSite";
     public static final String givenAllArticles_whenAnalyzingExcerpt_thenItShouldNotBeEmptyAndShouldMatchDescription = "givenAllArticles_whenAnalyzingExcerpt_thenItShouldNotBeEmptyAndShouldMatchDescription";

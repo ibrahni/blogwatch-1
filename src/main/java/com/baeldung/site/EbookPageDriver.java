@@ -12,9 +12,15 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.stereotype.Component;
 
+import com.baeldung.selenium.config.browserConfig;
+
 @Component
 public class EbookPageDriver extends BlogBaseDriver {
     private static final String EBOOKS_PAGE = "/baeldung-ebooks";
+
+    public EbookPageDriver(browserConfig browserConfig) {
+        super(browserConfig);
+    }
 
     public List<String> findEbooksUrls() {
         logger.info(magentaColordMessage("retrieving ebooks urls from {}"), EBOOKS_PAGE);
