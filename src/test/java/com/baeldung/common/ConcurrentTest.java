@@ -15,7 +15,7 @@ import org.junit.jupiter.api.Test;
 public @interface ConcurrentTest {
     /**
      * Can be overriden by:
-     * <pre>ConcurrentExtension.setGlobalThreadCount</pre>
+     * <pre>ConcurrentExtension.withGlobalThreadCount</pre>
      */
     int count() default 10;
     boolean printInfo() default false;

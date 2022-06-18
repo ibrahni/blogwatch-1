@@ -284,9 +284,9 @@ public class ConcurrentArticlesUITest extends ConcurrentBaseUISeleniumTest {
         log(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenArticleHasNoEmptyCodeBlock);
 
         onNewWindow(page -> {
-            do {
+            while (loadNextURL(page)) {
                 support.givenAllArticles_whenAnArticleLoads_thenArticleHasNoEmptyCodeBlock(page);
-            } while (loadNextURL(page));
+            }
         });
 
         if (badURLs.size() > 0) {
@@ -299,9 +299,9 @@ public class ConcurrentArticlesUITest extends ConcurrentBaseUISeleniumTest {
         log(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenItHasSingleShortcodeAtTheTop);
 
         onNewWindow(page -> {
-            do {
+            while (loadNextURL(page)) {
                 support.givenAllArticles_whenAnArticleLoads_thenItHasSingleShortcodeAtTheTop(page);
-            } while (loadNextURL(page));
+            }
         });
 
         if (badURLs.size() > 0) {
@@ -314,9 +314,9 @@ public class ConcurrentArticlesUITest extends ConcurrentBaseUISeleniumTest {
         log(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenItHasSingleShortcodeAtTheEnd);
 
         onNewWindow(page -> {
-            do {
+            while (loadNextURL(page)) {
                 support.givenAllArticles_whenAnArticleLoads_thenItHasSingleShortcodeAtTheEnd(page);
-            } while (loadNextURL(page));
+            }
         });
 
         if (badURLs.size() > 0) {
@@ -329,9 +329,9 @@ public class ConcurrentArticlesUITest extends ConcurrentBaseUISeleniumTest {
         log(GlobalConstants.givenAllArticles_whenAnalyzingImages_thenImagesDoNotHaveEmptyAltAttribute);
 
         onNewWindow(page -> {
-            do {
+            while (loadNextURL(page)) {
                 support.givenAllArticles_whenAnalyzingImages_thenImagesDoNotHaveEmptyAltAttribute(page);
-            } while (loadNextURL(page));
+            }
         });
 
         if (badURLs.size() > 0) {
@@ -344,9 +344,9 @@ public class ConcurrentArticlesUITest extends ConcurrentBaseUISeleniumTest {
         log(GlobalConstants.givenAllArticles_whenAnalyzingExcerpt_thenItShouldNotBeEmptyAndShouldMatchDescription);
 
         onNewWindow(page -> {
-            do {
+            while (loadNextURL(page)) {
                 support.givenAllArticles_whenAnalyzingExcerpt_thenItShouldNotBeEmptyAndShouldMatchDescription(page);
-            } while (loadNextURL(page));
+            }
         });
 
         if (badURLs.size() > 0) {
@@ -359,9 +359,9 @@ public class ConcurrentArticlesUITest extends ConcurrentBaseUISeleniumTest {
         log(GlobalConstants.givenAllArticles_whenAnalysingImages_thenImagesDoNotPoinToTheDraftsSite);
 
         onNewWindow(page -> {
-            do {
+            while (loadNextURL(page)) {
                 support.givenAllArticles_whenAnalysingImages_thenImagesDoNotPoinToTheDraftsSite(page);
-            } while (loadNextURL(page));
+            }
         });
 
         if (badURLs.size() > 0) {
@@ -374,9 +374,9 @@ public class ConcurrentArticlesUITest extends ConcurrentBaseUISeleniumTest {
         log(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenMetaOGImageAndTwitterImagePointToTheAbsolutePath);
 
         onNewWindow(page -> {
-            do {
+            while (loadNextURL(page)) {
                 support.givenAllArticles_whenAnArticleLoads_thenMetaOGImageAndTwitterImagePointToTheAbsolutePath(page);
-            } while (loadNextURL(page));
+            }
         });
 
         if (badURLs.size() > 0) {
@@ -389,13 +389,13 @@ public class ConcurrentArticlesUITest extends ConcurrentBaseUISeleniumTest {
         log(GlobalConstants.givenAllArticles_whenAnalyzingCodeBlocks_thenCodeBlocksAreRenderedProperly);
 
         onNewWindow(page -> {
-            do {
+            while (loadNextURL(page)) {
                 try {
                     support.givenAllArticles_whenAnalyzingCodeBlocks_thenCodeBlocksAreRenderedProperly(page, true);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
-            } while (loadNextURL(page));
+            }
         });
 
         if (badURLs.size() > 0) {
@@ -408,9 +408,9 @@ public class ConcurrentArticlesUITest extends ConcurrentBaseUISeleniumTest {
         log(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenItDoesNotContainOverlappingText);
 
         onNewWindow(page -> {
-            do {
+            while (loadNextURL(page)) {
                 support.givenAllArticles_whenAnArticleLoads_thenItDoesNotContainOverlappingText(page);
-            } while (loadNextURL(page));
+            }
         });
 
         if (badURLs.size() > 0) {
@@ -423,9 +423,9 @@ public class ConcurrentArticlesUITest extends ConcurrentBaseUISeleniumTest {
         log(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenItIsHasASingleOptinInTheSidebar);
 
         onNewWindow(page -> {
-            do {
+            while (loadNextURL(page)) {
                 support.givenAllArticles_whenAnArticleLoads_thenItIsHasASingleOptinInTheSidebar(page);
-            } while (loadNextURL(page));
+            }
         });
 
         if (badURLs.size() > 0) {
@@ -438,9 +438,9 @@ public class ConcurrentArticlesUITest extends ConcurrentBaseUISeleniumTest {
         log(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenItIsHasASingleOptinInTheAfterPostContent);
 
         onNewWindow(page -> {
-            do {
+            while (loadNextURL(page)) {
                 support.givenAllArticles_whenAnArticleLoads_thenItIsHasASingleOptinInTheAfterPostContent(page);
-            } while (loadNextURL(page));
+            }
         });
 
         if (badURLs.size() > 0) {
