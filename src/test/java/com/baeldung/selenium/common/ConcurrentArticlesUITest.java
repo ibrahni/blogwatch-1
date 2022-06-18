@@ -8,7 +8,7 @@ import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.openqa.selenium.WebElement;
@@ -24,17 +24,19 @@ import com.google.common.collect.Multimap;
 import com.google.common.collect.Multimaps;
 
 /**
- * Experimental concurrent version of {@link ArticlesUITest}
+ * Concurrent version of {@link ArticlesUITest}
+ * Default parallel thread count is 8. This configuration can be set via the system property -Dconcurrency.level=8.
+ * For details see: {@link com.baeldung.common.BaseTest}
  */
 public class ConcurrentArticlesUITest extends ConcurrentBaseUISeleniumTest {
+
+    private final TestSupport support = new TestSupport();
 
     @Value("${ignore.urls.newer.than.weeks}")
     private int ignoreUrlsNewerThanWeeks;
 
-    private final TestSupport support = new TestSupport();
-
-    private static SynchronizedIterator allArticlesList;
-    private static final Multimap<String, String> badURLs = Multimaps.synchronizedListMultimap(ArrayListMultimap.create());
+    private SynchronizedIterator allArticlesList;
+    private Multimap<String, String> badURLs;
 
     static class SynchronizedIterator implements Iterator<String> {
 
@@ -55,14 +57,18 @@ public class ConcurrentArticlesUITest extends ConcurrentBaseUISeleniumTest {
         }
     }
 
-    @BeforeAll
-    static synchronized void loadArticleList() throws IOException {
+    @BeforeEach
+    public void setup() throws IOException {
+        logger.info("The test will ignore URls newer than {} weeks", ignoreUrlsNewerThanWeeks);
         allArticlesList = new SynchronizedIterator(Utils.fetchAllArtilcesAsListIterator());
+        badURLs = Multimaps.synchronizedListMultimap(ArrayListMultimap.create());
     }
 
-    @BeforeEach
-    public void setup() {
-        logger.info("The test will ignore URls newer than {} weeks", ignoreUrlsNewerThanWeeks);
+    @AfterEach
+    public void clear() {
+        allArticlesList = null;
+        badURLs.clear();
+        badURLs = null;
     }
 
     private boolean loadNextURL(SitePage page) {
@@ -89,15 +95,16 @@ public class ConcurrentArticlesUITest extends ConcurrentBaseUISeleniumTest {
     }
 
     /**
-     * Runs a command on a new page
+     * Runs a command on a new window, automatically handles closing.
      */
-    void runOnPage(Consumer<SitePage> cmd) {
+    void onNewWindow(Consumer<SitePage> cmd) {
         final SitePage page = get();
-        page.openNewWindow();
-        if (loadNextURL(page)) {
+        try {
+            page.openNewWindow();
             cmd.accept(page);
+        } finally {
+            page.quiet();
         }
-        page.quiet();
     }
 
     class TestSupport {
@@ -276,7 +283,7 @@ public class ConcurrentArticlesUITest extends ConcurrentBaseUISeleniumTest {
     public final void givenAllArticles_whenAnArticleLoads_thenArticleHasNoEmptyCodeBlock() {
         log(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenArticleHasNoEmptyCodeBlock);
 
-        runOnPage(page -> {
+        onNewWindow(page -> {
             do {
                 support.givenAllArticles_whenAnArticleLoads_thenArticleHasNoEmptyCodeBlock(page);
             } while (loadNextURL(page));
@@ -291,7 +298,7 @@ public class ConcurrentArticlesUITest extends ConcurrentBaseUISeleniumTest {
     public final void givenAllArticles_whenAnArticleLoads_thenItHasSingleShortcodeAtTheTop() {
         log(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenItHasSingleShortcodeAtTheTop);
 
-        runOnPage(page -> {
+        onNewWindow(page -> {
             do {
                 support.givenAllArticles_whenAnArticleLoads_thenItHasSingleShortcodeAtTheTop(page);
             } while (loadNextURL(page));
@@ -306,7 +313,7 @@ public class ConcurrentArticlesUITest extends ConcurrentBaseUISeleniumTest {
     public final void givenAllArticles_whenAnArticleLoads_thenItHasSingleShortcodeAtTheEnd() {
         log(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenItHasSingleShortcodeAtTheEnd);
 
-        runOnPage(page -> {
+        onNewWindow(page -> {
             do {
                 support.givenAllArticles_whenAnArticleLoads_thenItHasSingleShortcodeAtTheEnd(page);
             } while (loadNextURL(page));
@@ -321,7 +328,7 @@ public class ConcurrentArticlesUITest extends ConcurrentBaseUISeleniumTest {
     public final void givenAllArticles_whenAnalyzingImages_thenImagesDoNotHaveEmptyAltAttribute() {
         log(GlobalConstants.givenAllArticles_whenAnalyzingImages_thenImagesDoNotHaveEmptyAltAttribute);
 
-        runOnPage(page -> {
+        onNewWindow(page -> {
             do {
                 support.givenAllArticles_whenAnalyzingImages_thenImagesDoNotHaveEmptyAltAttribute(page);
             } while (loadNextURL(page));
@@ -336,7 +343,7 @@ public class ConcurrentArticlesUITest extends ConcurrentBaseUISeleniumTest {
     public void givenAllArticles_whenAnalyzingExcerpt_thenItShouldNotBeEmptyAndShouldMatchDescription() {
         log(GlobalConstants.givenAllArticles_whenAnalyzingExcerpt_thenItShouldNotBeEmptyAndShouldMatchDescription);
 
-        runOnPage(page -> {
+        onNewWindow(page -> {
             do {
                 support.givenAllArticles_whenAnalyzingExcerpt_thenItShouldNotBeEmptyAndShouldMatchDescription(page);
             } while (loadNextURL(page));
@@ -351,7 +358,7 @@ public class ConcurrentArticlesUITest extends ConcurrentBaseUISeleniumTest {
     public final void givenAllArticles_whenAnalysingImages_thenImagesDoNotPoinToTheDraftsSite() {
         log(GlobalConstants.givenAllArticles_whenAnalysingImages_thenImagesDoNotPoinToTheDraftsSite);
 
-        runOnPage(page -> {
+        onNewWindow(page -> {
             do {
                 support.givenAllArticles_whenAnalysingImages_thenImagesDoNotPoinToTheDraftsSite(page);
             } while (loadNextURL(page));
@@ -366,7 +373,7 @@ public class ConcurrentArticlesUITest extends ConcurrentBaseUISeleniumTest {
     public final void givenAllArticles_whenAnArticleLoads_thenMetaOGImageAndTwitterImagePointToTheAbsolutePath() {
         log(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenMetaOGImageAndTwitterImagePointToTheAbsolutePath);
 
-        runOnPage(page -> {
+        onNewWindow(page -> {
             do {
                 support.givenAllArticles_whenAnArticleLoads_thenMetaOGImageAndTwitterImagePointToTheAbsolutePath(page);
             } while (loadNextURL(page));
@@ -381,7 +388,7 @@ public class ConcurrentArticlesUITest extends ConcurrentBaseUISeleniumTest {
     public final void givenAllArticles_whenAnalyzingCodeBlocks_thenCodeBlocksAreRenderedProperly() {
         log(GlobalConstants.givenAllArticles_whenAnalyzingCodeBlocks_thenCodeBlocksAreRenderedProperly);
 
-        runOnPage(page -> {
+        onNewWindow(page -> {
             do {
                 try {
                     support.givenAllArticles_whenAnalyzingCodeBlocks_thenCodeBlocksAreRenderedProperly(page, true);
@@ -400,7 +407,7 @@ public class ConcurrentArticlesUITest extends ConcurrentBaseUISeleniumTest {
     public final void givenAllArticles_whenAnArticleLoads_thenItDoesNotContainOverlappingText() {
         log(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenItDoesNotContainOverlappingText);
 
-        runOnPage(page -> {
+        onNewWindow(page -> {
             do {
                 support.givenAllArticles_whenAnArticleLoads_thenItDoesNotContainOverlappingText(page);
             } while (loadNextURL(page));
@@ -415,7 +422,7 @@ public class ConcurrentArticlesUITest extends ConcurrentBaseUISeleniumTest {
     public final void givenAllArticles_whenAnArticleLoads_thenItIsHasASingleOptinInTheSidebar() {
         log(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenItIsHasASingleOptinInTheSidebar);
 
-        runOnPage(page -> {
+        onNewWindow(page -> {
             do {
                 support.givenAllArticles_whenAnArticleLoads_thenItIsHasASingleOptinInTheSidebar(page);
             } while (loadNextURL(page));
@@ -430,7 +437,7 @@ public class ConcurrentArticlesUITest extends ConcurrentBaseUISeleniumTest {
     public final void givenAllArticles_whenAnArticleLoads_thenItIsHasASingleOptinInTheAfterPostContent() {
         log(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenItIsHasASingleOptinInTheAfterPostContent);
 
-        runOnPage(page -> {
+        onNewWindow(page -> {
             do {
                 support.givenAllArticles_whenAnArticleLoads_thenItIsHasASingleOptinInTheAfterPostContent(page);
             } while (loadNextURL(page));
@@ -444,8 +451,8 @@ public class ConcurrentArticlesUITest extends ConcurrentBaseUISeleniumTest {
     @ConcurrentTest
     @Tag(GlobalConstants.TAG_TECHNICAL)
     public final void givenAllTestsRelatedTechnicalArea_whenHittingAllArticles_thenOK() {
-        runOnPage(page -> {
-            do {
+        onNewWindow(page -> {
+            while (loadNextURL(page)) {
                 try {
                     support.givenAllArticles_whenAnArticleLoads_thenArticleHasNoEmptyCodeBlock(page);
                     support.givenAllArticles_whenAnArticleLoads_thenItHasSingleShortcodeAtTheTop(page);
@@ -462,7 +469,7 @@ public class ConcurrentArticlesUITest extends ConcurrentBaseUISeleniumTest {
                     logger.error("Error occurred while processing: {}, error message: {}",
                         page.getUrl(), StringUtils.substring(e.getMessage(), 0, 100));
                 }
-            } while (loadNextURL(page));
+            }
         });
 
         if (badURLs.size() > 0) {

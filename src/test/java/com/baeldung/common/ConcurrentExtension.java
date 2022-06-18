@@ -6,8 +6,8 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicInteger;
 
+import org.junit.jupiter.api.Timeout;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.InvocationInterceptor;
 import org.junit.jupiter.api.extension.ReflectiveInvocationContext;
@@ -17,6 +17,18 @@ import org.junit.platform.commons.util.Preconditions;
 import org.junit.platform.commons.util.ReflectionUtils;
 
 public class ConcurrentExtension implements InvocationInterceptor {
+
+  private int globalThreadCount;
+
+  /**
+   * Overrides @{@link ConcurrentTest} threadCount parameter globally.
+   * @param threadCount a positive number
+   */
+  public static ConcurrentExtension withGlobalThreadCount(int threadCount) {
+    final ConcurrentExtension instance = new ConcurrentExtension();
+    instance.globalThreadCount = threadCount;
+    return instance;
+  }
 
   @Override
   public void interceptTestMethod(
@@ -52,7 +64,7 @@ public class ConcurrentExtension implements InvocationInterceptor {
         }
       }, executorService);
     }
-    awaitTerminationAfterShutdown(executorService);
+    awaitTerminationAfterShutdown(executorService, timeout(invocationContext.getTargetClass(), testMethod));
 
     if (exception[0] != null) {
       throw exception[0];
@@ -62,10 +74,12 @@ public class ConcurrentExtension implements InvocationInterceptor {
     invocation.skip();
   }
 
-  private static void awaitTerminationAfterShutdown(ExecutorService threadPool) {
+  private void awaitTerminationAfterShutdown(ExecutorService threadPool, Timeout timeout) {
     threadPool.shutdown();
     try {
-      if (!threadPool.awaitTermination(300, TimeUnit.SECONDS)) {
+      if (!threadPool.awaitTermination(
+          timeout != null ? timeout.value() : Long.MAX_VALUE,
+          timeout != null ? timeout.unit() : TimeUnit.NANOSECONDS)) {
         threadPool.shutdownNow();
       }
     } catch (InterruptedException ex) {
@@ -74,7 +88,7 @@ public class ConcurrentExtension implements InvocationInterceptor {
     }
   }
 
-  private static void printInfo(Method testMethod) {
+  private void printInfo(Method testMethod) {
     final String message = String.format("Thread#%s > %s(%s)",
         Thread.currentThread().getId(),
         testMethod.getName(),
@@ -83,21 +97,22 @@ public class ConcurrentExtension implements InvocationInterceptor {
     System.out.println(message);
   }
 
-  private static int threadCount(ConcurrentTest concurrent, Method method) {
+  private int threadCount(ConcurrentTest concurrent, Method method) {
     final int count = concurrent.count();
     Preconditions.condition(count > 0, () -> String.format(
         "Configuration error: @ConcurrentTest on method [%s] must be declared with a positive 'count'.",
         method));
-    return globalThreadCount.get() > 0 ? globalThreadCount.get() : count;
+    return globalThreadCount > 0 ? globalThreadCount : count;
   }
 
-  private static final AtomicInteger globalThreadCount = new AtomicInteger(0);
-
-  /**
-   * Overrides @{@link ConcurrentTest} count parameter globally.
-   * @param count a positive number
-   */
-  public static void setGlobalThreadCount(int count) {
-    globalThreadCount.set(count);
+  private Timeout timeout(Class<?> clazz, Method method) {
+    final Optional<Timeout> methodTimeout = AnnotationUtils
+        .findAnnotation(method, Timeout.class);
+    if (methodTimeout.isEmpty()) {
+      // global timeout on class level or null
+      return AnnotationUtils.findAnnotation(clazz, Timeout.class).orElse(null);
+    }
+    return methodTimeout.get();
   }
+
 }

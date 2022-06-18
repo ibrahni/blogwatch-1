@@ -3,6 +3,7 @@ package com.baeldung.selenium.common;
 import java.util.function.Supplier;
 
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.ApplicationContext;
@@ -14,7 +15,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.baeldung.common.BaseTest;
-import com.baeldung.common.ConcurrentBaseTest;
+import com.baeldung.common.ConcurrentExtension;
 import com.baeldung.common.GlobalConstants;
 import com.baeldung.common.Utils;
 import com.baeldung.common.YAMLProperties;
@@ -24,7 +25,6 @@ import com.baeldung.crawler4j.config.Crawler4jMainCofig;
 import com.baeldung.selenium.config.SeleniumContextConfiguration;
 import com.baeldung.selenium.config.headlessBrowserConfig;
 import com.baeldung.site.SitePage;
-import com.baeldung.common.ConcurrentExtension;
 import com.google.common.collect.Multimap;
 
 @ContextConfiguration(classes = {
@@ -33,12 +33,12 @@ import com.google.common.collect.Multimap;
     Crawler4jMainCofig.class,
     ConcurrentBaseUISeleniumTest.SitePageConfiguration.class
 }, initializers = MyApplicationContextInitializer.class)
-@ExtendWith({SpringExtension.class, ConcurrentExtension.class})
-public class ConcurrentBaseUISeleniumTest extends ConcurrentBaseTest implements Supplier<SitePage> {
+@ExtendWith(SpringExtension.class)
+public class ConcurrentBaseUISeleniumTest extends BaseTest implements Supplier<SitePage> {
 
-    static {
-        ConcurrentExtension.setGlobalThreadCount(CONCURRENCY_LEVEL);
-    }
+    @RegisterExtension
+    static ConcurrentExtension extension = ConcurrentExtension
+        .withGlobalThreadCount(CONCURRENCY_LEVEL);
 
     @Autowired
     ApplicationContext appContext;
