@@ -14,7 +14,6 @@ import org.junit.jupiter.api.Tag;
 import org.openqa.selenium.WebElement;
 import org.springframework.beans.factory.annotation.Value;
 
-import com.baeldung.common.ConcurrentTest;
 import com.baeldung.common.GlobalConstants;
 import com.baeldung.common.GlobalConstants.TestMetricTypes;
 import com.baeldung.common.Utils;
@@ -22,6 +21,8 @@ import com.baeldung.site.SitePage;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Multimaps;
+
+import dev.yavuztas.junit.ConcurrentTest;
 
 /**
  * Concurrent version of {@link ArticlesUITest}

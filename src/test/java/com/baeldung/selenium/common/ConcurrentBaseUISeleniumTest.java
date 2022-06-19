@@ -15,7 +15,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.baeldung.common.BaseTest;
-import com.baeldung.common.ConcurrentExtension;
 import com.baeldung.common.GlobalConstants;
 import com.baeldung.common.Utils;
 import com.baeldung.common.YAMLProperties;
@@ -26,6 +25,8 @@ import com.baeldung.selenium.config.SeleniumContextConfiguration;
 import com.baeldung.selenium.config.headlessBrowserConfig;
 import com.baeldung.site.SitePage;
 import com.google.common.collect.Multimap;
+
+import dev.yavuztas.junit.ConcurrentExtension;
 
 @ContextConfiguration(classes = {
     CommonConfig.class,
