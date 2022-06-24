@@ -30,7 +30,7 @@ public class BaseTest {
     private static final Map<String, Integer> failedTestsNames = new ConcurrentHashMap<>(CONCURRENCY_LEVEL * 4, 0.75f, CONCURRENCY_LEVEL);
 
     protected static void recordExecution(String name) {
-        executedTestsNames.merge(name, 1, (oldValue, value) -> oldValue + 1);
+        executedTestsNames.merge(name, 1, Integer::sum);
     }
 
     protected static void recordFailure(String name) {
@@ -38,7 +38,7 @@ public class BaseTest {
     }
 
     protected static void recordFailure(String name, int count) {
-        failedTestsNames.merge(name, 1, (existing, value) -> existing + count);
+        failedTestsNames.merge(name, count, Integer::sum);
     }
 
     protected static void recordMetrics(int count, TestMetricTypes metricType) {
