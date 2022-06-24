@@ -72,6 +72,8 @@ public class Utils {
 
     private static final String POSSESSION_CHARACTER = "'s";
     private static final String EMPTY = "" ;
+    protected static final String CODE_TAG = "code";
+    protected static final String LANGUAGE_JAVA_CLASS_NAME = "language-java";
 
     public static Stream<String> fetchSampleArtilcesList() throws IOException {
         File file = new File(Utils.class.getClassLoader().getResource(GlobalConstants.BLOG_URL_LIST_RESOUCE_FOLDER_PATH + GlobalConstants.SAMPLE_ARTICLES_FILE_NAME).getPath());
@@ -385,8 +387,8 @@ public class Utils {
 
     public static List<JavaConstruct> getJavaConstructsFromPreTagsInTheJSoupDocument(Document doc) throws IOException {
         List<JavaConstruct> javaConstructs = new ArrayList<>();
-        for (Element e : doc.getElementsByClass("language-java")) {
-            getJavaConstructsFromJavaCode(StringEscapeUtils.unescapeHtml4(e.getElementsByTag("code").html()), javaConstructs);
+        for (Element e : doc.getElementsByClass(LANGUAGE_JAVA_CLASS_NAME)) {
+            getJavaConstructsFromJavaCode(StringEscapeUtils.unescapeHtml4(e.getElementsByTag(CODE_TAG).html()), javaConstructs);
 
         }
         return javaConstructs;
@@ -549,15 +551,17 @@ public class Utils {
         return gitHubModuleAndPostsMap;
     }
 
-    public static boolean hasArticlesWithProblems(Multimap<String, JavaConstruct> results) {
+    public static int countArticlesWithProblems(Multimap<String, JavaConstruct> results) {
+        int failuresCont = 0;
         for (Map.Entry<String, Collection<JavaConstruct>> entry : results.asMap().entrySet()) {
             for (JavaConstruct javaConstruct : entry.getValue()) {
                 if (javaConstruct != null) {
-                    return true;
+                    failuresCont++;
+                    break;
                 }
             }
         }
-        return false;
+        return failuresCont;
     }
 
     public static String formatResultsForCapatalizationTest(String url, List<String> invalidTitles) {
