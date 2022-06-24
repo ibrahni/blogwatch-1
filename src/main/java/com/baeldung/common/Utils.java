@@ -72,8 +72,7 @@ public class Utils {
 
     private static final String POSSESSION_CHARACTER = "'s";
     private static final String EMPTY = "" ;
-    protected static final String CODE_TAG = "code";
-    protected static final String LANGUAGE_JAVA_CLASS_NAME = "language-java";
+    
 
     public static Stream<String> fetchSampleArtilcesList() throws IOException {
         File file = new File(Utils.class.getClassLoader().getResource(GlobalConstants.BLOG_URL_LIST_RESOUCE_FOLDER_PATH + GlobalConstants.SAMPLE_ARTICLES_FILE_NAME).getPath());

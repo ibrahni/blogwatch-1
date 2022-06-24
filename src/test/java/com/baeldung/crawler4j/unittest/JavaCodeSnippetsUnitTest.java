@@ -1,5 +1,7 @@
-package com.baeldung.common;
+package com.baeldung.crawler4j.unittest;
 
+import static com.baeldung.common.GlobalConstants.CODE_TAG;
+import static com.baeldung.common.GlobalConstants.LANGUAGE_JAVA_CLASS_NAME;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
@@ -14,20 +16,24 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 
-class UtilsTest {
+import com.baeldung.common.Utils;
+
+
+
+class JavaCodeSnippetsUnitTest {
     private static final String POST_URL = "http://staging8.baeldung.com/httpclient4";
 
     @Test
     public void should_find_code_section_in_the_post() throws IOException {
         Document jSoupDocument = Utils.getJSoupDocument(POST_URL);
 
-        Elements elements = jSoupDocument.getElementsByClass(Utils.LANGUAGE_JAVA_CLASS_NAME);
+        Elements elements = jSoupDocument.getElementsByClass(LANGUAGE_JAVA_CLASS_NAME);
 
         Assertions.assertFalse(elements.isEmpty());
 
         Element firstElement = elements.iterator().next();
 
-        Assertions.assertFalse(firstElement.getElementsByTag(Utils.CODE_TAG).isEmpty());
+        Assertions.assertFalse(firstElement.getElementsByTag(CODE_TAG).isEmpty());
     }
 
     @Test
@@ -36,11 +42,11 @@ class UtilsTest {
 
         Document jSoupDocument = Utils.getJSoupDocument(POST_URL);
 
-        Elements elements = jSoupDocument.getElementsByClass(Utils.LANGUAGE_JAVA_CLASS_NAME);
+        Elements elements = jSoupDocument.getElementsByClass(LANGUAGE_JAVA_CLASS_NAME);
 
         for (Element element : elements) {
-            testCodeAreNotEmpty.add(() -> assertTrue(!element.getElementsByTag(Utils.CODE_TAG).isEmpty() &&
-                !StringUtils.isBlank(element.getElementsByTag(Utils.CODE_TAG).html()), "The code section should not be Empty"));
+            testCodeAreNotEmpty.add(() -> assertTrue(!element.getElementsByTag(CODE_TAG).isEmpty() &&
+                !StringUtils.isBlank(element.getElementsByTag(CODE_TAG).html()), "The code section should not be Empty"));
         }
 
         Assertions.assertAll(testCodeAreNotEmpty);

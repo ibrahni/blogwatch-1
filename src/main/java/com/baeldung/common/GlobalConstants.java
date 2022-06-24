@@ -246,6 +246,10 @@ public class GlobalConstants {
     public static final String DRIP_MAIN_EVENT_TRACKING_SCRIPT_TKP = "tag.getdrip.com/9539554.js";
     public static final String DRIP_EVENT_CONVERSION_TRACKING_SCRIPT_TKP = "window._dcq.push([\"track\"";
     
+    
+    public static final String LANGUAGE_JAVA_CLASS_NAME = "language-java";
+    public static final String CODE_TAG = "code";
+    
     // test names for
     public static final String givenAllArticles_whenAnalysingImages_thenImagesDoNotPoinToTheDraftsSite = "givenAllArticles_whenAnalysingImages_thenImagesDoNotPoinToTheDraftsSite";
     public static final String givenAllArticles_whenAnalyzingExcerpt_thenItShouldNotBeEmptyAndShouldMatchDescription = "givenAllArticles_whenAnalyzingExcerpt_thenItShouldNotBeEmptyAndShouldMatchDescription";
