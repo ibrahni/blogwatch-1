@@ -67,9 +67,10 @@ public class Crawler4JTest extends BaseCrawler4JTest {
 
         });
 
-        if (Utils.hasArticlesWithProblems(results)) {
-            recordMetrics(results.size(), TestMetricTypes.FAILED);
-            recordFailure(GlobalConstants.givenAllTheArticles_whenAnArticleLoads_thenJavaClassesAndMethodsCanBeFoundOnGitHub, results.size());
+        final int failingArticles = Utils.countArticlesWithProblems(results);
+        if (failingArticles > 0) {
+            recordMetrics(failingArticles, TestMetricTypes.FAILED);
+            recordFailure(GlobalConstants.givenAllTheArticles_whenAnArticleLoads_thenJavaClassesAndMethodsCanBeFoundOnGitHub, failingArticles);
             failTestWithLoggingTotalNoOfFailures("\n\nTest Results-->" + Utils.getErrorMessageForJavaConstructsTest(results, codeSnippetCrawlerController.getBaseURL()));
         }
 
