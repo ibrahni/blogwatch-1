@@ -1,8 +1,16 @@
 package com.baeldung.selenium.common;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.extension.ExtensionContext;
+import org.junit.jupiter.api.extension.ParameterContext;
+import org.junit.jupiter.api.extension.ParameterResolutionException;
+import org.junit.jupiter.api.extension.ParameterResolver;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
@@ -41,6 +49,19 @@ public class ConcurrentBaseUISeleniumTest extends BaseTest implements Supplier<S
     static ConcurrentExtension extension = ConcurrentExtension
         .withGlobalThreadCount(CONCURRENCY_LEVEL);
 
+    @RegisterExtension
+    static ParameterResolver nullResolver = new ParameterResolver() {
+        @Override
+        public boolean supportsParameter(ParameterContext parameterContext, ExtensionContext extensionContext) throws ParameterResolutionException {
+            return parameterContext.getParameter().getType().equals(SitePage.class);
+        }
+
+        @Override
+        public Object resolveParameter(ParameterContext parameterContext, ExtensionContext extensionContext) throws ParameterResolutionException {
+            return null;
+        }
+    };
+
     @Autowired
     ApplicationContext appContext;
 
@@ -67,6 +88,68 @@ public class ConcurrentBaseUISeleniumTest extends BaseTest implements Supplier<S
         return appContext.getBean("onDemandSitePage", SitePage.class);
     }
 
+    /**
+     * Runs a command on a new window, automatically handles closing.
+     */
+    protected void onNewWindow(Consumer<SitePage> cmd) {
+        final SitePage page = get();
+        try {
+            page.openNewWindow();
+            cmd.accept(page);
+        } finally {
+            page.quiet();
+        }
+    }
+
+    protected boolean loadNextURL(SitePage page) {
+        return false;
+    }
+
+    /**
+     * Encapsulates the test logic, determines how to run the test, in bulk or for single page.
+     */
+    protected class TestLogic {
+
+        final Set<SitePage.Type> ensureTypes;
+        Consumer<SitePage> consumer;
+
+        public TestLogic(SitePage.Type... types) {
+            this.ensureTypes = new HashSet<>(Arrays.asList(types));
+        }
+
+        public TestLogic apply(Consumer<SitePage> consumer) {
+            this.consumer = page -> {
+                if (ensureTag(page)) {
+                    consumer.accept(page);
+                }
+            };
+            return this;
+        }
+
+        private boolean ensureTag(SitePage sitePage) {
+            return ensureTypes.isEmpty() || ensureTypes.contains(sitePage.getType());
+        }
+
+        public void run(SitePage page) {
+            if (page == null) {
+                runAll();
+            } else {
+                // run test logic on a single page
+                consumer.accept(page);
+            }
+        }
+
+        public void runAll() {
+            // run test logic against all urls
+            onNewWindow(newPage -> {
+                while (loadNextURL(newPage)) {
+                    consumer.accept(newPage);
+                }
+            });
+        }
+    }
+
+
     protected boolean shouldSkipUrl(SitePage page, String testName) {
         return shouldSkipUrl(page, testName, true);
     }
@@ -81,5 +164,9 @@ public class ConcurrentBaseUISeleniumTest extends BaseTest implements Supplier<S
 
     protected void triggerTestFailure(Multimap<String, String> badURLs) {
         Utils.triggerTestFailure(badURLs, null, "Failed tests-->", getMetrics(GlobalConstants.TestMetricTypes.FAILED));
+    }
+
+    protected void log(String testName) {
+        logger.info("Running Test - {}", testName);
     }
 }

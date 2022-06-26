@@ -40,6 +40,12 @@ public class SitePage extends BlogBaseDriver {
 
     private static DateTimeFormatter publishedDateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssXXX");
 
+    private Type type = Type.NULL;
+
+    public enum Type {
+        NULL, PAGE, ARTICLE;
+    }
+
     public SitePage(browserConfig browserConfig) {
         super(browserConfig);
     }
@@ -47,6 +53,14 @@ public class SitePage extends BlogBaseDriver {
     @Override
     public void setUrl(String pageURL) {
         this.url = pageURL;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
+    }
+
+    public Type getType() {
+        return this.type;
     }
 
     public WebElement findContentDiv() {
@@ -159,14 +173,25 @@ public class SitePage extends BlogBaseDriver {
                 .findElements(By.xpath("//section//img[contains(@src, 'drafts.baeldung.com')]"));
     }
 
+    public List<WebElement> findImagesPointingToDraftSiteOnThePage() {
+        return this.getWebDriver()
+            .findElements(By.xpath("//article//img[contains(@src, 'drafts.baeldung.com')]"));
+    }
+
+    public List<WebElement> findImagesPointingToDraftSite() {
+        String path = switch (this.type) {
+            case ARTICLE -> "section";
+            case PAGE -> "article";
+            default -> "";
+        };
+        return this.getWebDriver()
+            .findElements(By.xpath("//%s//img[contains(@src, 'drafts.baeldung.com')]"
+                .formatted(path)));
+    }
+
     public List<WebElement> findAnchorsPointingToAnImageAndDraftSiteOnTheArticle() {
         return this.getWebDriver()
                 .findElements(By.xpath("//section//a[contains(@href, 'drafts.baeldung.com')  and ( contains(@href, '.jpg') or contains(@href, '.jpeg') or contains(@href, '.png'))]"));
-    }
-
-    public List<WebElement> findImagesPointingToDraftSiteOnThePage() {
-        return this.getWebDriver()
-                .findElements(By.xpath("//article//img[contains(@src, 'drafts.baeldung.com')]"));
     }
 
     public List<WebElement> findAnchorsPointingToAnImageAndInvalidEnvOnThePage() {
