@@ -2,6 +2,7 @@ package com.baeldung.selenium.common;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
@@ -111,10 +112,17 @@ public class ConcurrentBaseUISeleniumTest extends BaseTest implements Supplier<S
     protected class TestLogic {
 
         final Set<SitePage.Type> ensureTypes;
+        final Set<String> testNames = new LinkedHashSet<>();
+
         Consumer<SitePage> consumer;
 
         public TestLogic(SitePage.Type... types) {
             this.ensureTypes = new HashSet<>(Arrays.asList(types));
+        }
+
+        public TestLogic log(String testName) {
+            this.testNames.add(testName);
+            return this;
         }
 
         public TestLogic apply(Consumer<SitePage> consumer) {
@@ -124,10 +132,6 @@ public class ConcurrentBaseUISeleniumTest extends BaseTest implements Supplier<S
                 }
             };
             return this;
-        }
-
-        private boolean ensureTag(SitePage sitePage) {
-            return ensureTypes.isEmpty() || ensureTypes.contains(sitePage.getType());
         }
 
         public void run(SitePage page) {
@@ -140,12 +144,22 @@ public class ConcurrentBaseUISeleniumTest extends BaseTest implements Supplier<S
         }
 
         public void runAll() {
+            // log testnames only once
+            log();
             // run test logic against all urls
             onNewWindow(newPage -> {
                 while (loadNextURL(newPage)) {
                     consumer.accept(newPage);
                 }
             });
+        }
+
+        private void log() {
+            testNames.forEach(name -> logger.info("Running Test - {}", name));
+        }
+
+        private boolean ensureTag(SitePage sitePage) {
+            return ensureTypes.isEmpty() || ensureTypes.contains(sitePage.getType());
         }
     }
 
@@ -166,7 +180,4 @@ public class ConcurrentBaseUISeleniumTest extends BaseTest implements Supplier<S
         Utils.triggerTestFailure(badURLs, null, "Failed tests-->", getMetrics(GlobalConstants.TestMetricTypes.FAILED));
     }
 
-    protected void log(String testName) {
-        logger.info("Running Test - {}", testName);
-    }
 }
