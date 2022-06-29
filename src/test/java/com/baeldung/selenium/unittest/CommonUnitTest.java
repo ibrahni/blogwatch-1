@@ -17,7 +17,7 @@ public class CommonUnitTest {
     @Test
     void givenAReadmeWithLocalSystemPath_whenConvertToHttpURL_itReturn200OK(){
         
-        String localSystemPath="/var/lib/jenkins/tutorials-source-code/akka-streams/README.md";
+        String localSystemPath="/var/lib/jenkins/tutorials-source-code/akka-modules/README.md";
         String httpUrl = replaceTutorialLocalPathWithHttpUrl(GlobalConstants.tutorialsRepoLocalPath, GlobalConstants.tutorialsRepoMasterPath).apply(localSystemPath);
         
         logger.info("URL to test: {}", httpUrl);
