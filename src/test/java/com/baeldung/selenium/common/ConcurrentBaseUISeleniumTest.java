@@ -136,14 +136,14 @@ public class ConcurrentBaseUISeleniumTest extends BaseTest implements Supplier<S
 
         public void run(SitePage page) {
             if (page == null) {
-                runAll();
+                run();
             } else {
                 // run test logic on a single page
                 consumer.accept(page);
             }
         }
 
-        public void runAll() {
+        public void run() {
             // log testnames only once
             log();
             // run test logic against all urls
@@ -176,8 +176,8 @@ public class ConcurrentBaseUISeleniumTest extends BaseTest implements Supplier<S
         return false;
     }
 
-    protected void triggerTestFailure(Multimap<String, String> badURLs) {
-        Utils.triggerTestFailure(badURLs, null, "Failed tests-->", getMetrics(GlobalConstants.TestMetricTypes.FAILED));
+    protected void triggerTestFailure(Multimap<String, String> badURLs, Multimap<Integer, String> resultsForGitHubHttpStatusTest) {
+        Utils.triggerTestFailure(badURLs, resultsForGitHubHttpStatusTest, "Failed tests-->", getMetrics(GlobalConstants.TestMetricTypes.FAILED));
     }
 
 }

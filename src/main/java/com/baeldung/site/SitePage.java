@@ -40,10 +40,10 @@ public class SitePage extends BlogBaseDriver {
 
     private static DateTimeFormatter publishedDateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssXXX");
 
-    private Type type = Type.NULL;
+    private Type type;
 
     public enum Type {
-        NULL, PAGE, ARTICLE;
+        PAGE, ARTICLE;
     }
 
     public SitePage(browserConfig browserConfig) {

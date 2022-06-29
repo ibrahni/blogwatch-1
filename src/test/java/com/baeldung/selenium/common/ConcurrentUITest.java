@@ -1,7 +1,9 @@
 package com.baeldung.selenium.common;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -11,12 +13,16 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.openqa.selenium.WebElement;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.util.CollectionUtils;
 
 import com.baeldung.common.GlobalConstants;
 import com.baeldung.common.GlobalConstants.TestMetricTypes;
 import com.baeldung.common.UrlIterator;
 import com.baeldung.common.Utils;
+import com.baeldung.common.YAMLProperties;
+import com.baeldung.site.InvalidTitles;
 import com.baeldung.site.SitePage;
+import com.baeldung.utility.TestUtils;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Multimaps;
@@ -37,27 +43,48 @@ import dev.yavuztas.junit.ConcurrentTest;
  */
 public class ConcurrentUITest extends ConcurrentBaseUISeleniumTest {
 
+    @Value("#{'${givenAllArticles_whenWeCheckTheAuthor_thenTheyAreNotOnTheInternalTeam.site-excluded-authors}'.split(',')}")
+    private List<String> excludedListOfAuthors;
+
     @Value("${ignore.urls.newer.than.weeks}")
     private int ignoreUrlsNewerThanWeeks;
+
+    @Value("${min.java.docs.accepted.version:11}")
+    private String minJavDocsAcceptedVersion;
+
+    @Value("${single-url-to-run-all-tests}")
+    private String singleURL;
 
     private UrlIterator urlIterator;
 
     private Multimap<String, String> badURLs;
+    private Multimap<Integer, String> resultsForGitHubHttpStatusTest;
+
+    List<String> level2ExceptionsForJavaDocTest= YAMLProperties.exceptionsForTestsLevel2.get(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenItDoesNotLinkToOldJavaDocs);
+    List<String> level2ExceptionsForTitleCapitalizationTest= YAMLProperties.exceptionsForTestsLevel2.get(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenTheArticleHasProperTitleCapitalization);
+    List<String> level2ExceptionsForTitleProperDotsTest= YAMLProperties.exceptionsForTestsLevel2.get(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenTheArticleHasProperDotsInTitle);
 
     @BeforeEach
     public void setup() throws IOException {
         logger.info("The test will ignore URls newer than {} weeks", ignoreUrlsNewerThanWeeks);
         urlIterator = new UrlIterator();
-        urlIterator.append(SitePage.Type.ARTICLE, Utils.fetchAllArtilcesAsListIterator());
-        urlIterator.append(SitePage.Type.PAGE, Utils.fetchAllPagesAsListIterator());
+        if (StringUtils.isNotEmpty(singleURL)) {
+            // when a single url is given, all tests run against only that url
+            urlIterator.append(SitePage.Type.ARTICLE, Collections.singleton(singleURL).iterator());
+        } else {
+            // otherwise load all pages
+            urlIterator.append(SitePage.Type.ARTICLE, Utils.fetchAllArtilcesAsListIterator());
+            urlIterator.append(SitePage.Type.PAGE, Utils.fetchAllPagesAsListIterator());
+        }
         badURLs = Multimaps.synchronizedListMultimap(ArrayListMultimap.create());
+        resultsForGitHubHttpStatusTest = Multimaps.synchronizedListMultimap(ArrayListMultimap.create());
     }
 
     @AfterEach
     public void clear() {
         // if any bad urls in each test then fail
-        if (badURLs.size() > 0) {
-            triggerTestFailure(badURLs);
+        if (badURLs.size() > 0 || resultsForGitHubHttpStatusTest.size() > 0) {
+            triggerTestFailure(badURLs, resultsForGitHubHttpStatusTest);
         }
     }
 
@@ -328,6 +355,22 @@ public class ConcurrentUITest extends ConcurrentBaseUISeleniumTest {
     }
 
     @ConcurrentTest
+    public final void givenAllArticles_whenAnArticleLoads_thenItIsNotBuiltUsingTheThriveArchtect() {
+        new TestLogic(SitePage.Type.ARTICLE)
+            .log(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenItIsNotBuiltUsingTheThriveArchtect)
+            .apply(page -> {
+                recordExecution(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenItIsNotBuiltUsingTheThriveArchtect);
+
+                if (page.containsThriveArchtectResource()) {
+                    logger.info("page found which is build using Thrive Archetect " + page.getUrl());
+                    recordMetrics(1, TestMetricTypes.FAILED);
+                    recordFailure(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenItIsNotBuiltUsingTheThriveArchtect);
+                    badURLs.put(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenItIsNotBuiltUsingTheThriveArchtect, page.getUrlWithNewLineFeed());
+                }
+            }).run();
+    }
+
+    @ConcurrentTest
     @Tag(GlobalConstants.TAG_TECHNICAL)
     public final void givenAllTestsRelatedTechnicalArea_whenHittingAllArticles_thenOK() {
         new TestLogic().apply(page -> {
@@ -347,7 +390,217 @@ public class ConcurrentUITest extends ConcurrentBaseUISeleniumTest {
                 logger.error("Error occurred while processing: {}, error message: {}",
                     page.getUrl(), StringUtils.substring(e.getMessage(), 0, 100));
             }
-        }).runAll();
+        }).run();
+    }
+
+    /**
+     * The test looks into four locations for searching a back-link
+     * First URL - the URL linked from the article
+     * 2nd URL - the immediate parent of the first URL
+     * 3rd URL - the master module, immediate child of \master\
+     * 4th URL - the immediate child of the parent(eugenp or Baeldung) repository
+     */
+    @ConcurrentTest
+    @Tag(GlobalConstants.TAG_GITHUB_RELATED)
+    public final void givenArticlesWithALinkToTheGitHubModule_whenTheArticleLoads_thenTheGitHubModuleLinksBackToTheArticle() {
+        new TestLogic(SitePage.Type.ARTICLE)
+            .log(GlobalConstants.givenArticlesWithALinkToTheGitHubModule_whenTheArticleLoads_thenTheGitHubModuleLinksBackToTheArticle)
+            .log(GlobalConstants.givenArticlesWithALinkToTheGitHubModule_whenTheArticleLoads_thenTheArticleTitleAndGitHubLinkMatch)
+            .log(GlobalConstants.givenAllArticlesLinkingToGitHubModule_whenAnArticleLoads_thenLinkedGitHubModulesReturns200OK)
+            .apply(page -> {
+                recordExecution(GlobalConstants.givenArticlesWithALinkToTheGitHubModule_whenTheArticleLoads_thenTheGitHubModuleLinksBackToTheArticle);
+                recordExecution(GlobalConstants.givenArticlesWithALinkToTheGitHubModule_whenTheArticleLoads_thenTheArticleTitleAndGitHubLinkMatch);
+                recordExecution(GlobalConstants.givenAllArticlesLinkingToGitHubModule_whenAnArticleLoads_thenLinkedGitHubModulesReturns200OK);
+
+                List<String> gitHubModulesLinkedOntheArticle = page.gitHubModulesLinkedOnTheArticle();
+                if (shouldSkipUrl(page, GlobalConstants.givenAllArticlesLinkingToGitHubModule_whenAnArticleLoads_thenLinkedGitHubModulesReturns200OK) || Utils.excludePage(page.getUrl(), GlobalConstants.ARTILCE_JAVA_WEEKLY, false)) {
+                    return;
+                }
+                Map<Integer, String> httpStatusCodesOtherThan200OK = TestUtils.getHTTPStatusCodesOtherThan200OK(gitHubModulesLinkedOntheArticle);
+                if (httpStatusCodesOtherThan200OK.size() > 0) {
+                    recordMetrics(httpStatusCodesOtherThan200OK.size(), TestMetricTypes.FAILED);
+                    recordFailure(GlobalConstants.givenAllArticlesLinkingToGitHubModule_whenAnArticleLoads_thenLinkedGitHubModulesReturns200OK, httpStatusCodesOtherThan200OK.size());
+                    httpStatusCodesOtherThan200OK.forEach((key, value) -> resultsForGitHubHttpStatusTest.put(key, page.getUrl() + " --> " + value));
+                }
+
+                if (shouldSkipUrl(page, GlobalConstants.givenArticlesWithALinkToTheGitHubModule_whenTheArticleLoads_thenTheGitHubModuleLinksBackToTheArticle) || Utils.excludePage(page.getUrl(), GlobalConstants.ARTILCE_JAVA_WEEKLY, false)) {
+                    return;
+                }
+
+                String articleHeading = page.getArticleHeading();
+                String articleRelativeUrl = page.getRelativeUrl();
+                List<String> linksToTheGithubModule = page.findLinksToTheGithubModule(gitHubModulesLinkedOntheArticle);
+                if (CollectionUtils.isEmpty(linksToTheGithubModule)) {
+                    return;
+                }
+
+                if (!TestUtils.articleLinkFoundOnTheGitHubModule(linksToTheGithubModule, articleRelativeUrl, page)) {
+                    recordMetrics(1, TestMetricTypes.FAILED);
+                    recordFailure(GlobalConstants.givenArticlesWithALinkToTheGitHubModule_whenTheArticleLoads_thenTheGitHubModuleLinksBackToTheArticle);
+                    badURLs.put(GlobalConstants.givenArticlesWithALinkToTheGitHubModule_whenTheArticleLoads_thenTheGitHubModuleLinksBackToTheArticle, page.getUrlWithNewLineFeed());
+                } else if (!shouldSkipUrl(page, GlobalConstants.givenArticlesWithALinkToTheGitHubModule_whenTheArticleLoads_thenTheArticleTitleAndGitHubLinkMatch) && !page.articleTitleMatchesWithTheGitHubLink(articleHeading, articleRelativeUrl)) {
+                    recordMetrics(1, TestMetricTypes.FAILED);
+                    recordFailure(GlobalConstants.givenArticlesWithALinkToTheGitHubModule_whenTheArticleLoads_thenTheArticleTitleAndGitHubLinkMatch);
+                    badURLs.put(GlobalConstants.givenArticlesWithALinkToTheGitHubModule_whenTheArticleLoads_thenTheArticleTitleAndGitHubLinkMatch, page.getUrlWithNewLineFeed());
+                }
+            }).run();
+    }
+
+    @ConcurrentTest
+    public final void givenAllArticles_whenAnArticleLoads_thenTheMetaDescriptionExists(SitePage sitePage) {
+        new TestLogic(SitePage.Type.ARTICLE)
+            .log(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenTheMetaDescriptionExists)
+            .apply(page -> {
+                recordExecution(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenTheMetaDescriptionExists);
+
+                if (shouldSkipUrl(page, GlobalConstants.givenAllArticles_whenAnArticleLoads_thenTheMetaDescriptionExists)) {
+                    return;
+                }
+
+                if (!page.metaDescriptionTagsAvailable()) {
+                    recordMetrics(1, TestMetricTypes.FAILED);
+                    recordFailure(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenTheMetaDescriptionExists);
+                    badURLs.put(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenTheMetaDescriptionExists, page.getUrlWithNewLineFeed());
+                }
+            }).run(sitePage);
+    }
+
+    @ConcurrentTest
+    public final void givenAllArticles_whenWeCheckTheAuthor_thenTheyAreNotOnTheInternalTeam(SitePage sitePage) {
+        new TestLogic(SitePage.Type.ARTICLE)
+            .log(GlobalConstants.givenAllArticles_whenWeCheckTheAuthor_thenTheyAreNotOnTheInternalTeam)
+            .apply(page -> {
+                recordExecution(GlobalConstants.givenAllArticles_whenWeCheckTheAuthor_thenTheyAreNotOnTheInternalTeam);
+
+                if (shouldSkipUrl(page, GlobalConstants.givenAllArticles_whenWeCheckTheAuthor_thenTheyAreNotOnTheInternalTeam)) {
+                    return;
+                }
+
+                String authorName = page.findAuthorOfTheArticle();
+                if (excludedListOfAuthors.contains(authorName.toLowerCase())) {
+                    recordMetrics(1, TestMetricTypes.FAILED);
+                    recordFailure(GlobalConstants.givenAllArticles_whenWeCheckTheAuthor_thenTheyAreNotOnTheInternalTeam);
+                    badURLs.put(GlobalConstants.givenAllArticles_whenWeCheckTheAuthor_thenTheyAreNotOnTheInternalTeam, page.getUrlWithNewLineFeed());
+                }
+            }).run(sitePage);
+    }
+
+    @ConcurrentTest
+    public final void givenAllArticles_whenAnArticleLoads_thenTheArticleDoesNotCotainWrongQuotations(SitePage sitePage) {
+        new TestLogic(SitePage.Type.ARTICLE)
+            .log(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenTheArticleDoesNotCotainWrongQuotations)
+            .apply(page -> {
+                recordExecution(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenTheArticleDoesNotCotainWrongQuotations);
+
+                if (shouldSkipUrl(page, GlobalConstants.givenAllArticles_whenAnArticleLoads_thenTheArticleDoesNotCotainWrongQuotations)) {
+                    return;
+                }
+
+                if (page.findInvalidCharactersInTheArticle()) {
+                    recordMetrics(1, TestMetricTypes.FAILED);
+                    recordFailure(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenTheArticleDoesNotCotainWrongQuotations);
+                    badURLs.put(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenTheArticleDoesNotCotainWrongQuotations, page.getUrlWithNewLineFeed());
+                }
+            }).run(sitePage);
+    }
+
+    @ConcurrentTest
+    public final void givenAllArticles_whenAnArticleLoads_thenTheArticleHasProperTitleCapitalization(SitePage sitePage) {
+        new TestLogic(SitePage.Type.ARTICLE)
+            .log(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenTheArticleHasProperTitleCapitalization)
+            .log(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenTheArticleHasProperDotsInTitle)
+            .apply(page -> {
+                recordExecution(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenTheArticleHasProperTitleCapitalization);
+                recordExecution(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenTheArticleHasProperDotsInTitle);
+
+                if (shouldSkipUrl(page, GlobalConstants.givenAllArticles_whenAnArticleLoads_thenTheArticleHasProperTitleCapitalization)) {
+                    return;
+                }
+
+                try {
+                    InvalidTitles titlesWithErrors = page.findInvalidTitles(level2ExceptionsForTitleCapitalizationTest);
+                    if (titlesWithErrors.invalidTitles().size() > 0) {
+                        recordMetrics(titlesWithErrors.invalidTitles().size(), TestMetricTypes.FAILED);
+                        recordFailure(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenTheArticleHasProperTitleCapitalization, titlesWithErrors.invalidTitles().size());
+                        badURLs.put(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenTheArticleHasProperTitleCapitalization, Utils.formatResultsForCapatalizationTest(page.getUrl(), titlesWithErrors.invalidTitles()));
+                    }
+
+                    if (shouldSkipUrl(page, GlobalConstants.givenAllArticles_whenAnArticleLoads_thenTheArticleHasProperDotsInTitle)
+                        || Utils.excludePage(page.getUrl(), GlobalConstants.ARTILCE_JAVA_WEEKLY, false)
+                        || page.hasCategoryOrTag(level2ExceptionsForTitleProperDotsTest)) {
+                        return;
+                    }
+
+                    if (titlesWithErrors.titlesWithInvalidDots().size() > 0) {
+                        recordMetrics(titlesWithErrors.titlesWithInvalidDots().size(), TestMetricTypes.FAILED);
+                        recordFailure(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenTheArticleHasProperDotsInTitle, titlesWithErrors.titlesWithInvalidDots().size());
+                        badURLs.put(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenTheArticleHasProperDotsInTitle, Utils.formatResultsForCapatalizationTest(page.getUrl(), titlesWithErrors.titlesWithInvalidDots()));
+                    }
+                } catch (Exception e) {
+                    logger.error("Error occurened in Title Capatilization test for: " + page.getUrl() + " error message:" + e.getMessage());
+                }
+            }).run(sitePage);
+    }
+
+    @ConcurrentTest
+    public final void givenAllArticles_whenAnalyzingCategories_thenTheArticleDoesNotContainUnnecessaryCategory(SitePage sitePage) {
+        new TestLogic(SitePage.Type.ARTICLE)
+            .log(GlobalConstants.givenAllArticles_whenAnalyzingCategories_thenTheArticleDoesNotContainUnnecessaryCategory)
+            .apply(page -> {
+                recordExecution(GlobalConstants.givenAllArticles_whenAnalyzingCategories_thenTheArticleDoesNotContainUnnecessaryCategory);
+
+                if (shouldSkipUrl(page, GlobalConstants.givenAllArticles_whenAnalyzingCategories_thenTheArticleDoesNotContainUnnecessaryCategory)) {
+                    return;
+                }
+
+                if (page.hasUnnecessaryLabels()) {
+                    // logger.info("URL found with Spring and other more specific label:" +
+                    // page.getUrlWithNewLineFeed());
+                    recordMetrics(1, TestMetricTypes.FAILED);
+                    recordFailure(GlobalConstants.givenAllArticles_whenAnalyzingCategories_thenTheArticleDoesNotContainUnnecessaryCategory);
+                    badURLs.put(GlobalConstants.givenAllArticles_whenAnalyzingCategories_thenTheArticleDoesNotContainUnnecessaryCategory, page.getUrlWithNewLineFeed());
+                }
+            }).run(sitePage);
+    }
+
+    @ConcurrentTest
+    public final void givenAllArticles_whenAnArticleLoads_thenItDoesNotLinkToOldJavaDocs(SitePage sitePage) {
+        new TestLogic(SitePage.Type.ARTICLE)
+            .log(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenItDoesNotLinkToOldJavaDocs)
+            .apply(page -> {
+                recordExecution(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenItDoesNotLinkToOldJavaDocs);
+
+                if (shouldSkipUrl(page, GlobalConstants.givenAllArticles_whenAnArticleLoads_thenItDoesNotLinkToOldJavaDocs)) {
+                    return;
+                }
+
+                List<WebElement> webElementsLinkingToOldJavaDocs = page.findElementsLinkingToOldJavaDocs(Double.valueOf(minJavDocsAcceptedVersion), level2ExceptionsForJavaDocTest);
+
+                if (webElementsLinkingToOldJavaDocs.size() > 0) {
+                    recordMetrics(1, TestMetricTypes.FAILED);
+                    recordFailure(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenItDoesNotLinkToOldJavaDocs);
+                    badURLs.put(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenItDoesNotLinkToOldJavaDocs,Utils.formatResultsForOldJavaDocs(badURLs,webElementsLinkingToOldJavaDocs, page.getUrl() ));
+
+                }
+            }).run(sitePage);
+    }
+
+    @ConcurrentTest
+    @Tag(GlobalConstants.TAG_EDITORIAL)
+    public final void givenAllEditorialTests_whenHittingAllArticles_thenOK() {
+        new TestLogic(SitePage.Type.ARTICLE).apply(page -> {
+            try {
+                givenAllArticles_whenAnArticleLoads_thenTheMetaDescriptionExists(page);
+                givenAllArticles_whenWeCheckTheAuthor_thenTheyAreNotOnTheInternalTeam(page);
+                givenAllArticles_whenAnArticleLoads_thenTheArticleDoesNotCotainWrongQuotations(page);
+                givenAllArticles_whenAnArticleLoads_thenTheArticleHasProperTitleCapitalization(page);
+                givenAllArticles_whenAnalyzingCategories_thenTheArticleDoesNotContainUnnecessaryCategory(page);
+                givenAllArticles_whenAnArticleLoads_thenItDoesNotLinkToOldJavaDocs(page);
+            } catch (Exception e) {
+                logger.error("Error occurred while processing: {}, error message: {}",
+                    page.getUrl(), StringUtils.substring(e.getMessage(), 0, 100));
+            }
+        }).run();
     }
 
 }
