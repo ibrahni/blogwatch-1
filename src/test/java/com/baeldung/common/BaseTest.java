@@ -20,7 +20,7 @@ import com.baeldung.common.GlobalConstants.TestMetricTypes;
 @ThreadSafe
 public class BaseTest {
 
-    protected static final int CONCURRENCY_LEVEL = Integer.parseInt(System.getProperty(GlobalConstants.ENV_PROPERTY_CONCURRENCY_LEVEL, "8"));
+    protected static final int CONCURRENCY_LEVEL = Integer.parseInt(System.getProperty(GlobalConstants.ENV_PROPERTY_CONCURRENCY_LEVEL, "3"));
 
     protected Logger logger = LoggerFactory.getLogger(getClass());
     protected static Logger baseLogger = LoggerFactory.getLogger(BaseTest.class);
