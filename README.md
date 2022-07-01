@@ -10,11 +10,13 @@ The project uses Selenium framework, Crawler4J, jsoup and REST Assured for UI te
 
 ### Running Tests from the IDE
 
-The default configuration executes tests with headless mode in windows environment and target URL is https://www.baeldung.com. The configuration can be changed using following properties:
+The default configuration executes tests with headless mode in windows environment, target URL is https://www.baeldung.com, and the concurrency level is 3. 
+The configuration can be changed using following properties:
 
   - _spring.profiles.active_ - environment variable to either "headless-browser" and "ui-browser"
   - _target.env_ - environment variable should be set to "win" or "linux" for headless browser
   - _base.url_ - to target base URL, for example _http://www.baeldung.com_
+  - _concurrency.level_ - parallel threads to request to the target url
 
 These can be set as environment variables via the Eclipse run configuration. 
 
@@ -26,9 +28,11 @@ Three Maven profiles are available for running tests:
   - _headless-browser-linux_ 
   - _ui-brower-windows_
 
-The target URL for all profiles is https://www.baeldung.com. This can be changed using following property
+The target URL for all profiles is https://www.baeldung.com, and the concurrency level is 3.
+This can be changed using following properties:
 
 - _base.url_ - to target base URL, for example _http://www.baeldung.com_
+- _concurrency.level_ - parallel threads to request to the target url
 
 ### Headless Browser selection
 
@@ -95,7 +99,52 @@ For specific situation where this can not be used, we can explicitly collect the
 Explicit invocation of these methods is needed in the following situations:
 - the test is annotated with GlobalConstants.TAG_SKIP_METRICS
 - we want to record multiple failures inside the same test
-- the test is invoked from another test  (eg: PagesUITest.givenTestsRelatedTechnicalArea_whenHittingAllPages_thenOK)
+- the test is invoked from another test  (eg: AllUrlsUITest.givenAllTestsRelatedTechnicalArea_whenHittingAllArticles_thenOK)
+
+### Parallel Execution of Tests
+Currently, _concurrency.level_ property is only in effect for [_AllUrlsUITest_](https://github.com/Baeldung/blogwatch/blob/master/src/test/java/com/baeldung/selenium/common/AllUrlsUITest.java).
+
+Concurrency supported tests are done by extending a special base class, [_ConcurrentBaseUISeleniumTest_](https://github.com/Baeldung/blogwatch/blob/master/src/test/java/com/baeldung/selenium/common/ConcurrentBaseUISeleniumTest.java), 
+which provides an isolated instance of _SitePage_ for each threads. 
+
+To migrate any other tests into its concurrent version, simply extend it from the new base class instead of _BaseUISeleniumTest_:
+```java
+public class ConcurrentTest extends ConcurrentBaseUISeleniumTest {
+    
+    @BeforeEach
+    public void setup() {
+        // prepare shared state which is accessed by concurrent threads
+    }
+
+    @AfterEach
+    public void clear() {
+        // checking and triggering failures
+    }
+
+    @ConcurrentTest
+    public final void testMethod(SitePage sitePage) {
+        new TestLogic()
+            .log("testMethod")
+            .apply(page -> {
+                // individual test logic
+            }).run(sitePage);
+    }
+
+    @ConcurrentTest
+    public final void testBulk() {
+        new TestLogic().apply(page -> {
+            testMethod(page);
+        }).run();
+    }
+}
+```
+
+To run any single test method in parallel, use Maven's _test_ property in the format of `-Dtest=<test-class-name>#<method-name>`. 
+
+An example maven command:
+```
+test -Dtest=AllUrlsUITest#givenAllPages_whenAnalysingImages_thenImagesDoNotPoinToTheDraftsSite -Dconcurrency.level=3 -Dheadless.browser.name=chrome-headless -Dbase.url=http://staging8.baeldung.com
+```
 
 ### On Jenkins
  
