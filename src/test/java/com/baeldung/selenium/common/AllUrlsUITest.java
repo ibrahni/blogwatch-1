@@ -41,7 +41,7 @@ import dev.yavuztas.junit.ConcurrentTest;
  * Default parallel thread count is 8. This configuration can be set via the system property -Dconcurrency.level=8.
  * For details see: {@link com.baeldung.common.BaseTest}
  */
-public class ConcurrentUITest extends ConcurrentBaseUISeleniumTest {
+public class AllUrlsUITest extends ConcurrentBaseUISeleniumTest {
 
     @Value("#{'${givenAllArticles_whenWeCheckTheAuthor_thenTheyAreNotOnTheInternalTeam.site-excluded-authors}'.split(',')}")
     private List<String> excludedListOfAuthors;
@@ -182,24 +182,6 @@ public class ConcurrentUITest extends ConcurrentBaseUISeleniumTest {
                     badURLs.put(GlobalConstants.givenAllPages_whenAPageLoads_thenItDoesNotContainOverlappingText, page.getUrlWithNewLineFeed());
                 }
             }).run(sitePage);
-    }
-
-    @ConcurrentTest
-    @Tag(GlobalConstants.TAG_EDITORIAL)
-    public final void givenAllPages_whenAPageLoads_thenTheMetaDescriptionExists(SitePage sitePage) {
-        new TestLogic(SitePage.Type.PAGE).apply(page -> {
-            recordExecution(GlobalConstants.givenAllPages_whenAPageLoads_thenTheMetaDescriptionExists);
-
-            if (shouldSkipUrl(page, GlobalConstants.givenAllPages_whenAPageLoads_thenTheMetaDescriptionExists)) {
-                return;
-            }
-
-            if (!Utils.excludePage(page.getUrl(), GlobalConstants.PAGES_THANK_YOU, false) && !page.findMetaDescriptionTag()) {
-                recordMetrics(1, TestMetricTypes.FAILED);
-                recordFailure(GlobalConstants.givenAllPages_whenAPageLoads_thenTheMetaDescriptionExists);
-                badURLs.put(GlobalConstants.givenAllPages_whenAPageLoads_thenTheMetaDescriptionExists, page.getUrlWithNewLineFeed());
-            }
-        }).run(sitePage);
     }
 
     @ConcurrentTest
@@ -448,12 +430,20 @@ public class ConcurrentUITest extends ConcurrentBaseUISeleniumTest {
 
     @ConcurrentTest
     public final void givenAllArticles_whenAnArticleLoads_thenTheMetaDescriptionExists(SitePage sitePage) {
-        new TestLogic(SitePage.Type.ARTICLE)
+        new TestLogic(SitePage.Type.PAGE, SitePage.Type.ARTICLE)
             .log(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenTheMetaDescriptionExists)
             .apply(page -> {
                 recordExecution(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenTheMetaDescriptionExists);
 
-                if (shouldSkipUrl(page, GlobalConstants.givenAllArticles_whenAnArticleLoads_thenTheMetaDescriptionExists)) {
+                if (shouldSkipUrl(page, GlobalConstants.givenAllArticles_whenAnArticleLoads_thenTheMetaDescriptionExists)
+                    // also skip the pages contain thanks, thank-you
+                    || shouldSkipUrl(
+                        page,
+                        GlobalConstants.givenAllArticles_whenAnArticleLoads_thenTheMetaDescriptionExists,
+                        GlobalConstants.PAGES_THANK_YOU,
+                        false
+                    )
+                ) {
                     return;
                 }
 

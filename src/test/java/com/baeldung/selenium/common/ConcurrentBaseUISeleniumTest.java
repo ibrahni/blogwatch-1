@@ -3,6 +3,7 @@ package com.baeldung.selenium.common;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
@@ -169,7 +170,11 @@ public class ConcurrentBaseUISeleniumTest extends BaseTest implements Supplier<S
     }
 
     protected boolean shouldSkipUrl(SitePage page, String testName, boolean compareAfterAddingTrailingSlash) {
-        if (Utils.excludePage(page.getUrl(), YAMLProperties.exceptionsForTests.get(testName), compareAfterAddingTrailingSlash)) {
+        return shouldSkipUrl(page, testName, YAMLProperties.exceptionsForTests.get(testName), compareAfterAddingTrailingSlash);
+    }
+
+    protected boolean shouldSkipUrl(SitePage page, String testName, List<String> entryList, boolean compareAfterAddingTrailingSlash) {
+        if (Utils.excludePage(page.getUrl(), entryList, compareAfterAddingTrailingSlash)) {
             logger.info("Skipping {} for test: {}", page.getUrl(), testName);
             return true;
         }
