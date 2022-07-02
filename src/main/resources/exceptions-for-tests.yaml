@@ -1,106 +1,27 @@
 givenAllArticles_whenAnArticleLoads_thenArticleHasNoEmptyCodeBlock:
-  - /jpa-composite-primary-keys/  
+  - /jpa-composite-primary-keys/
 givenAllArticles_whenAnArticleLoads_thenItHasSingleShortcodeAtTheTop:
-  - /spring-java-online-courses/  
+  - /spring-java-online-courses/
   - /linux/
   - /kotlin/
   - /cs/
   - /scala/
   - /string/
 givenAllArticles_whenAnArticleLoads_thenItHasSingleShortcodeAtTheEnd:
-  - /spring-java-online-courses/ 
+  - /spring-java-online-courses/
   - /kotlin/
   - /linux/
   - /cs/
   - /scala/
   - /codota/
-givenAllArticles_whenAnalysingImages_thenImagesDoNotPoinToTheDraftsSite:
+givenAllArticlesAndPages_whenAnalysingImages_thenImagesDoNotPoinToTheDraftsSite:
   - /javafx/
   - /java-sms-twilio/
   - /apache-mesos
   - /cs/chipset
-givenAllArticles_whenAnArticleLoads_thenTheMetaDescriptionExists: 
-  - /start-here/
-  - /spring-5/
-  - /swagger-test-on-a-page/
-  - /follow/
-  - /baeldung-company-info/
-  - /contact/
-  - /rest-course-almost-done/
-givenArticlesWithALinkToTheGitHubModule_whenTheArticleLoads_thenTheGitHubModuleLinksBackToTheArticle:
-  - /cookbooks/
-  - /security-spring/
-  - /maven-dire/
-  - /slf4j-with-log4j2-logback/
-  - /spring-security-expressions-basic/
-  - /2013/02/25/tweeting-stackexchange-with-spring-social-part-1/ 
-  - /2012/01/03/this-is-not-your-fathers-spring-a-learning-project/
-  - /persistence-with-spring-series/
-  - /persistence-with-spring-series-alternative/
-  - /design-a-user-friendly-java-library/
-  - /travis-ci-build-pipeline/
-  - /rest-api-spring-oauth2-angular/
-  - /securing-a-restful-web-service-with-spring-security/
-  - /spring-boot-modules
-  - /core-java-modules/multimodulemavenproject
-  - /linux/wc-command
-givenArticlesWithALinkToTheGitHubModule_whenTheArticleLoads_thenTheArticleTitleAndGitHubLinkMatch:
-
-givenAllTheArticles_whenAnArticleLoads_thenTheAuthorIsNotFromTheExcludedList:
-
-givenAllArticles_whenAnArticleLoads_thenMetaOGImageAndTwitterImagePointToTheAbsolutePath:
-
-givenAllArticles_whenAnArticleLoads_thenTheArticleDoesNotCotainWrongQuotations:
-  - /java-web-start/
-  - /java-logging-intro/
-  - /spring-security-login-error-handling-localization/
-  - /spring-security-thymeleaf/
-  - /thymeleaf-list/
-  - /spring-security-taglibs/
-  - /javadoc-see-vs-link/
-givenAllArticles_whenAnArticleLoads_thenTheArticleHasProperTitleCapitalization:
-  - /spring-security-registration-captcha
-  - /spring-boot-interview-questions 
-  - /java-ocp-advanced-class-design
-  - /java-application-remote-debugging 
-  - /java-filename-without-extension
-  - /java-system-stubs 
-  - /java-call-private-method 
-  - /linux/grep-filtered-files 
-  - /linux/display-columns-from-file  
-  - /linux/status-codes 
-  - /linux/zip-avoiding-unwanted-directories  
-  - /java-lang-math
-  - /java-string-interview-questions
-  - /jackson-linkedhashmap-cannot-be-cast  
-  - /java-string-to-bigdecimal
-  - /linux/filesystems
-  - /cs/k-nearest-neighbors
-  - /configuration-properties-in-spring-boot
-  - /linux/check-if-port-is-open
-  - /linux/raid-intro
-  - /linux/too-many-levels-of-symlinks
-  - /javadoc-version-since
-  - /linux/find-graphics-card-version
-  - /linux/merge-files-line-by-line
-  - /linux/sort-file-in-place
-  - /cs/acf-pacf-plots-arma-modeling
-  - /linux/inodes
-  - /javadoc-see-vs-link
-  
-
-givenAllArticles_whenAnalyzingCategories_thenTheArticleDoesNotContainUnnecessaryCategory:
-  - /spring-reloading-properties/
-  - /spring-component-scanning/
-  - /unable-to-locate-spring-namespacehandler-for-xml-schema-namespace/
-  - /properties-with-spring/
-  - /java-8-spring-4-and-spring-boot-adoption/
-  - /spring-adoption-march-2016/
-  - /spring-angular-ecommerce/
-givenAllPages_whenAnalysingImages_thenImagesDoNotPoinToTheDraftsSite:
   - /learn-spring-security-faq/
   - /rest-with-spring-faq/
-givenAllPages_whenAPageLoads_thenTheMetaDescriptionExists:
+givenAllArticlesAndPages_whenAPageLoads_thenTheMetaDescriptionExists:
   - /api-discoverability-with-spring-and-spring-hateoas-workshop
   - /api-discoverability-with-spring-and-spring-hateoas
   - /the-basics-of-rest-with-spring-webinar
@@ -117,8 +38,76 @@ givenAllPages_whenAPageLoads_thenTheMetaDescriptionExists:
   - /baeldung-company-info/
   - /contact/
   - /rest-course-almost-done/
+givenArticlesWithALinkToTheGitHubModule_whenTheArticleLoads_thenTheGitHubModuleLinksBackToTheArticle:
+  - /cookbooks/
+  - /security-spring/
+  - /maven-dire/
+  - /slf4j-with-log4j2-logback/
+  - /spring-security-expressions-basic/
+  - /2013/02/25/tweeting-stackexchange-with-spring-social-part-1/
+  - /2012/01/03/this-is-not-your-fathers-spring-a-learning-project/
+  - /persistence-with-spring-series/
+  - /persistence-with-spring-series-alternative/
+  - /design-a-user-friendly-java-library/
+  - /travis-ci-build-pipeline/
+  - /rest-api-spring-oauth2-angular/
+  - /securing-a-restful-web-service-with-spring-security/
+  - /spring-boot-modules
+  - /core-java-modules/multimodulemavenproject
+  - /linux/wc-command
+givenArticlesWithALinkToTheGitHubModule_whenTheArticleLoads_thenTheArticleTitleAndGitHubLinkMatch:
 
-givenAllPages_whenAPageLoads_thenMetaOGImageAndTwitterImagePointToTheAbsolutePath:
+givenAllTheArticles_whenAnArticleLoads_thenTheAuthorIsNotFromTheExcludedList:
+
+givenAllArticlesAndPages_whenAPageLoads_thenMetaOGImageAndTwitterImagePointToTheAbsolutePath:
+
+givenAllArticles_whenAnArticleLoads_thenTheArticleDoesNotCotainWrongQuotations:
+  - /java-web-start/
+  - /java-logging-intro/
+  - /spring-security-login-error-handling-localization/
+  - /spring-security-thymeleaf/
+  - /thymeleaf-list/
+  - /spring-security-taglibs/
+  - /javadoc-see-vs-link/
+givenAllArticles_whenAnArticleLoads_thenTheArticleHasProperTitleCapitalization:
+  - /spring-security-registration-captcha
+  - /spring-boot-interview-questions
+  - /java-ocp-advanced-class-design
+  - /java-application-remote-debugging
+  - /java-filename-without-extension
+  - /java-system-stubs
+  - /java-call-private-method
+  - /linux/grep-filtered-files
+  - /linux/display-columns-from-file
+  - /linux/status-codes
+  - /linux/zip-avoiding-unwanted-directories
+  - /java-lang-math
+  - /java-string-interview-questions
+  - /jackson-linkedhashmap-cannot-be-cast
+  - /java-string-to-bigdecimal
+  - /linux/filesystems
+  - /cs/k-nearest-neighbors
+  - /configuration-properties-in-spring-boot
+  - /linux/check-if-port-is-open
+  - /linux/raid-intro
+  - /linux/too-many-levels-of-symlinks
+  - /javadoc-version-since
+  - /linux/find-graphics-card-version
+  - /linux/merge-files-line-by-line
+  - /linux/sort-file-in-place
+  - /cs/acf-pacf-plots-arma-modeling
+  - /linux/inodes
+  - /javadoc-see-vs-link
+
+
+givenAllArticles_whenAnalyzingCategories_thenTheArticleDoesNotContainUnnecessaryCategory:
+  - /spring-reloading-properties/
+  - /spring-component-scanning/
+  - /unable-to-locate-spring-namespacehandler-for-xml-schema-namespace/
+  - /properties-with-spring/
+  - /java-8-spring-4-and-spring-boot-adoption/
+  - /spring-adoption-march-2016/
+  - /spring-angular-ecommerce/
 
 givenAllArticles_whenAnalyzingCodeBlocks_thenCodeBlocksAreRenderedProperly:
 
@@ -130,9 +119,7 @@ givenAllLongRunningTests_whenHittingAllPages_thenOK:
 
 givenAllArticlesLinkingToGitHubModule_whenAnArticleLoads_thenLinkedGitHubModulesReturns200OK:
 
-givenAllPages_whenAPageLoads_thenItDoesNotContainerOverlappingText:
-
-givenAllArticles_whenAnArticleLoads_thenItDoesNotContainOverlappingText:
+givenAllArticlesAndPages_whenAPageLoads_thenItDoesNotContainOverlappingText:
 
 givenAllArticles_whenAnArticleLoads_thenItDoesNotLinkToOldJavaDocs:
 
@@ -143,7 +130,7 @@ givenTutorialsRepo_whenAllModulesAnalysed_thenFolderNameAndArtifiactIdAndModuleN
 givenAGitHubModuleReadme_whenAnalysingTheReadme_thenLinksToAndFromGithubMatch:
  - https://github.com/eugenp/tutorials/blob/master/README.md
  - https://github.com/eugenp/tutorials/tree/master/README.md
- 
+
 givenAllArticles_whenAnArticleLoads_thenItIsHasASingleOptinInTheSidebar:
   - /linux/
   - /kotlin/
@@ -154,7 +141,7 @@ givenAllArticles_whenAnArticleLoads_thenItIsHasASingleOptinInTheSidebar:
   - /job/
   - /java-weekly
   - /java-web-weekly
-givenAllArticles_whenAnArticleLoads_thenItIsHasASingleOptinInTheAfterPostContent: 
+givenAllArticles_whenAnArticleLoads_thenItIsHasASingleOptinInTheAfterPostContent:
   - /linux/
   - /kotlin/
   - /cs/
@@ -181,5 +168,5 @@ givenAllArticles_whenAnalyzingImages_thenImagesDoNotHaveEmptyAltAttribute:
 
 givenAllArticles_whenAnalyzingExcerpt_thenItShouldNotBeEmptyAndShouldMatchDescription:
 
-  
-    
+
+

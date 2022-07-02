@@ -115,13 +115,13 @@ public class AllUrlsUITest extends ConcurrentBaseUISeleniumTest {
     }
 
     @ConcurrentTest
-    public final void givenAllPages_whenAnalysingImages_thenImagesDoNotPoinToTheDraftsSite(SitePage sitePage) {
+    public final void givenAllArticlesAndPages_whenAnalysingImages_thenImagesDoNotPoinToTheDraftsSite(SitePage sitePage) {
         new TestLogic(SitePage.Type.PAGE, SitePage.Type.ARTICLE)
-            .log(GlobalConstants.givenAllPages_whenAnalysingImages_thenImagesDoNotPoinToTheDraftsSite)
+            .log(GlobalConstants.givenAllArticlesAndPages_whenAnalysingImages_thenImagesDoNotPoinToTheDraftsSite)
             .apply(page -> {
-                recordExecution(GlobalConstants.givenAllPages_whenAnalysingImages_thenImagesDoNotPoinToTheDraftsSite);
+                recordExecution(GlobalConstants.givenAllArticlesAndPages_whenAnalysingImages_thenImagesDoNotPoinToTheDraftsSite);
 
-                if (shouldSkipUrl(page, GlobalConstants.givenAllPages_whenAnalysingImages_thenImagesDoNotPoinToTheDraftsSite)) {
+                if (shouldSkipUrl(page, GlobalConstants.givenAllArticlesAndPages_whenAnalysingImages_thenImagesDoNotPoinToTheDraftsSite)) {
                     return;
                 }
 
@@ -130,15 +130,15 @@ public class AllUrlsUITest extends ConcurrentBaseUISeleniumTest {
 
                 if (imgTags.size() > 0) {
                     recordMetrics(imgTags.size(), TestMetricTypes.FAILED);
-                    recordFailure(GlobalConstants.givenAllPages_whenAnalysingImages_thenImagesDoNotPoinToTheDraftsSite, imgTags.size());
-                    badURLs.put(GlobalConstants.givenAllPages_whenAnalysingImages_thenImagesDoNotPoinToTheDraftsSite,
+                    recordFailure(GlobalConstants.givenAllArticlesAndPages_whenAnalysingImages_thenImagesDoNotPoinToTheDraftsSite, imgTags.size());
+                    badURLs.put(GlobalConstants.givenAllArticlesAndPages_whenAnalysingImages_thenImagesDoNotPoinToTheDraftsSite,
                         page.getUrlWithNewLineFeed() + " ( " + imgTags.stream().map(webElement -> webElement.getAttribute("src") + " , ").collect(Collectors.joining()) + ")\n");
                 }
 
                 if (anchorTags.size() > 0) {
                     recordMetrics(anchorTags.size(), TestMetricTypes.FAILED);
-                    recordFailure(GlobalConstants.givenAllPages_whenAnalysingImages_thenImagesDoNotPoinToTheDraftsSite, anchorTags.size());
-                    badURLs.put(GlobalConstants.givenAllPages_whenAnalysingImages_thenImagesDoNotPoinToTheDraftsSite,
+                    recordFailure(GlobalConstants.givenAllArticlesAndPages_whenAnalysingImages_thenImagesDoNotPoinToTheDraftsSite, anchorTags.size());
+                    badURLs.put(GlobalConstants.givenAllArticlesAndPages_whenAnalysingImages_thenImagesDoNotPoinToTheDraftsSite,
                         page.getUrlWithNewLineFeed() + " ( " + anchorTags.stream().map(webElement -> webElement.getAttribute("href") + " , ").collect(Collectors.joining()) + ")\n");
                 }
             }).run(sitePage);
@@ -146,40 +146,40 @@ public class AllUrlsUITest extends ConcurrentBaseUISeleniumTest {
 
 
     @ConcurrentTest
-    public final void givenAllPages_whenAPageLoads_thenMetaOGImageAndTwitterImagePointToTheAbsolutePath(SitePage sitePage) {
+    public final void givenAllArticlesAndPages_whenAPageLoads_thenMetaOGImageAndTwitterImagePointToTheAbsolutePath(SitePage sitePage) {
         new TestLogic(SitePage.Type.PAGE, SitePage.Type.ARTICLE)
-            .log(GlobalConstants.givenAllPages_whenAPageLoads_thenMetaOGImageAndTwitterImagePointToTheAbsolutePath)
+            .log(GlobalConstants.givenAllArticlesAndPages_whenAPageLoads_thenMetaOGImageAndTwitterImagePointToTheAbsolutePath)
             .apply(page -> {
-                recordExecution(GlobalConstants.givenAllPages_whenAPageLoads_thenMetaOGImageAndTwitterImagePointToTheAbsolutePath);
+                recordExecution(GlobalConstants.givenAllArticlesAndPages_whenAPageLoads_thenMetaOGImageAndTwitterImagePointToTheAbsolutePath);
 
-                if (shouldSkipUrl(page, GlobalConstants.givenAllPages_whenAPageLoads_thenMetaOGImageAndTwitterImagePointToTheAbsolutePath)) {
+                if (shouldSkipUrl(page, GlobalConstants.givenAllArticlesAndPages_whenAPageLoads_thenMetaOGImageAndTwitterImagePointToTheAbsolutePath)) {
                     return;
                 }
 
                 if (!page.findMetaTagWithOGImagePointingToTheAbsolutePath() || !page.findMetaTagWithTwitterImagePointingToTheAbsolutePath()) {
                     recordMetrics(1, TestMetricTypes.FAILED);
-                    recordFailure(GlobalConstants.givenAllPages_whenAPageLoads_thenMetaOGImageAndTwitterImagePointToTheAbsolutePath);
+                    recordFailure(GlobalConstants.givenAllArticlesAndPages_whenAPageLoads_thenMetaOGImageAndTwitterImagePointToTheAbsolutePath);
                     logger.info("og:image or twitter:image check failed for: {}", page.getUrl());
-                    badURLs.put(GlobalConstants.givenAllPages_whenAPageLoads_thenMetaOGImageAndTwitterImagePointToTheAbsolutePath, page.getUrlWithNewLineFeed());
+                    badURLs.put(GlobalConstants.givenAllArticlesAndPages_whenAPageLoads_thenMetaOGImageAndTwitterImagePointToTheAbsolutePath, page.getUrlWithNewLineFeed());
                 }
             }).run(sitePage);
     }
 
     @ConcurrentTest
-    public final void givenAllPages_whenAPageLoads_thenItDoesNotContainOverlappingText(SitePage sitePage) {
+    public final void givenAllArticlesAndPages_whenAPageLoads_thenItDoesNotContainOverlappingText(SitePage sitePage) {
         new TestLogic(SitePage.Type.PAGE, SitePage.Type.ARTICLE)
-            .log(GlobalConstants.givenAllPages_whenAPageLoads_thenItDoesNotContainOverlappingText)
+            .log(GlobalConstants.givenAllArticlesAndPages_whenAPageLoads_thenItDoesNotContainOverlappingText)
             .apply(page -> {
-                recordExecution(GlobalConstants.givenAllPages_whenAPageLoads_thenItDoesNotContainOverlappingText);
+                recordExecution(GlobalConstants.givenAllArticlesAndPages_whenAPageLoads_thenItDoesNotContainOverlappingText);
 
-                if (shouldSkipUrl(page, GlobalConstants.givenAllPages_whenAPageLoads_thenItDoesNotContainOverlappingText)) {
+                if (shouldSkipUrl(page, GlobalConstants.givenAllArticlesAndPages_whenAPageLoads_thenItDoesNotContainOverlappingText)) {
                     return;
                 }
 
                 if (page.containesOverlappingText()) {
                     recordMetrics(1, TestMetricTypes.FAILED);
-                    recordFailure(GlobalConstants.givenAllPages_whenAPageLoads_thenItDoesNotContainOverlappingText);
-                    badURLs.put(GlobalConstants.givenAllPages_whenAPageLoads_thenItDoesNotContainOverlappingText, page.getUrlWithNewLineFeed());
+                    recordFailure(GlobalConstants.givenAllArticlesAndPages_whenAPageLoads_thenItDoesNotContainOverlappingText);
+                    badURLs.put(GlobalConstants.givenAllArticlesAndPages_whenAPageLoads_thenItDoesNotContainOverlappingText, page.getUrlWithNewLineFeed());
                 }
             }).run(sitePage);
     }
@@ -357,9 +357,9 @@ public class AllUrlsUITest extends ConcurrentBaseUISeleniumTest {
     public final void givenAllTestsRelatedTechnicalArea_whenHittingAllArticles_thenOK() {
         new TestLogic().apply(page -> {
             try {
-                givenAllPages_whenAnalysingImages_thenImagesDoNotPoinToTheDraftsSite(page);
-                givenAllPages_whenAPageLoads_thenMetaOGImageAndTwitterImagePointToTheAbsolutePath(page);
-                givenAllPages_whenAPageLoads_thenItDoesNotContainOverlappingText(page);
+                givenAllArticlesAndPages_whenAnalysingImages_thenImagesDoNotPoinToTheDraftsSite(page);
+                givenAllArticlesAndPages_whenAPageLoads_thenMetaOGImageAndTwitterImagePointToTheAbsolutePath(page);
+                givenAllArticlesAndPages_whenAPageLoads_thenItDoesNotContainOverlappingText(page);
                 givenAllArticles_whenAnArticleLoads_thenArticleHasNoEmptyCodeBlock(page);
                 givenAllArticles_whenAnArticleLoads_thenItHasSingleShortcodeAtTheTop(page);
                 givenAllArticles_whenAnArticleLoads_thenItIsHasASingleOptinInTheSidebar(page);
@@ -429,17 +429,17 @@ public class AllUrlsUITest extends ConcurrentBaseUISeleniumTest {
     }
 
     @ConcurrentTest
-    public final void givenAllArticles_whenAnArticleLoads_thenTheMetaDescriptionExists(SitePage sitePage) {
+    public final void givenAllArticlesAndPages_whenAPageLoads_thenTheMetaDescriptionExists(SitePage sitePage) {
         new TestLogic(SitePage.Type.PAGE, SitePage.Type.ARTICLE)
-            .log(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenTheMetaDescriptionExists)
+            .log(GlobalConstants.givenAllArticlesAndPages_whenAPageLoads_thenTheMetaDescriptionExists)
             .apply(page -> {
-                recordExecution(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenTheMetaDescriptionExists);
+                recordExecution(GlobalConstants.givenAllArticlesAndPages_whenAPageLoads_thenTheMetaDescriptionExists);
 
-                if (shouldSkipUrl(page, GlobalConstants.givenAllArticles_whenAnArticleLoads_thenTheMetaDescriptionExists)
+                if (shouldSkipUrl(page, GlobalConstants.givenAllArticlesAndPages_whenAPageLoads_thenTheMetaDescriptionExists)
                     // also skip the pages contain thanks, thank-you
                     || shouldSkipUrl(
                         page,
-                        GlobalConstants.givenAllArticles_whenAnArticleLoads_thenTheMetaDescriptionExists,
+                        GlobalConstants.givenAllArticlesAndPages_whenAPageLoads_thenTheMetaDescriptionExists,
                         GlobalConstants.PAGES_THANK_YOU,
                         false
                     )
@@ -449,8 +449,8 @@ public class AllUrlsUITest extends ConcurrentBaseUISeleniumTest {
 
                 if (!page.metaDescriptionTagsAvailable()) {
                     recordMetrics(1, TestMetricTypes.FAILED);
-                    recordFailure(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenTheMetaDescriptionExists);
-                    badURLs.put(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenTheMetaDescriptionExists, page.getUrlWithNewLineFeed());
+                    recordFailure(GlobalConstants.givenAllArticlesAndPages_whenAPageLoads_thenTheMetaDescriptionExists);
+                    badURLs.put(GlobalConstants.givenAllArticlesAndPages_whenAPageLoads_thenTheMetaDescriptionExists, page.getUrlWithNewLineFeed());
                 }
             }).run(sitePage);
     }
@@ -580,7 +580,7 @@ public class AllUrlsUITest extends ConcurrentBaseUISeleniumTest {
     public final void givenAllEditorialTests_whenHittingAllArticles_thenOK() {
         new TestLogic(SitePage.Type.ARTICLE).apply(page -> {
             try {
-                givenAllArticles_whenAnArticleLoads_thenTheMetaDescriptionExists(page);
+                givenAllArticlesAndPages_whenAPageLoads_thenTheMetaDescriptionExists(page);
                 givenAllArticles_whenWeCheckTheAuthor_thenTheyAreNotOnTheInternalTeam(page);
                 givenAllArticles_whenAnArticleLoads_thenTheArticleDoesNotCotainWrongQuotations(page);
                 givenAllArticles_whenAnArticleLoads_thenTheArticleHasProperTitleCapitalization(page);
