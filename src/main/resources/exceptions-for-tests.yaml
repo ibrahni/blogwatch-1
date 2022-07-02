@@ -141,6 +141,15 @@ givenAllArticles_whenAnArticleLoads_thenItIsHasASingleOptinInTheSidebar:
   - /job/
   - /java-weekly
   - /java-web-weekly
+  - /cassandra-astra-stargate-dashboard
+  - /cassandra-astra-rest-dashboard-map
+  - /spring-data-cassandra-dates
+  - /spring-data-cassandra-logging-queries
+  - /spring-boot-datacassandratest
+  - /java-cassandra-unit
+  - /faunadb-spring
+  - /spring-boot-nosql-database
+  - /faunadb-spring-web-app
 givenAllArticles_whenAnArticleLoads_thenItIsHasASingleOptinInTheAfterPostContent:
   - /linux/
   - /kotlin/
@@ -151,6 +160,7 @@ givenAllArticles_whenAnArticleLoads_thenItIsHasASingleOptinInTheAfterPostContent
   - /job/
   - /java-weekly
   - /java-web-weekly
+  - /spring-boot-datacassandratest
 givenAllArticles_whenAnArticleLoads_thenTheArticleHasProperDotsInTitle:
   - /string/
 givenTheTutorialsRepository_listAllTheModulesThatAreNotBuildInBothDefautlAndIntegrationTests:

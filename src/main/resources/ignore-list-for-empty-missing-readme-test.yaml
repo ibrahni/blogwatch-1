@@ -6,7 +6,7 @@
 ignoreReadmeContaining:
   - /guest/
   - /spring-session/
-  - /spring-ejb/
+  - /spring-ejb-modules/
   - /java-spi/
   - /spring-boot-admin/
   - /spring-security-web-x509/
@@ -114,4 +114,5 @@ ignoreReadmeEndingWith:
   - /aws-modules
   - /graphql-modules
   - /algorithms-modules
-  - /groovy-modules
+  - /core-groovy-modules
+  - /rxjava-modules
