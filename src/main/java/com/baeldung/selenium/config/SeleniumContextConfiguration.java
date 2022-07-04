@@ -3,6 +3,7 @@ package com.baeldung.selenium.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
@@ -15,6 +16,7 @@ import com.baeldung.selenium.BlogLinksExtractor;
 public class SeleniumContextConfiguration {
 
     @Bean
+    @Primary
     @Profile("headless-browser")
     public headlessBrowserConfig seleniumHeadlessBrowserConfig() {
         return new headlessBrowserConfig();

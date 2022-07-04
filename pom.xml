@@ -16,11 +16,11 @@
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
             <version>4.1.2</version>
-            <exclusions>                               
+            <exclusions>
                 <exclusion>
                     <groupId>com.google.guava</groupId>
                     <artifactId>guava</artifactId>
-                </exclusion>                      
+                </exclusion>
             </exclusions>
         </dependency>
 
@@ -35,7 +35,7 @@
             	</exclusion>
             </exclusions>
         </dependency>
-       
+
         <!-- Spring -->
 
         <dependency>
@@ -204,6 +204,13 @@
         </dependency>
 
         <dependency>
+            <groupId>dev.yavuztas</groupId>
+            <artifactId>junit5-concurrent-extension</artifactId>
+            <version>1.0</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
             <groupId>org.hamcrest</groupId>
             <artifactId>hamcrest-core</artifactId>
             <version>${org.hamcrest.version}</version>
@@ -365,7 +372,7 @@
 
         <!-- testing -->
         <rest-assured.version>4.5.1</rest-assured.version>
-        <junit.jupiter.version>5.8.2</junit.jupiter.version>        
+        <junit.jupiter.version>5.8.2</junit.jupiter.version>
         <org.hamcrest.version>2.2</org.hamcrest.version>
         <mockito.version>4.4.0</mockito.version>
 

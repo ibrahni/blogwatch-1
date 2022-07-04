@@ -15,6 +15,7 @@ public class GlobalConstants {
     public static final String ENV_PROPERTY_SPRING_PROFILE = "spring.profiles.active";
     public static final String ENV_PROPERTY_TARGET_ENV = "target.env";
     public static final String ENV_PROPERTY_HEADLESS_BROWSER_NAME = "headless.browser.name";
+    public static final String ENV_PROPERTY_CONCURRENCY_LEVEL = "concurrency.level";
 
     public static final String DEFAULT_SPRING_PROFILE = "headless-browser";
 
@@ -67,12 +68,12 @@ public class GlobalConstants {
     public static final String TAG_DAILY = "daily";
 
     /**
-     * Tests using this tag are executed daily on Jenkins with HtmlUnit 
+     * Tests using this tag are executed daily on Jenkins with HtmlUnit
      */
     public static final String TAG_DAILY_HTMLUNIT = "daily-htmlunit";
 
     /**
-     * Tests using this tag are executed daily on Jenkins with EU proxy 
+     * Tests using this tag are executed daily on Jenkins with EU proxy
      */
     public static final String TAG_DAILY_EU_PROXY = "daily-eu-proxy";
 
@@ -84,7 +85,7 @@ public class GlobalConstants {
     public static final String TAG_SITE_SMOKE_TEST = "site-smoke-test";
 
     public static final String TAG_SKIP_METRICS = "skip-metrics";
-    
+
     public static final String THANKYOU_PAGES_EVENT_TRACKING = "thank-you-pages-event-tracking";
 
     /**
@@ -155,7 +156,7 @@ public class GlobalConstants {
     public static final String PAGE_WITH_DRIP_SCRPT = "/spring-tutorial/";
     public static final String DRIP_SCRPT_SEARCH_STRING = "dc.src = '//tag.getdrip.com/9539554.js';";
 
-    
+
     public static final String README_LINKS_FOLDER_PATH = "./blog-url-list/";
     public static final String README_FILE_NAME_LOWERCASE = "readme.md";
     public static final String README_FILE_NAME_UPPERCASE = "README.md";
@@ -206,38 +207,38 @@ public class GlobalConstants {
 
     public static enum TestMetricTypes {
         FAILED;
-    }    
+    }
 
     // contact us form
     public static final String CONTACT_US_FORM_URL = "/contact";
-    
+
     // 200OK test modes
     public static final String MODE_STRICT="STRICT";
     public static final String MODE_RELAXED="RELAXED";
-    
+
     public static final String YES="yes";
     public static final String NO="no";
-    
+
     // for givenAnArtifactId_thenListAllChildModules
     public static final String tutorialsRepoLocalPath = "/var/lib/jenkins/tutorials-source-code";
     public static final String tutorialsRepoGitUrl="https://github.com/eugenp/tutorials.git";
     public static final String tutorialsRepoMasterPath="https://github.com/eugenp/tutorials/tree/master";
-    
+
     public static final String scalaTutorialsRepoLocalPath = "/var/lib/jenkins/scala-tutorials-source-code";
     public static final String scalaTutorialsRepoGitUrl="https://github.com/Baeldung/scala-tutorials.git";
     public static final String scalaTutorialsRepoMasterPath="https://github.com/Baeldung/scala-tutorials/tree/master";
-    
+
     public static final ImmutableList<GitHubRepoVO> tutorialsRepos = ImmutableList.of(new GitHubRepoVO("Java-tutorials", tutorialsRepoGitUrl, tutorialsRepoLocalPath, tutorialsRepoMasterPath),
             new GitHubRepoVO("Scala-tutorials", scalaTutorialsRepoGitUrl, scalaTutorialsRepoLocalPath, scalaTutorialsRepoMasterPath));
-    
-    
+
+
     //for givenAGitHubModuleReadme_whenAnalysingTheReadme_thenLinksToAndFromGithubMatch
     public static final String STAGEING8_HOME_URL="http://staging8.baeldung.com";
-    
+
     //facebook tracking code on thank-you pages
     public static final String FACEBOOK_MAIN_EVENT_TRACKING_SCRIPT_TKP = "fbq('init', '512471148948613')";
     public static final String FACEBOOK_EVENT_CONVERSION_TRACKING_SCRIPT_TKP = "fbq('track', 'Purchase'";
-    
+
   //GOOGLE tracking code on thank-you pages
     public static final String GOOGLE_MAIN_EVENT_TRACKING_SCRIPT_TKP = "ga('create', 'UA-26064837-1', 'auto', {'allowLinker': true});";
     public static final String GOOGLE_EVENT_CONVERSION_TRACKING_SCRIPT_TKP = "gtag('event', 'conversion', {";
@@ -245,24 +246,24 @@ public class GlobalConstants {
     //drip tracking on thank-you pages
     public static final String DRIP_MAIN_EVENT_TRACKING_SCRIPT_TKP = "tag.getdrip.com/9539554.js";
     public static final String DRIP_EVENT_CONVERSION_TRACKING_SCRIPT_TKP = "window._dcq.push([\"track\"";
-    
-    
+
+
     public static final String LANGUAGE_JAVA_CLASS_NAME = "language-java";
     public static final String CODE_TAG = "code";
-    
+
     // test names for
     public static final String givenAllArticles_whenAnalysingImages_thenImagesDoNotPoinToTheDraftsSite = "givenAllArticles_whenAnalysingImages_thenImagesDoNotPoinToTheDraftsSite";
     public static final String givenAllArticles_whenAnalyzingExcerpt_thenItShouldNotBeEmptyAndShouldMatchDescription = "givenAllArticles_whenAnalyzingExcerpt_thenItShouldNotBeEmptyAndShouldMatchDescription";
     public static final String givenAllArticles_whenAnalyzingImages_thenImagesDoNotHaveEmptyAltAttribute = "givenAllArticles_whenAnalyzingImages_thenImagesDoNotHaveEmptyAltAttribute";
     public static final String givenAllTheURLs_whenURLLoads_thenImagesPointToCorrectEnv = "givenAllTheURLs_whenURLLoads_thenImagesPointToCorrectEnv";
-    public static final String givenAllPages_whenAnalysingImages_thenImagesDoNotPoinToTheDraftsSite = "givenAllPages_whenAnalysingImages_thenImagesDoNotPoinToTheDraftsSite";
+    public static final String givenAllArticlesAndPages_whenAnalysingImages_thenImagesDoNotPoinToTheDraftsSite = "givenAllArticlesAndPages_whenAnalysingImages_thenImagesDoNotPoinToTheDraftsSite";
     public static final String givenTestsTargetedToAllUrls_whenTheTestRuns_thenItPasses = "givenTestsTargetedToAllUrls_whenTheTestRuns_thenItPasses";
     public static final String givenTestsTargetedToAllArticlesUrls_whenTheTestRuns_thenItPasses = "givenTestsTargetedToAllArticlesUrls_whenTheTestRuns_thenItPasses";
     public static final String givenTestsTargetedToAllPages_whenTheTestRuns_thenItPasses = "givenTestsTargetedToAllPages_whenTheTestRuns_thenItPasses";
     public static final String givenAllArticles_whenAnArticleLoads_thenArticleHasNoEmptyCodeBlock = "givenAllArticles_whenAnArticleLoads_thenArticleHasNoEmptyCodeBlock";
     public static final String givenAllArticles_whenAnArticleLoads_thenItHasSingleShortcodeAtTheTop = "givenAllArticles_whenAnArticleLoads_thenItHasSingleShortcodeAtTheTop";
     public static final String givenAllArticles_whenAnArticleLoads_thenItHasSingleShortcodeAtTheEnd = "givenAllArticles_whenAnArticleLoads_thenItHasSingleShortcodeAtTheEnd";
-    public static final String givenAllArticles_whenAnArticleLoads_thenTheMetaDescriptionExists = "givenAllArticles_whenAnArticleLoads_thenTheMetaDescriptionExists";
+    public static final String givenAllArticlesAndPages_whenAPageLoads_thenTheMetaDescriptionExists = "givenAllArticlesAndPages_whenAPageLoads_thenTheMetaDescriptionExists";
     public static final String givenAllTheURLs_whenURLLoads_thenTheMetaDescriptionExists = "givenAllTheURLs_whenURLLoads_thenTheMetaDescriptionExists";
     public static final String givenArticlesWithALinkToTheGitHubModule_whenTheArticleLoads_thenTheGitHubModuleLinksBackToTheArticle = "givenArticlesWithALinkToTheGitHubModule_whenTheArticleLoads_thenTheGitHubModuleLinksBackToTheArticle";
     public static final String givenArticlesWithALinkToTheGitHubModule_whenTheArticleLoads_thenTheArticleTitleAndGitHubLinkMatch = "givenArticlesWithALinkToTheGitHubModule_whenTheArticleLoads_thenTheArticleTitleAndGitHubLinkMatch";
@@ -270,7 +271,7 @@ public class GlobalConstants {
     public static final String givenAllArticles_whenAnArticleLoads_thenMetaOGImageAndTwitterImagePointToTheAbsolutePath = "givenAllArticles_whenAnArticleLoads_thenMetaOGImageAndTwitterImagePointToTheAbsolutePath";
     public static final String givenAllTheURls_whenAURLLoads_thenMetaOGImageAndTwitterImagePointToTheAbsolutePath = "givenAllTheURls_whenAURLLoads_thenMetaOGImageAndTwitterImagePointToTheAbsolutePath";
     public static final String givenAllPages_whenAPageLoads_thenTheMetaDescriptionExists = "givenAllPages_whenAPageLoads_thenTheMetaDescriptionExists";
-    public static final String givenAllPages_whenAPageLoads_thenMetaOGImageAndTwitterImagePointToTheAbsolutePath = "givenAllPages_whenAPageLoads_thenMetaOGImageAndTwitterImagePointToTheAbsolutePath";
+    public static final String givenAllArticlesAndPages_whenAPageLoads_thenMetaOGImageAndTwitterImagePointToTheAbsolutePath = "givenAllArticlesAndPages_whenAPageLoads_thenMetaOGImageAndTwitterImagePointToTheAbsolutePath";
     public static final String givenAllArticles_whenAnArticleLoads_thenTheArticleDoesNotCotainWrongQuotations = "givenAllArticles_whenAnArticleLoads_thenTheArticleDoesNotCotainWrongQuotations";
     public static final String givenAllArticles_whenAnArticleLoads_thenTheArticleHasProperTitleCapitalization = "givenAllArticles_whenAnArticleLoads_thenTheArticleHasProperTitleCapitalization";
     public static final String givenAllArticles_whenAnArticleLoads_thenTheArticleHasProperDotsInTitle = "givenAllArticles_whenAnArticleLoads_thenTheArticleHasProperDotsInTitle";
@@ -279,7 +280,7 @@ public class GlobalConstants {
     public static final String givenAllLongRunningTests_whenHittingAllArticles_thenOK = "givenAllLongRunningTests_whenHittingAllArticles_thenOK";
     public static final String givenAllLongRunningTests_whenHittingAllPages_thenOK = "givenAllLongRunningTests_whenHittingAllPages_thenOK";
     public static final String givenAllArticlesLinkingToGitHubModule_whenAnArticleLoads_thenLinkedGitHubModulesReturns200OK = "givenAllArticlesLinkingToGitHubModule_whenAnArticleLoads_thenLinkedGitHubModulesReturns200OK";
-    public static final String givenAllPages_whenAPageLoads_thenItDoesNotContainOverlappingText = "givenAllPages_whenAPageLoads_thenItDoesNotContainOverlappingText";
+    public static final String givenAllArticlesAndPages_whenAPageLoads_thenItDoesNotContainOverlappingText = "givenAllArticlesAndPages_whenAPageLoads_thenItDoesNotContainOverlappingText";
     public static final String givenAllArticles_whenAnArticleLoads_thenItDoesNotContainOverlappingText = "givenAllArticles_whenAnArticleLoads_thenItDoesNotContainOverlappingText";
     public static final String givenAGitHubModuleReadme_whenAnalysingTheReadme_thentheReadmeDoesNotLikTooManyArticles = "givenAGitHubModuleReadme_whenAnalysingTheReadme_thentheReadmeDoesNotLikTooManyArticles";
     public static final String givenAGitHubModuleReadme_whenAnalysingTheReadme_thenLinksToAndFromGithubMatch = "givenAGitHubModuleReadme_whenAnalysingTheReadme_thenLinksToAndFromGithubMatch";

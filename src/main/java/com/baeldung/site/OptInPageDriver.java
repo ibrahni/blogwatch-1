@@ -10,13 +10,19 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.stereotype.Component;
 
+import com.baeldung.selenium.config.browserConfig;
+
 @Component
 public class OptInPageDriver extends BlogBaseDriver {
+
+    public OptInPageDriver(browserConfig browserConfig) {
+        super(browserConfig);
+    }
 
     public void clickOnGetAccessLinkforSmallTeam() throws InterruptedException {
         logger.info("executing clickOnGetAccessLinkforSmallTeam()");
         acceptCookie();
-        Thread.sleep(5000);        
+        Thread.sleep(5000);
         WebDriverWait wait = new WebDriverWait(this.getWebDriver(), 20);
         WebElement button = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[contains(@class,'buy_team_small')]/a")));
         button.click();
@@ -26,7 +32,7 @@ public class OptInPageDriver extends BlogBaseDriver {
         logger.info("executing closePopupOnRwSTeamOptInPage()");
         for (WebElement element : this.getWebDriver().findElements(By.xpath("//div[contains(@class, 'tve_ea_thrive_leads_form_close')]"))) {
             if (element.isDisplayed()) {
-                element.click();                
+                element.click();
                 logger.info("Popup closed");
                 break;
             }
@@ -34,7 +40,7 @@ public class OptInPageDriver extends BlogBaseDriver {
     }
 
     public boolean theFirstNameInputFieldIsDisplayed() throws InterruptedException, WebDriverException, IOException {
-       
+
         logger.info("executing theFirstNameInputFieldIsDisplayed()");
         WebDriverWait wait = new WebDriverWait(this.getWebDriver(), 20);
         WebElement button = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("drip-first-name")));
@@ -44,10 +50,10 @@ public class OptInPageDriver extends BlogBaseDriver {
 
     public void clickOnGetAccessLinkforMediumTeam() throws InterruptedException {
         logger.info("executing clickOnGetAccessLinkforMediumTeam()");
-        Thread.sleep(5000);        
+        Thread.sleep(5000);
         WebDriverWait wait = new WebDriverWait(this.getWebDriver(), 20);
         WebElement button = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[contains(@class,'buy_team_medium')]/a")));
-        button.click();        
+        button.click();
 
     }
 

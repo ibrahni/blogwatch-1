@@ -21,6 +21,7 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
 import com.baeldung.common.ConsoleColors;
@@ -29,17 +30,37 @@ import com.baeldung.common.Utils;
 import com.baeldung.common.vo.CoursePurchaseLinksVO.PurchaseLink;
 import com.baeldung.common.vo.FooterLinksDataVO;
 import com.baeldung.common.vo.LinkVO;
+import com.baeldung.selenium.config.browserConfig;
 import com.baeldung.site.strategy.ITitleAnalyzerStrategy;
 
+@Primary
 @Component
 public class SitePage extends BlogBaseDriver {
     private static final Pattern RAW_TAG_PATTERN = Pattern.compile("(?i)\\[raw[^\\]]*\\]|\\[\\/raw\\]");
 
     private static DateTimeFormatter publishedDateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssXXX");
 
+    private Type type;
+
+    public enum Type {
+        PAGE, ARTICLE;
+    }
+
+    public SitePage(browserConfig browserConfig) {
+        super(browserConfig);
+    }
+
     @Override
     public void setUrl(String pageURL) {
         this.url = pageURL;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
+    }
+
+    public Type getType() {
+        return this.type;
     }
 
     public WebElement findContentDiv() {
@@ -145,21 +166,32 @@ public class SitePage extends BlogBaseDriver {
         } catch (NoSuchElementException e) {
             return false;
         }
-    }    
+    }
 
     public List<WebElement> findImagesPointingToDraftSiteOnTheArticle() {
         return this.getWebDriver()
                 .findElements(By.xpath("//section//img[contains(@src, 'drafts.baeldung.com')]"));
     }
 
+    public List<WebElement> findImagesPointingToDraftSiteOnThePage() {
+        return this.getWebDriver()
+            .findElements(By.xpath("//article//img[contains(@src, 'drafts.baeldung.com')]"));
+    }
+
+    public List<WebElement> findImagesPointingToDraftSite() {
+        String path = switch (this.type) {
+            case ARTICLE -> "section";
+            case PAGE -> "article";
+            default -> "";
+        };
+        return this.getWebDriver()
+            .findElements(By.xpath("//%s//img[contains(@src, 'drafts.baeldung.com')]"
+                .formatted(path)));
+    }
+
     public List<WebElement> findAnchorsPointingToAnImageAndDraftSiteOnTheArticle() {
         return this.getWebDriver()
                 .findElements(By.xpath("//section//a[contains(@href, 'drafts.baeldung.com')  and ( contains(@href, '.jpg') or contains(@href, '.jpeg') or contains(@href, '.png'))]"));
-    }
-
-    public List<WebElement> findImagesPointingToDraftSiteOnThePage() {
-        return this.getWebDriver()
-                .findElements(By.xpath("//article//img[contains(@src, 'drafts.baeldung.com')]"));
     }
 
     public List<WebElement> findAnchorsPointingToAnImageAndInvalidEnvOnThePage() {
@@ -278,7 +310,7 @@ public class SitePage extends BlogBaseDriver {
             if (CollectionUtils.isEmpty(links)) {
                 return gitHubModuleLinks;
             }
-            
+
             if(links.size()>1) {
                 gitHubModuleLinks.addAll(links.stream().limit(links.size()-1).collect(Collectors.toList()));
             }
@@ -367,9 +399,9 @@ public class SitePage extends BlogBaseDriver {
 
     private WebElement findElementWithTheRelativeURL(String articleRelativeURL) {
         // @formatter:off
-    	return this.getWebDriver() 
+    	return this.getWebDriver()
                 .findElement(By.xpath(
-                        "//a[(translate(@href, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')=translate('" + GlobalConstants.BAELDUNG_HOME_PAGE_URL_WITH_HTTP + articleRelativeURL + "', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')) " + 
+                        "//a[(translate(@href, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')=translate('" + GlobalConstants.BAELDUNG_HOME_PAGE_URL_WITH_HTTP + articleRelativeURL + "', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')) " +
                         " or (translate(@href, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')=translate('" + GlobalConstants.BAELDUNG_HOME_PAGE_URL + articleRelativeURL + "','ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'))]")) ;
     	// @formatter:on
     }
@@ -507,9 +539,9 @@ public class SitePage extends BlogBaseDriver {
 
     public boolean tableAnchorIsVisibleOnThePage() {
         try {
-            WebElement element = Utils.findAnchorContainingText(this.getWebDriver(), "#table");                              
+            WebElement element = Utils.findAnchorContainingText(this.getWebDriver(), "#table");
             return Utils.matchTextInElement(element, "PRICING");
-            
+
         } catch (NoSuchElementException e) {
             return false;
         }
@@ -517,8 +549,8 @@ public class SitePage extends BlogBaseDriver {
 
     public boolean masterclassAnchorIsVisibleOnThePage() {
         try {
-            WebElement element = Utils.findAnchorContainingText(this.getWebDriver(), "#master-class");                              
-            return Utils.matchTextInElement(element, "MASTER CLASS");            
+            WebElement element = Utils.findAnchorContainingText(this.getWebDriver(), "#master-class");
+            return Utils.matchTextInElement(element, "MASTER CLASS");
         } catch (NoSuchElementException e) {
             return false;
         }
@@ -526,8 +558,8 @@ public class SitePage extends BlogBaseDriver {
 
     public boolean certificationclassAnchorIsVisibleOnThePage() {
         try {
-            WebElement element = Utils.findAnchorContainingText(this.getWebDriver(), "#certification-class");                              
-            return Utils.matchTextInElement(element, "CERTIFICATION CLASS");            
+            WebElement element = Utils.findAnchorContainingText(this.getWebDriver(), "#certification-class");
+            return Utils.matchTextInElement(element, "CERTIFICATION CLASS");
         } catch (NoSuchElementException e) {
             return false;
         }
@@ -577,10 +609,10 @@ public class SitePage extends BlogBaseDriver {
                 .map(element->  element.getAttribute("innerHTML"))
                 .map(label -> label==null?label:label.toLowerCase())
                 .collect(Collectors.toList());
-        
+
         List<String> subCategories = GlobalConstants.springSubCategories.stream()
                 .filter(subCategory -> labels.contains(subCategory.toLowerCase()))
-                .collect(Collectors.toList());                
+                .collect(Collectors.toList());
 
        //@formatter:on
 
@@ -626,10 +658,10 @@ public class SitePage extends BlogBaseDriver {
             return false;
         }
     }
-    
+
     public boolean containsThriveArchtectResource() {
         try {
-            return this.getWebDriver().findElement(By.xpath("//span[contains(@style, 'width: 100%')]")).isEnabled();           
+            return this.getWebDriver().findElement(By.xpath("//span[contains(@style, 'width: 100%')]")).isEnabled();
         } catch (NoSuchElementException e) {
             return false;
         }
@@ -667,13 +699,13 @@ public class SitePage extends BlogBaseDriver {
             spanElements =  this.getWebDriver().findElements(By.xpath("//" + tag + "//a[contains(@href,'" + link.getAnchorLink() + "')]//span"));
             if (CollectionUtils.isNotEmpty(spanElements)) {
                 elements.addAll(spanElements);
-            }  
+            }
         } else {
             elements = this.getWebDriver().findElements(By.xpath("//a[contains(@href,'" + link.getAnchorLink() + "')]"));
             spanElements =  this.getWebDriver().findElements(By.xpath("//a[contains(@href,'" + link.getAnchorLink() + "')]//span"));
             if (CollectionUtils.isNotEmpty(spanElements)) {
                 elements.addAll(spanElements);
-            }            
+            }
         }
         for (WebElement element : elements) {
             if (link.getAnchorText().equalsIgnoreCase(element.getText()) || link.getAnchorText().equalsIgnoreCase(element.getAttribute("innerHTML")))
@@ -685,7 +717,7 @@ public class SitePage extends BlogBaseDriver {
     public boolean linkIdAndLinkAvailable(PurchaseLink link, String url) {
         try {
             WebElement element = this.getWebDriver().findElement(By.id(link.getLinkId()));
-            return element.getAttribute("href").contains(link.getLink());        
+            return element.getAttribute("href").contains(link.getLink());
         } catch (NoSuchElementException e) {
             logger.info(redBoldMessage("Couldn't find id: {} on") + " {}", link.getLinkId(), url);
             return false;
@@ -714,7 +746,7 @@ public class SitePage extends BlogBaseDriver {
                 .findElements(By.xpath("//a[contains(@href,'docs.oracle.com/javase/')]"));
 
         Pattern p = Pattern.compile(".*docs.oracle.com\\/javase\\/(.*)\\/docs/.*");
-        return elements.stream()                
+        return elements.stream()
                 .filter(element -> {
                     String url = element.getAttribute("href");
                     return (Optional.of(p.matcher(url))
@@ -722,7 +754,7 @@ public class SitePage extends BlogBaseDriver {
                                     .compareTo(minJavDocsAcceptedVersion) < 0 : false)
                             .orElse(false))
                             && !Utils.excludePage(url, testExceptions, true);
-                })               
+                })
                 .collect(toList());
     }
 
@@ -739,7 +771,7 @@ public class SitePage extends BlogBaseDriver {
             return Optional.empty();
         }
     }
-    
+
     public boolean findDivWithId(String divId) {
         try {
             return this.getWebDriver().findElement(By.id(divId)).isEnabled();
@@ -747,7 +779,7 @@ public class SitePage extends BlogBaseDriver {
             return false;
         }
     }
-    
+
     public boolean findScriptWithText(String text) {
         try {
             return this.getWebDriver().findElement(By.xpath("//script[contains(text(), '"+text+"')]")).isEnabled();

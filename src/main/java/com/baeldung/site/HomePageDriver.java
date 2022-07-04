@@ -9,10 +9,15 @@ import org.openqa.selenium.WebElement;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import com.baeldung.selenium.config.browserConfig;
 import com.google.common.collect.Streams;
 
 @Component
 public class HomePageDriver extends BlogBaseDriver {
+
+    public HomePageDriver(browserConfig browserConfig) {
+        super(browserConfig);
+    }
 
     public void clickNewsletterButton() {
         this.getWebDriver().findElement(By.xpath("//a[contains(., 'NEWSLETTER')]")).click();
