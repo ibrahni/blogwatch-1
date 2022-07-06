@@ -390,17 +390,17 @@ public class SitePage extends BlogBaseDriver {
     public boolean linkExistsInthePage(String articleRelativeURL) {
 
         try {
-            return findElementWithTheRelativeURL(articleRelativeURL).isDisplayed();
+            return findElementWithTheRelativeURL(articleRelativeURL).stream().anyMatch(element -> element.isDisplayed());           
         } catch (NoSuchElementException e) {
             return false;
         }
 
     }
 
-    private WebElement findElementWithTheRelativeURL(String articleRelativeURL) {
+    private List<WebElement> findElementWithTheRelativeURL(String articleRelativeURL) {
         // @formatter:off
     	return this.getWebDriver()
-                .findElement(By.xpath(
+                .findElements(By.xpath(
                         "//a[(translate(@href, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')=translate('" + GlobalConstants.BAELDUNG_HOME_PAGE_URL_WITH_HTTP + articleRelativeURL + "', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')) " +
                         " or (translate(@href, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')=translate('" + GlobalConstants.BAELDUNG_HOME_PAGE_URL + articleRelativeURL + "','ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'))]")) ;
     	// @formatter:on
@@ -510,9 +510,8 @@ public class SitePage extends BlogBaseDriver {
         }
     }
 
-    public boolean articleTitleMatchesWithTheGitHubLink(String articleHeading, String articleRelativeUrl) {
-        // TODO Auto-generated method stub
-        return findElementWithTheRelativeURL(articleRelativeUrl).getText().equalsIgnoreCase(articleHeading);
+    public boolean articleTitleMatchesWithTheGitHubLink(String articleHeading, String articleRelativeUrl) {        
+        return findElementWithTheRelativeURL(articleRelativeUrl).stream().anyMatch(element -> element.getText().equalsIgnoreCase(articleHeading));      
     }
 
     public String getTheFirstBaeldungURL() {
