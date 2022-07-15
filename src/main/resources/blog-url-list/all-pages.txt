@@ -77,3 +77,4 @@
 /kotlin-author-contact
 /cs-author-contact
 /security-video-guide
+/maven-ebook
