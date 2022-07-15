@@ -1,6 +1,7 @@
 package com.baeldung.selenium.common;
 
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +21,7 @@ import com.baeldung.common.GlobalConstants.TestMetricTypes;
 import com.baeldung.common.UrlIterator;
 import com.baeldung.common.Utils;
 import com.baeldung.common.YAMLProperties;
+import com.baeldung.common.vo.GitHubRepoVO;
 import com.baeldung.site.InvalidTitles;
 import com.baeldung.site.SitePage;
 import com.baeldung.utility.TestUtils;
@@ -78,6 +80,19 @@ public class AllUrlsUITest extends ConcurrentBaseUISeleniumTest {
         }
         badURLs = Multimaps.synchronizedListMultimap(ArrayListMultimap.create());
         resultsForGitHubHttpStatusTest = Multimaps.synchronizedListMultimap(ArrayListMultimap.create());
+    }
+
+    @BeforeEach
+    @Tag(GlobalConstants.TAG_GITHUB_RELATED)
+    public void loadGitHubRepositories() {
+        logger.info("Loading Github repositories into local");
+        for (GitHubRepoVO gitHubRepo : GlobalConstants.tutorialsRepos) {
+            try {
+                Utils.fetchGitRepo(GlobalConstants.YES, Paths.get(gitHubRepo.repoLocalPath()), gitHubRepo.repoUrl());
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
     @AfterEach
@@ -398,11 +413,11 @@ public class AllUrlsUITest extends ConcurrentBaseUISeleniumTest {
                 if (shouldSkipUrl(page, GlobalConstants.givenAllArticlesLinkingToGitHubModule_whenAnArticleLoads_thenLinkedGitHubModulesReturns200OK) || Utils.excludePage(page.getUrl(), GlobalConstants.ARTILCE_JAVA_WEEKLY, false)) {
                     return;
                 }
-                Map<Integer, String> httpStatusCodesOtherThan200OK = TestUtils.getHTTPStatusCodesOtherThan200OK(gitHubModulesLinkedOntheArticle);
-                if (httpStatusCodesOtherThan200OK.size() > 0) {
-                    recordMetrics(httpStatusCodesOtherThan200OK.size(), TestMetricTypes.FAILED);
-                    recordFailure(GlobalConstants.givenAllArticlesLinkingToGitHubModule_whenAnArticleLoads_thenLinkedGitHubModulesReturns200OK, httpStatusCodesOtherThan200OK.size());
-                    httpStatusCodesOtherThan200OK.forEach((key, value) -> resultsForGitHubHttpStatusTest.put(key, page.getUrl() + " --> " + value));
+                Map<Integer, String> notFoundUrls = TestUtils.checkLocalRepoDirectories(GlobalConstants.tutorialsRepos, gitHubModulesLinkedOntheArticle);
+                if (notFoundUrls.size() > 0) {
+                    recordMetrics(notFoundUrls.size(), TestMetricTypes.FAILED);
+                    recordFailure(GlobalConstants.givenAllArticlesLinkingToGitHubModule_whenAnArticleLoads_thenLinkedGitHubModulesReturns200OK, notFoundUrls.size());
+                    notFoundUrls.forEach((key, value) -> resultsForGitHubHttpStatusTest.put(key, page.getUrl() + " --> " + value));
                 }
 
                 if (shouldSkipUrl(page, GlobalConstants.givenArticlesWithALinkToTheGitHubModule_whenTheArticleLoads_thenTheGitHubModuleLinksBackToTheArticle) || Utils.excludePage(page.getUrl(), GlobalConstants.ARTILCE_JAVA_WEEKLY, false)) {
@@ -416,11 +431,12 @@ public class AllUrlsUITest extends ConcurrentBaseUISeleniumTest {
                     return;
                 }
 
-                if (!TestUtils.articleLinkFoundOnTheGitHubModule(linksToTheGithubModule, articleRelativeUrl, page)) {
+                if (!TestUtils.checkLocalRepoArticleLinkFoundOnModule(GlobalConstants.tutorialsRepos, linksToTheGithubModule, articleRelativeUrl)) {
                     recordMetrics(1, TestMetricTypes.FAILED);
                     recordFailure(GlobalConstants.givenArticlesWithALinkToTheGitHubModule_whenTheArticleLoads_thenTheGitHubModuleLinksBackToTheArticle);
                     badURLs.put(GlobalConstants.givenArticlesWithALinkToTheGitHubModule_whenTheArticleLoads_thenTheGitHubModuleLinksBackToTheArticle, page.getUrlWithNewLineFeed());
-                } else if (!shouldSkipUrl(page, GlobalConstants.givenArticlesWithALinkToTheGitHubModule_whenTheArticleLoads_thenTheArticleTitleAndGitHubLinkMatch) && !page.articleTitleMatchesWithTheGitHubLink(articleHeading, articleRelativeUrl)) {
+                } else if (!shouldSkipUrl(page, GlobalConstants.givenArticlesWithALinkToTheGitHubModule_whenTheArticleLoads_thenTheArticleTitleAndGitHubLinkMatch)
+                        && !TestUtils.checkLocalRepoArticleLinkAndTitleMatches(GlobalConstants.tutorialsRepos, linksToTheGithubModule, articleRelativeUrl, articleHeading)) {
                     recordMetrics(1, TestMetricTypes.FAILED);
                     recordFailure(GlobalConstants.givenArticlesWithALinkToTheGitHubModule_whenTheArticleLoads_thenTheArticleTitleAndGitHubLinkMatch);
                     badURLs.put(GlobalConstants.givenArticlesWithALinkToTheGitHubModule_whenTheArticleLoads_thenTheArticleTitleAndGitHubLinkMatch, page.getUrlWithNewLineFeed());

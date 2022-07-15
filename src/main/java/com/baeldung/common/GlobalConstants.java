@@ -228,8 +228,10 @@ public class GlobalConstants {
     public static final String scalaTutorialsRepoGitUrl="https://github.com/Baeldung/scala-tutorials.git";
     public static final String scalaTutorialsRepoMasterPath="https://github.com/Baeldung/scala-tutorials/tree/master";
 
-    public static final ImmutableList<GitHubRepoVO> tutorialsRepos = ImmutableList.of(new GitHubRepoVO("Java-tutorials", tutorialsRepoGitUrl, tutorialsRepoLocalPath, tutorialsRepoMasterPath),
-            new GitHubRepoVO("Scala-tutorials", scalaTutorialsRepoGitUrl, scalaTutorialsRepoLocalPath, scalaTutorialsRepoMasterPath));
+    public static final ImmutableList<GitHubRepoVO> tutorialsRepos = ImmutableList.of(
+        new GitHubRepoVO("Java-tutorials", tutorialsRepoGitUrl, tutorialsRepoLocalPath, tutorialsRepoMasterPath),
+        new GitHubRepoVO("Scala-tutorials", scalaTutorialsRepoGitUrl, scalaTutorialsRepoLocalPath, scalaTutorialsRepoMasterPath)
+    );
 
 
     //for givenAGitHubModuleReadme_whenAnalysingTheReadme_thenLinksToAndFromGithubMatch
