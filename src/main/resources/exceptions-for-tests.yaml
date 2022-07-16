@@ -169,7 +169,7 @@ givenAGitHubModuleReadme_whenAnalysingTheReadme_thentheReadmeDoesNotLikTooManyAr
   - https://github.com/eugenp/tutorials/tree/master/spring-boot-rest/README.md
   - https://github.com/eugenp/tutorials/tree/master/spring-5-reactive-modules/spring-reactive/README.md
   - https://github.com/eugenp/tutorials/tree/master/spring-boot-modules/spring-boot-mvc-2/README.md
-  - https://github.com/eugenp/tutorials/blob/master/spring-boot-modules/spring-boot-libraries/README.md
+  - https://github.com/eugenp/tutorials/tree/master/spring-boot-modules/spring-boot-libraries/README.md
   - https://github.com/eugenp/tutorials/tree/master/spring-boot-modules/spring-boot-mvc/README.md
 
 
