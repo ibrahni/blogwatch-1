@@ -150,6 +150,7 @@ givenAllArticles_whenAnArticleLoads_thenItIsHasASingleOptinInTheSidebar:
   - /faunadb-spring
   - /spring-boot-nosql-database
   - /faunadb-spring-web-app
+  - /java-lightrun
 givenAllArticles_whenAnArticleLoads_thenItIsHasASingleOptinInTheAfterPostContent:
   - /linux/
   - /kotlin/
@@ -161,6 +162,7 @@ givenAllArticles_whenAnArticleLoads_thenItIsHasASingleOptinInTheAfterPostContent
   - /java-weekly
   - /java-web-weekly
   - /spring-boot-datacassandratest
+  - /java-lightrun
 givenAllArticles_whenAnArticleLoads_thenTheArticleHasProperDotsInTitle:
   - /string/
 givenTheTutorialsRepository_listAllTheModulesThatAreNotBuildInBothDefautlAndIntegrationTests:
