@@ -305,36 +305,34 @@ public class CommonUITest extends BaseUISeleniumTest {
         recordExecution(GlobalConstants.givenAGitHubModuleReadme_whenAnalysingTheReadme_thenLinksToAndFromGithubMatch);
         List<String> testExceptions= YAMLProperties.exceptionsForTests.get(TestUtils.getMehodName(testInfo.getTestMethod()));
 
-        List<String> readmeURLs = Utils.getListOfReadmesFromAllTutorialsRepos(true);
-
         Multimap<String, LinkVO> badURLs = ArrayListMultimap.create();
+        Map<GitHubRepoVO, List<String>> reposReadmes = Utils.getRepoWiseListOfReadmesFromAllTutorialsRepos(false);
+        reposReadmes.forEach((repo, readmePaths) -> {
 
-        readmeURLs.forEach(readmeURL -> {
-            try {
-
-                if(testExceptions.contains(readmeURL)) {
-                    return;
-                }
-
-                page.setUrl(readmeURL);
-
-                page.loadUrl(); // loads README in browser
-
-                List<LinkVO> urlsInReadmeFile = page.getLinksToTheBaeldungSite(); // get all the articles linked in this README
-
-                String reamdmeParentURL = Utils.getTheParentOfReadme(readmeURL);
-                urlsInReadmeFile.forEach(link -> {
-                    String staging8Url = Utils.changeLiveUrlWithStaging8(link.getLink());
-
-                    page.setUrl(staging8Url);
-                    page.loadUrl(); // loads an article in the browser
-                    if (!page.getWebDriver().getPageSource().toLowerCase().contains(reamdmeParentURL.toLowerCase())) {
-                        badURLs.put(readmeURL, link);
+            readmePaths.forEach(readmePath -> {
+                try {
+                    if(testExceptions.contains(readmePath)) {
+                        return;
                     }
-                });
-            } catch (Exception e) {
-                logger.debug("Error while processing " + readmeURL + " \nError message" + e.getMessage());
-            }
+
+                    String reamdmeParentPath = Utils.getTheParentOfReadme(readmePath);
+                    List<LinkVO> urlsInReadmeFile = Utils.extractBaeldungLinksFromReadmeFile(Path.of(readmePath)); // get all the articles linked in this README
+                    urlsInReadmeFile.forEach(link -> {
+                        String staging8Url = Utils.changeLiveUrlWithStaging8(link.getLink());
+
+                        page.setUrl(staging8Url);
+                        page.loadUrl(); // loads an article in the browser
+                        String reamdmeParentURL = Utils.replaceTutorialLocalPathWithHttpUrl(repo.repoLocalPath(), repo.repoMasterHttpPath())
+                            .apply(reamdmeParentPath);
+                        if (!page.getWebDriver().getPageSource().toLowerCase().contains(reamdmeParentURL.toLowerCase())) {
+                            badURLs.put(readmePath, link);
+                        }
+                    });
+                } catch (Exception e) {
+                    logger.debug("Error while processing {} \nError message {}", readmePath, e.getMessage());
+                }
+            });
+
         });
 
         if (badURLs.size() > 0 ) {

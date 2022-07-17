@@ -899,13 +899,33 @@ public class Utils {
             ReadmeFileVisitor readmeFileVisitor = new ReadmeFileVisitor(repo.repoLocalPath());
             Files.walkFileTree(repoLocalPath, readmeFileVisitor);
             if(convertPathToHttpUrl) {
-                readmeList.addAll(readmeFileVisitor.getReameList().stream().map(replaceTutorialLocalPathWithHttpUrl(repo.repoLocalPath(), repo.repoMasterHttpPath())).collect(toList()));
+                readmeList.addAll(readmeFileVisitor.getReadmeList().stream().map(replaceTutorialLocalPathWithHttpUrl(repo.repoLocalPath(), repo.repoMasterHttpPath())).collect(toList()));
             }else {
-                readmeList.addAll(readmeFileVisitor.getReameList());
+                readmeList.addAll(readmeFileVisitor.getReadmeList());
             }
             readmes.put(repo, readmeList);
         }
         return readmes;
+    }
+
+    private static final Pattern EXTRACT_LINKS_PATTERN = Pattern.compile("-\\s.*\\[(.*)\\]\\((https?:\\/\\/www\\.baeldung\\.com.*)\\)");
+
+    public static List<LinkVO> extractBaeldungLinksFromReadmeFile(Path readme) {
+        List<LinkVO> links = new ArrayList<>();
+        final Matcher matcher = EXTRACT_LINKS_PATTERN.matcher("");
+        if (Files.exists(readme)) {
+            try (var lines = Files.lines(readme)) {
+                lines.forEach(line -> {
+                    Matcher reset = matcher.reset(line);
+                    if (reset.matches()) {
+                        links.add(new LinkVO(reset.group(2), reset.group(1)));
+                    }
+                });
+            } catch (IOException e) {
+                logger.error(e.getMessage(), e);
+            }
+        }
+        return links;
     }
 
 

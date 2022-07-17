@@ -20,7 +20,7 @@ public class ReadmeFileVisitor extends SimpleFileVisitor<Path> {
 
     protected Logger logger = LoggerFactory.getLogger(getClass());
 
-    private List<String> reameList = new ArrayList<>();
+    private List<String> readmeList = new ArrayList<>();
 
     public ReadmeFileVisitor(String repoLocalPath) {
         super();
@@ -40,14 +40,14 @@ public class ReadmeFileVisitor extends SimpleFileVisitor<Path> {
 
         File file = path.toFile();
         if (file.isFile() && file.getName().toLowerCase().endsWith(GlobalConstants.README_FILE_NAME_LOWERCASE)) {
-            logger.info("redme found {}", path);
-            reameList.add(path.toString());
+            logger.info("readme found {}", path);
+            readmeList.add(path.toString());
         }
         return FileVisitResult.CONTINUE;
     }
 
-    public List<String> getReameList() {
-        return reameList;
+    public List<String> getReadmeList() {
+        return readmeList;
     }
 
 }
