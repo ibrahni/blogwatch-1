@@ -48,6 +48,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.rholder.retry.RetryException;
 import com.github.rholder.retry.Retryer;
+import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 
 import io.restassured.RestAssured;
@@ -234,8 +235,8 @@ public class TestUtils {
         });
     }
 
-    public static Map<Integer, String> checkLocalRepoDirectories(List<GitHubRepoVO> repositories, List<String> gitHubModuleLinks) {
-        Map<Integer, String> errors = new HashMap<>();
+    public static Multimap<Integer, String> checkLocalRepoDirectories(List<GitHubRepoVO> repositories, List<String> gitHubModuleLinks) {
+        Multimap<Integer, String> errors = ArrayListMultimap.create();
         traverseLocalRepositories(gitHubModuleLinks, repositories, (repo, url) -> {
             final Path localPath = repo.getLocalPathByUrl(url);
             if (localPath != null && !Files.isDirectory(localPath)) {

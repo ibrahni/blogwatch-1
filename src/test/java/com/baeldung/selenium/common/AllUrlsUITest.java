@@ -413,7 +413,7 @@ public class AllUrlsUITest extends ConcurrentBaseUISeleniumTest {
                 if (shouldSkipUrl(page, GlobalConstants.givenAllArticlesLinkingToGitHubModule_whenAnArticleLoads_thenLinkedGitHubModulesReturns200OK) || Utils.excludePage(page.getUrl(), GlobalConstants.ARTILCE_JAVA_WEEKLY, false)) {
                     return;
                 }
-                Map<Integer, String> notFoundUrls = TestUtils.checkLocalRepoDirectories(GlobalConstants.tutorialsRepos, gitHubModulesLinkedOntheArticle);
+                Multimap<Integer, String> notFoundUrls = TestUtils.checkLocalRepoDirectories(GlobalConstants.tutorialsRepos, gitHubModulesLinkedOntheArticle);
                 if (notFoundUrls.size() > 0) {
                     recordMetrics(notFoundUrls.size(), TestMetricTypes.FAILED);
                     recordFailure(GlobalConstants.givenAllArticlesLinkingToGitHubModule_whenAnArticleLoads_thenLinkedGitHubModulesReturns200OK, notFoundUrls.size());

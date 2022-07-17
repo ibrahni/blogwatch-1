@@ -6,7 +6,7 @@ import java.nio.file.Paths;
 public record GitHubRepoVO(String repoName, String repoUrl, String repoLocalPath, String repoMasterHttpPath) {
 
     public boolean canHandle(String url) {
-        return url.startsWith(repoMasterHttpPath);
+        return url.startsWith(repoMasterHttpPath) || repoUrl.equals(url + ".git");
     }
 
     /**
@@ -16,16 +16,17 @@ public record GitHubRepoVO(String repoName, String repoUrl, String repoLocalPath
      * @return Path of directory or null
      */
     public Path getLocalPathByUrl(String url) {
-        if (canHandle(url)) {
-            final int index = url.indexOf(repoMasterHttpPath) + repoMasterHttpPath.length() + 1;
-            if (index > url.length()) {
-                return null;
-            }
-            String path = url.substring(index);
-            return Paths.get(repoLocalPath())
-                .resolve(path);
+        if (!canHandle(url))
+            return null;
+        Path baseDir = Path.of(repoLocalPath);
+        if (url.length() < repoMasterHttpPath.length()) {
+            return baseDir;
         }
-        return null;
+        String path = url.substring(url.indexOf(repoMasterHttpPath) + repoMasterHttpPath.length());
+        if (path.isEmpty() || path.equals("/")) {
+            return baseDir;
+        }
+        return baseDir.resolve(path.substring(1));
     }
 
 }
