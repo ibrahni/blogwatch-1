@@ -14,6 +14,9 @@ givenAllArticles_whenAnArticleLoads_thenItHasSingleShortcodeAtTheEnd:
   - /cs/
   - /scala/
   - /codota/
+  - /spring-boot-datacassandratest
+  - /java-cassandra-unit
+  - /java-lightrun
 givenAllArticlesAndPages_whenAnalysingImages_thenImagesDoNotPoinToTheDraftsSite:
   - /javafx/
   - /java-sms-twilio/
