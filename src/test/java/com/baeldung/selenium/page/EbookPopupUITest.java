@@ -6,8 +6,10 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.stream.Stream;
 
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -29,6 +31,15 @@ public class EbookPopupUITest extends BaseUISeleniumTest {
     @BeforeEach
     public void loadNewWindow() {
         ebookPageDriver.openNewWindow();
+    }
+
+    @Test
+    @Tag("VerifyEbookDataSourceSize")
+    public final void givenEbookPageDriver_whenFindEbookUrls_thenMoreThanSevenResults() {
+        ebookPageDriver.openNewWindow();
+        Assertions.assertThat(ebookPageDriver.findEbooksUrls()
+                .size())
+            .isGreaterThanOrEqualTo(7);
     }
 
     @ParameterizedTest(name = " {displayName} - Test download ebook popup on {0} ")
