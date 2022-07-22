@@ -288,9 +288,6 @@
 
         <profile>
             <id>headless-browser-windows</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
             <build>
                 <plugins>
                     <plugin>
@@ -340,7 +337,7 @@
                                 <spring.profiles.active>headless-browser</spring.profiles.active>
                                 <target.env>mac-m1</target.env>
                                 <base.url>https://www.baeldung.com</base.url>
-                                <headless.browser.name>phantomJS</headless.browser.name>
+                                <headless.browser.name>HtmlUnit</headless.browser.name>
                             </systemPropertyVariables>
                         </configuration>
                     </plugin>
