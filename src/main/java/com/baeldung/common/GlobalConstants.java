@@ -220,13 +220,15 @@ public class GlobalConstants {
     public static final String NO="no";
 
     // for givenAnArtifactId_thenListAllChildModules
-    public static final String tutorialsRepoLocalPath = "/var/lib/jenkins/tutorials-source-code";
-    public static final String tutorialsRepoGitUrl="https://github.com/eugenp/tutorials.git";
-    public static final String tutorialsRepoMasterPath="https://github.com/eugenp/tutorials/tree/master";
+    private static final String localRepoBasePath = System.getProperty("local.repo.basepath", "/var/lib/jenkins");
 
-    public static final String scalaTutorialsRepoLocalPath = "/var/lib/jenkins/scala-tutorials-source-code";
-    public static final String scalaTutorialsRepoGitUrl="https://github.com/Baeldung/scala-tutorials.git";
-    public static final String scalaTutorialsRepoMasterPath="https://github.com/Baeldung/scala-tutorials/tree/master";
+    public static final String tutorialsRepoLocalPath = localRepoBasePath + "/tutorials-source-code";
+    public static final String tutorialsRepoGitUrl = "https://github.com/eugenp/tutorials.git";
+    public static final String tutorialsRepoMasterPath = "https://github.com/eugenp/tutorials/tree/master";
+
+    public static final String scalaTutorialsRepoLocalPath = localRepoBasePath + "/scala-tutorials-source-code";
+    public static final String scalaTutorialsRepoGitUrl = "https://github.com/Baeldung/scala-tutorials.git";
+    public static final String scalaTutorialsRepoMasterPath = "https://github.com/Baeldung/scala-tutorials/tree/master";
 
     public static final ImmutableList<GitHubRepoVO> tutorialsRepos = ImmutableList.of(
         new GitHubRepoVO("Java-tutorials", tutorialsRepoGitUrl, tutorialsRepoLocalPath, tutorialsRepoMasterPath),
