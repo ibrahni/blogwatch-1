@@ -288,6 +288,9 @@
 
         <profile>
             <id>headless-browser-windows</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
             <build>
                 <plugins>
                     <plugin>
