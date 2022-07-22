@@ -337,7 +337,7 @@
                                 <spring.profiles.active>headless-browser</spring.profiles.active>
                                 <target.env>mac-m1</target.env>
                                 <base.url>https://www.baeldung.com</base.url>
-                                <headless.browser.name>HtmlUnit</headless.browser.name>
+                                <headless.browser.name>chrome-headless</headless.browser.name>
                             </systemPropertyVariables>
                         </configuration>
                     </plugin>
