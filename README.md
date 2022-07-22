@@ -45,6 +45,11 @@ Headless browser can be configured using following system property
 
 - _headless.browser.name_
 
+### MacBook Users
+
+- In case you are running on MacBook, you will have to download it's specific ChromeDriver version on your own. It can be downloaded from here https://chromedriver.chromium.org.
+- Note there are two versions of chromedriver available for MacBook, depending on processor type (Intel or M1).
+- To match the maven profile for M1 Macbook that exists in _pom.xml_, you will have to paste the chromedriver under project location _bin/mac-m1/_.
 
 ### Updating List of Posts and Pages
 
