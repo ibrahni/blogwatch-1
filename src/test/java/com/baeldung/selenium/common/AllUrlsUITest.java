@@ -180,7 +180,7 @@ public class AllUrlsUITest extends ConcurrentBaseUISeleniumTest {
     }
 
     @ConcurrentTest
-    public final void givenAllArticlesAndPages_whenAPageLoads_thenMetaOGImageAndTwitterImageIsPresentAndPointToTheAbsolutePath(SitePage sitePage) {
+    public final void givenAllArticlesAndPages_whenAPageLoads_thenMetaOGImageAndTwitterImageExistAndPointToTheAbsolutePath(SitePage sitePage) {
         new TestLogic(SitePage.Type.PAGE, SitePage.Type.ARTICLE).log(GlobalConstants.givenAllArticlesAndPages_whenAPageLoads_thenMetaOGImageAndTwitterImageExistAndPointToTheAbsolutePath)
             .apply(page -> {
                 recordExecution(GlobalConstants.givenAllArticlesAndPages_whenAPageLoads_thenMetaOGImageAndTwitterImageExistAndPointToTheAbsolutePath);
