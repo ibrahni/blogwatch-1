@@ -1,41 +1,32 @@
 package com.baeldung.common.vo;
 
-public class GitHubRepoVO {
-    private String repoName;
-    private String repoUrl;
-    private String repoLoalPath;
-    private String repoMasterHttpPath;
-          
-    public GitHubRepoVO(String repoName, String repoUrl, String repoLoalPath, String repoMasterHttpPath) {
-        super();
-        this.repoName = repoName;
-        this.repoUrl = repoUrl;
-        this.repoLoalPath = repoLoalPath;
-        this.repoMasterHttpPath = repoMasterHttpPath;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+public record GitHubRepoVO(String repoName, String repoUrl, String repoLocalPath, String repoMasterHttpPath) {
+
+    public boolean canHandle(String url) {
+        return url.startsWith(repoMasterHttpPath) || repoUrl.equals(url + ".git");
     }
-    public String getRepoName() {
-        return repoName;
+
+    /**
+     * Takes Github url and finds corresponding local directory
+     *
+     * @param url Github HTTP url
+     * @return Path of directory or null
+     */
+    public Path getLocalPathByUrl(String url) {
+        if (!canHandle(url))
+            return null;
+        Path baseDir = Path.of(repoLocalPath);
+        if (url.length() < repoMasterHttpPath.length()) {
+            return baseDir;
+        }
+        String path = url.substring(url.indexOf(repoMasterHttpPath) + repoMasterHttpPath.length());
+        if (path.isEmpty() || path.equals("/")) {
+            return baseDir;
+        }
+        return baseDir.resolve(path.substring(1));
     }
-    public void setRepoName(String repoName) {
-        this.repoName = repoName;
-    }
-    public String getRepoUrl() {
-        return repoUrl;
-    }
-    public void setRepoUrl(String repoUrl) {
-        this.repoUrl = repoUrl;
-    }
-    public String getRepoLoalPath() {
-        return repoLoalPath;
-    }
-    public void setRepoLoalPath(String repoLoalPath) {
-        this.repoLoalPath = repoLoalPath;
-    }
-    public String getRepoMasterHttpPath() {
-        return repoMasterHttpPath;
-    }
-    public void setRepoMasterHttpPath(String repoMasterHttpPath) {
-        this.repoMasterHttpPath = repoMasterHttpPath;
-    }
-    
+
 }

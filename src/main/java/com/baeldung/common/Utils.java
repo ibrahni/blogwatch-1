@@ -72,7 +72,7 @@ public class Utils {
 
     private static final String POSSESSION_CHARACTER = "'s";
     private static final String EMPTY = "" ;
-    
+
 
     public static Stream<String> fetchSampleArtilcesList() throws IOException {
         File file = new File(Utils.class.getClassLoader().getResource(GlobalConstants.BLOG_URL_LIST_RESOUCE_FOLDER_PATH + GlobalConstants.SAMPLE_ARTICLES_FILE_NAME).getPath());
@@ -310,11 +310,11 @@ public class Utils {
             });
 
             // @formatter:off
-                 
-             resutls = "\n------------------------------------------------------------------------------------\n" 
+
+             resutls = "\n------------------------------------------------------------------------------------\n"
                             + testName
-                            + "\n-------------------------------------------------------------------------------------\n" 
-                            + formatResult.toString() 
+                            + "\n-------------------------------------------------------------------------------------\n"
+                            + formatResult.toString()
                             + "\n------------------------------------------------------------------------------------\n\n\n";
             // @formatter:on
         }
@@ -333,10 +333,10 @@ public class Utils {
 
         // @formatter:off
 
-        String resutls = "\n------------------------------------------------------------------------------------\n" 
+        String resutls = "\n------------------------------------------------------------------------------------\n"
                         + testName
-                        + "\n-------------------------------------------------------------------------------------" 
-                        + formatResult.toString() 
+                        + "\n-------------------------------------------------------------------------------------"
+                        + formatResult.toString()
                         + "\n------------------------------------------------------------------------------------\n";
      // @formatter:on
 
@@ -360,10 +360,10 @@ public class Utils {
 
         // @formatter:off
 
-        String resutls = "\n------------------------------------------------------------------------------------\n" 
+        String resutls = "\n------------------------------------------------------------------------------------\n"
                         + testName
-                        + "\n-------------------------------------------------------------------------------------" 
-                        + formatResult.toString() 
+                        + "\n-------------------------------------------------------------------------------------"
+                        + formatResult.toString()
                         + "\n------------------------------------------------------------------------------------\n";
      // @formatter:on
 
@@ -481,8 +481,8 @@ public class Utils {
 
         // @formatter:off
         javaConstructsOnPost.stream().filter(javaConstructOnPage -> !javaConstructOnPage.isFoundOnGitHub() && !javaConstructOnPage.getConstructName().equals(GlobalConstants.CONSTRUCT_DUMMY_CLASS_NAME))
-                                     .forEach(javaConstruct -> results.put(url, javaConstruct));                                                                                            
-        // @formatter:on 
+                                     .forEach(javaConstruct -> results.put(url, javaConstruct));
+        // @formatter:on
         if (!results.containsKey(url)) {
             results.put(url, null);
         }
@@ -504,14 +504,14 @@ public class Utils {
 
         StringBuilder resultBuilder = new StringBuilder();
 
-        // @formatter:off        
+        // @formatter:off
         javaConstructs.forEach((javaConstruct) -> {
-            resultBuilder.append(javaConstruct == null ? "OK" :javaConstruct.toString()+"\n");            
+            resultBuilder.append(javaConstruct == null ? "OK" :javaConstruct.toString()+"\n");
         });
-        String resutls = "\n------------------------------------------------------------------------------------\n" 
+        String resutls = "\n------------------------------------------------------------------------------------\n"
                         + url
-                        + "\n-------------------------------------------------------------------------------------\n" 
-                        + resultBuilder 
+                        + "\n-------------------------------------------------------------------------------------\n"
+                        + resultBuilder
                         + "\n------------------------------------------------------------------------------------\n\n";
         // @formatter:on
         return resutls;
@@ -634,15 +634,15 @@ public class Utils {
                     delimiter = GlobalConstants.RIGHT_PARENTHESIS;
                 }
                 if (title.substring(tokenStartIndex).indexOf(delimiter) == -1) {
-                    token = title.substring(tokenStartIndex);                                           
-                    tokens.add(title.substring(tokenStartIndex).trim());                    
+                    token = title.substring(tokenStartIndex);
+                    tokens.add(title.substring(tokenStartIndex).trim());
                     break;
                 }
             }
 
             token = title.substring(tokenStartIndex, tokenStartIndex + title.substring(tokenStartIndex).indexOf(delimiter) + delimiter.length());
             tokenStartIndex = tokenStartIndex + token.length();
-            if (StringUtils.isNotBlank(token)) {               
+            if (StringUtils.isNotBlank(token)) {
                tokens.add(token.trim());
             }
             if (tokenStartIndex >= title.length()) {
@@ -656,14 +656,14 @@ public class Utils {
 
     }
 
-    private static String findNextDelimiter(String title) {       
+    private static String findNextDelimiter(String title) {
         int indexOfFirstSpace = title.indexOf(GlobalConstants.SPACE_DELIMITER);
         if (indexOfFirstSpace == -1) {
             return GlobalConstants.SPACE_DELIMITER;
         }
         String firstTokenWithTheSpaceDelimiter = title.substring(0,indexOfFirstSpace);
         return firstTokenWithTheSpaceDelimiter.contains(GlobalConstants.LEFT_PARENTHESIS) && !firstTokenWithTheSpaceDelimiter.contains("()") ? GlobalConstants.RIGHT_PARENTHESIS_FOLLOWED_BY_SPACE : " ";
-    }       
+    }
 
     public static String generateXPathExcludeClauseForImages(ImmutableList<String> domainToExclude) {
         StringBuilder excludeCluse = new StringBuilder();
@@ -771,7 +771,7 @@ public class Utils {
         return resultBuilder.toString();
 
     }
-    
+
     public static boolean matchTextInElement(WebElement element, String textToMatch) {
         return textToMatch.equals(element.getText()) || textToMatch.equals(element.getAttribute("innerHTML"));
     }
@@ -781,9 +781,9 @@ public class Utils {
     }
 
     public static void logChildModulesResults(TutorialsParentModuleFinderFileVisitor tutorialsParentModuleFinderFileVisitor) {
-              
+
         logger.info(colordHeading("Please find below child modules for: {}"), tutorialsParentModuleFinderFileVisitor.getArtificateId());
-        
+
         tutorialsParentModuleFinderFileVisitor.getChildModules().forEach(modulePath -> {
             String gitUrl = StringUtils.removeEnd(StringUtils.removeStart(modulePath, GlobalConstants.tutorialsRepoLocalPath), "pom.xml");
             System.out.println("https://github.com/eugenp/tutorials/tree/master" + gitUrl);
@@ -800,10 +800,10 @@ public class Utils {
         else {
             staging8Url = liveUrl.replace(GlobalConstants.BAELDUNG_HOME_PAGE_URL_WIThOUT_THE_PROTOCOL, GlobalConstants.STAGEING8_HOME_URL);
         }
-        
+
         return staging8Url;
     }
-    
+
     public static void sleep(int millis) {
         try {
             Thread.sleep(millis);
@@ -820,9 +820,9 @@ public class Utils {
             try {
                 logger.info(magentaColordMessage("Firing git pull to downlaod updates (if any)"));
                 PullResult result = git.pull().setRemote("origin").setRemoteBranchName("master").call();
-                if (result.isSuccessful()) {  
-                    logger.info(magentaColordMessage("Git pull finished successfully"));  
-                    git.clean().setForce(true).setIgnore(false).setCleanDirectories(true).call();                    
+                if (result.isSuccessful()) {
+                    logger.info(magentaColordMessage("Git pull finished successfully"));
+                    git.clean().setForce(true).setIgnore(false).setCleanDirectories(true).call();
                 }
                 else {
                     redownloadTutorialsRepo = GlobalConstants.YES;
@@ -842,30 +842,30 @@ public class Utils {
 
             logger.info(magentaColordMessage("tutorials repository cloned"));
         }
-        
+
     }
-    
+
     public static void logUnAlignedModulesResults(ModuleAlignmentValidatorFileVisitor moduleAlignmentValidatorFileVisitor) {
-        
+
         logger.info(colordHeading("Please find below unalighed Moudles"));
-        
+
         moduleAlignmentValidatorFileVisitor.getInvalidModules().forEach(modulePath -> {
             String gitUrl = StringUtils.removeEnd(StringUtils.removeStart(modulePath, GlobalConstants.tutorialsRepoLocalPath), "pom.xml");
             System.out.println("https://github.com/eugenp/tutorials/tree/master" + gitUrl);
         });
     }
-    
+
     public static void logUnparsableModulesResults(ModuleAlignmentValidatorFileVisitor moduleAlignmentValidatorFileVisitor) {
         if(moduleAlignmentValidatorFileVisitor.getUnparsableModule().size() >0 ) {
             logger.info(colordHeading("The auotmation coundn't parse folloiwng modues. Please report these to devOps-dev"));
         }
-        
+
         moduleAlignmentValidatorFileVisitor.getUnparsableModule().forEach(modulePath -> {
             String gitUrl = StringUtils.removeEnd(StringUtils.removeStart(modulePath, GlobalConstants.tutorialsRepoLocalPath), "pom.xml");
             System.out.println("https://github.com/eugenp/tutorials/tree/master" + gitUrl);
         });
     }
-    
+
    public  static int getIndexOfFirstTokenStartingWithACharacter(String title) {
         return  Character.isDigit(Character.valueOf(title.charAt(0))) || "Q".equals(String.valueOf(title.charAt(0))) || ">".equals(String.valueOf(title.charAt(0)))? 1 : 0;
      }
@@ -888,44 +888,64 @@ public class Utils {
     }
 
     public static Map<GitHubRepoVO,List<String>> getRepoWiseListOfReadmesFromAllTutorialsRepos(boolean convertPathToHttpUrl) throws InvalidRemoteException, TransportException, IOException, GitAPIException {
-        List<String> readmeList = null;        
+        List<String> readmeList = null;
         Map<GitHubRepoVO, List<String>> readmes = new HashMap<GitHubRepoVO, List<String>>();
-        
-        for(GitHubRepoVO repo: tutorialsRepos) {   
-            readmeList = new ArrayList<>();
-            Path repoLocalPath = Paths.get(repo.getRepoLoalPath());
-            Utils.fetchGitRepo(GlobalConstants.NO, repoLocalPath, repo.getRepoUrl());        
 
-            ReadmeFileVisitor readmeFileVisitor = new ReadmeFileVisitor(repo.getRepoLoalPath());
+        for(GitHubRepoVO repo: tutorialsRepos) {
+            readmeList = new ArrayList<>();
+            Path repoLocalPath = Paths.get(repo.repoLocalPath());
+            Utils.fetchGitRepo(GlobalConstants.NO, repoLocalPath, repo.repoUrl());
+
+            ReadmeFileVisitor readmeFileVisitor = new ReadmeFileVisitor(repo.repoLocalPath());
             Files.walkFileTree(repoLocalPath, readmeFileVisitor);
             if(convertPathToHttpUrl) {
-                readmeList.addAll(readmeFileVisitor.getReameList().stream().map(replaceTutorialLocalPathWithHttpUrl(repo.getRepoLoalPath(), repo.getRepoMasterHttpPath())).collect(toList()));                
+                readmeList.addAll(readmeFileVisitor.getReadmeList().stream().map(replaceTutorialLocalPathWithHttpUrl(repo.repoLocalPath(), repo.repoMasterHttpPath())).collect(toList()));
             }else {
-                readmeList.addAll(readmeFileVisitor.getReameList());
+                readmeList.addAll(readmeFileVisitor.getReadmeList());
             }
-            readmes.put(repo, readmeList);           
+            readmes.put(repo, readmeList);
         }
         return readmes;
     }
-    
-    
+
+    private static final Pattern EXTRACT_LINKS_PATTERN = Pattern.compile("-\\s.*\\[(.*)\\]\\((https?:\\/\\/www\\.baeldung\\.com.*)\\)");
+
+    public static List<LinkVO> extractBaeldungLinksFromReadmeFile(Path readme) {
+        List<LinkVO> links = new ArrayList<>();
+        final Matcher matcher = EXTRACT_LINKS_PATTERN.matcher("");
+        if (Files.exists(readme)) {
+            try (var lines = Files.lines(readme)) {
+                lines.forEach(line -> {
+                    Matcher reset = matcher.reset(line);
+                    if (reset.matches()) {
+                        links.add(new LinkVO(reset.group(2), reset.group(1)));
+                    }
+                });
+            } catch (IOException e) {
+                logger.error(e.getMessage(), e);
+            }
+        }
+        return links;
+    }
+
+
     public static Function<String, String> replaceTutorialLocalPathWithHttpUrl(String repoLocalPath, String repoHttpPath){
-        return path -> repoHttpPath.concat(StringUtils.removeStart(path, repoLocalPath));        
-    }     
-    
+        return path -> repoHttpPath.concat(StringUtils.removeStart(path, repoLocalPath));
+    }
+
     public static Function<String, String> replaceJavaTutorialLocalPathWithHttpUrl = path -> tutorialsRepoMasterPath.concat(StringUtils.removeStart(path, tutorialsRepoLocalPath));
-     
-    
+
+
     public static List<String> getLinksToTheBaeldungSite(Document doc) {
         Elements baeldungUrls = doc.select("a[href*="+GlobalConstants.BAELDUNG_DOMAIN_NAME+"]");
         return baeldungUrls.stream().map(e -> e.attr("href")).collect(toList());
     }
 
-    public static int getLinksToTheBaeldungSite(String readmePath) throws IOException {        
-       return  (int) Files.lines(Paths.get(readmePath))        
+    public static int getLinksToTheBaeldungSite(String readmePath) throws IOException {
+       return  (int) Files.lines(Paths.get(readmePath))
         .filter(line -> line.matches(".*\\(.*baeldung.com.*\\).*"))
         .count();
-      
+
     }
 
     public static List<String> getListOfReadmesFromAllTutorialsRepos(boolean convertPathToHttpUrl) throws InvalidRemoteException, TransportException, IOException, GitAPIException {

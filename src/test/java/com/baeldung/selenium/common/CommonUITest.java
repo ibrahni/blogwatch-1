@@ -56,7 +56,6 @@ import com.baeldung.common.TestMetricsExtension;
 import com.baeldung.common.Utils;
 import com.baeldung.common.YAMLProperties;
 import com.baeldung.common.vo.AnchorLinksTestDataVO;
-import com.baeldung.common.vo.CoursePurchaseLinksVO.PurchaseLink;
 import com.baeldung.common.vo.EventTrackingVO;
 import com.baeldung.common.vo.FooterLinksDataVO;
 import com.baeldung.common.vo.GitHubRepoVO;
@@ -91,7 +90,7 @@ public class CommonUITest extends BaseUISeleniumTest {
 
     @Value("${givenAListOfUrls_whenAUrlLoads_thenItReturns200OK.retries-for-200OK-test}")
     private int retriesFor200OKTest;
-    
+
     @Value("${givenAListOfUrls_whenAUrlLoads_thenItReturns200OK.mode-for-200OK-test}")
     private String modeFor200OKTest;
 
@@ -100,22 +99,22 @@ public class CommonUITest extends BaseUISeleniumTest {
 
     @Value("#{'${givenAListOfUrls_whenAUrlLoads_thenItReturns200OK.site-status-check-url-file-names:course-pages.txt}'.split(',')}")
     private List<String> pageStausCheckUrlFileNames;
-    
+
     @Value("${givenURLsWithFooterLinks_whenAnaysingFooterLinks_thenAnchorTextAndAnchorLinksExist.verify-write-for-baeldung-footer-link}")
-    private boolean verifyWriteForBaeldungFooterLink;     
-    
+    private boolean verifyWriteForBaeldungFooterLink;
+
     @Value("${givenAPage_whenThePageLoads_thenNoPopupAppearsOnThePage.time-to-wait-for-popup}")
     private int timeToWaitForPopup;
-    
+
     @Value("${givenAnArtifactId_thenListAllChildModules.parent-artifact-id}")
     private String parentArtifactId;
-    
+
     @Value("${redownload-repo}")
     private String redownloadTutorialsRepo;
 
     @Autowired
     ObjectMapper objectMapper;
-    
+
 
     @Test
     @Tag(GlobalConstants.TAG_DAILY)
@@ -179,9 +178,9 @@ public class CommonUITest extends BaseUISeleniumTest {
         page.setUrl(page.getBaseURL() + GlobalConstants.ARTICLE_WITH_PESISTENCE_EBOOK_DOWNLOAD);
 
         page.loadUrl();
-        
+
         List<WebElement> images = page.getPathOfPersistenceEBookImages();
-        
+
         assertTrue(images.size() > 0, "Couldn't find any images in the after-post-banner-widget on /hibernate-spatial" );
 
         images.forEach(image -> {
@@ -195,7 +194,7 @@ public class CommonUITest extends BaseUISeleniumTest {
     @Tag(GlobalConstants.TAG_DAILY)
     public final void givenAGoogleAnalyticsEnabledPage_whenAnalysingThePageSource_thenItHasTrackingCode(String url) {
         String  fullUrl = page.getBaseURL() + url;
-        
+
         page.setUrl(fullUrl);
 
         page.loadUrl();
@@ -253,7 +252,7 @@ public class CommonUITest extends BaseUISeleniumTest {
                     if (!page.findDivWithEventCalls(eventTrackingVO.getTrackingCodes())) {
                         badURLs.put(page.getBaseURL() + urlKey, "Button/link: " + eventTrackingVO.getLinkText() + "\nTracking code: " + eventTrackingVO.getTrackingCodes());
                     }
-                }                
+                }
             }
 
         }
@@ -269,13 +268,13 @@ public class CommonUITest extends BaseUISeleniumTest {
     @Tag("screenShotTest")
     public final void screenShotTest() throws IOException {
         page.setUrl(page.getBaseURL() + "/jackson");
-        
+
         TestUtils.sleep(30000);
 
         page.loadUrl();
 
         TestUtils.takeScreenShot(page.getWebDriver());
-       
+
     }
 
     @Test
@@ -306,36 +305,34 @@ public class CommonUITest extends BaseUISeleniumTest {
         recordExecution(GlobalConstants.givenAGitHubModuleReadme_whenAnalysingTheReadme_thenLinksToAndFromGithubMatch);
         List<String> testExceptions= YAMLProperties.exceptionsForTests.get(TestUtils.getMehodName(testInfo.getTestMethod()));
 
-        List<String> readmeURLs = Utils.getListOfReadmesFromAllTutorialsRepos(true);
-        
         Multimap<String, LinkVO> badURLs = ArrayListMultimap.create();
+        Map<GitHubRepoVO, List<String>> reposReadmes = Utils.getRepoWiseListOfReadmesFromAllTutorialsRepos(false);
+        reposReadmes.forEach((repo, readmePaths) -> {
 
-        readmeURLs.forEach(readmeURL -> {
-            try {
-                
-                if(testExceptions.contains(readmeURL)) {
-                    return;
-                }
-                
-                page.setUrl(readmeURL);
-
-                page.loadUrl(); // loads README in browser
-
-                List<LinkVO> urlsInReadmeFile = page.getLinksToTheBaeldungSite(); // get all the articles linked in this README                                     
-                
-                String reamdmeParentURL = Utils.getTheParentOfReadme(readmeURL);
-                urlsInReadmeFile.forEach(link -> {                    
-                    String staging8Url = Utils.changeLiveUrlWithStaging8(link.getLink());
-                    
-                    page.setUrl(staging8Url);
-                    page.loadUrl(); // loads an article in the browser
-                    if (!page.getWebDriver().getPageSource().toLowerCase().contains(reamdmeParentURL.toLowerCase())) {
-                        badURLs.put(readmeURL, link);
+            readmePaths.forEach(readmePath -> {
+                try {
+                    if(testExceptions.contains(readmePath)) {
+                        return;
                     }
-                });
-            } catch (Exception e) {
-                logger.debug("Error while processing " + readmeURL + " \nError message" + e.getMessage());
-            }
+
+                    String reamdmeParentPath = Utils.getTheParentOfReadme(readmePath);
+                    List<LinkVO> urlsInReadmeFile = Utils.extractBaeldungLinksFromReadmeFile(Path.of(readmePath)); // get all the articles linked in this README
+                    urlsInReadmeFile.forEach(link -> {
+                        String staging8Url = Utils.changeLiveUrlWithStaging8(link.getLink());
+
+                        page.setUrl(staging8Url);
+                        page.loadUrl(); // loads an article in the browser
+                        String reamdmeParentURL = Utils.replaceTutorialLocalPathWithHttpUrl(repo.repoLocalPath(), repo.repoMasterHttpPath())
+                            .apply(reamdmeParentPath);
+                        if (!page.getWebDriver().getPageSource().toLowerCase().contains(reamdmeParentURL.toLowerCase())) {
+                            badURLs.put(readmePath, link);
+                        }
+                    });
+                } catch (Exception e) {
+                    logger.debug("Error while processing {} \nError message {}", readmePath, e.getMessage());
+                }
+            });
+
         });
 
         if (badURLs.size() > 0 ) {
@@ -344,7 +341,7 @@ public class CommonUITest extends BaseUISeleniumTest {
             failTestWithLoggingTotalNoOfFailures("\nwe found issues with following READMEs" + Utils.getErrorMessageForInvalidLinksInReadmeFiles(badURLs));
         }
     }
-    
+
     @Test
     @Tag(GlobalConstants.TAG_TECHNICAL)
     @Tag(GlobalConstants.TAG_SKIP_METRICS)
@@ -356,21 +353,21 @@ public class CommonUITest extends BaseUISeleniumTest {
         Map<GitHubRepoVO, List<String>> reposReadmes = Utils.getRepoWiseListOfReadmesFromAllTutorialsRepos(false);
         Map<String, Integer> articleCountByReadme = new HashMap<>();
 
-        reposReadmes.forEach((repo, readmesPathList) -> {            
+        reposReadmes.forEach((repo, readmesPathList) -> {
             readmesPathList.forEach(readmePath -> {
-                try {                     
+                try {
                     String replacedPath = readmePath.replace("\\", "/");
                     if(testExceptions.contains(Utils.replaceJavaTutorialLocalPathWithHttpUrl.apply(replacedPath))) {
                         return;
                     }
-                    int baeldungUrlsCount = Utils.getLinksToTheBaeldungSite(readmePath); // get all the articles linked in this README                    
+                    int baeldungUrlsCount = Utils.getLinksToTheBaeldungSite(readmePath); // get all the articles linked in this README
                     // for documenting no of links per README
                     if (readmePath.toLowerCase().contains("spring")) {
                         if (baeldungUrlsCount > limitForSpringRelatedReadmeHavingArticles) {
-                            articleCountByReadme.put(Utils.replaceTutorialLocalPathWithHttpUrl(repo.getRepoLoalPath(), repo.getRepoMasterHttpPath()).apply(readmePath), baeldungUrlsCount);
+                            articleCountByReadme.put(Utils.replaceTutorialLocalPathWithHttpUrl(repo.repoLocalPath(), repo.repoMasterHttpPath()).apply(readmePath), baeldungUrlsCount);
                         }
                     } else if (baeldungUrlsCount > limitForReadmeHavingArticles) {
-                        articleCountByReadme.put(Utils.replaceTutorialLocalPathWithHttpUrl(repo.getRepoLoalPath(), repo.getRepoMasterHttpPath()).apply(readmePath), baeldungUrlsCount);
+                        articleCountByReadme.put(Utils.replaceTutorialLocalPathWithHttpUrl(repo.repoLocalPath(), repo.repoMasterHttpPath()).apply(readmePath), baeldungUrlsCount);
                     }
                 } catch (Exception e) {
                     logger.debug("Error while processing " + readmePath + " \nError message" + e.getMessage());
@@ -483,7 +480,7 @@ public class CommonUITest extends BaseUISeleniumTest {
             recordFailure(GlobalConstants.givenURLsWithAnchorsLinkingWithinSamePage_whenAnaysingPage_thenAnHtmlElementExistsForEachAnchor, badURLs.size());
             triggerTestFailure(badURLs, "Matching HTML element not found for the following Anchor Links");
         }
-    }    
+    }
 
     @Test
     public final void givenTheContactForm_whenAMessageIsSubmitted_thenItIsSentSuccessfully() throws InterruptedException {
@@ -497,11 +494,11 @@ public class CommonUITest extends BaseUISeleniumTest {
 
         page.acceptCookie();
 
-        // fill and submit form       
+        // fill and submit form
         page.getWebDriver().findElement(By.xpath("//input[@name='form_fields[name]' or @name='your-name']")).sendKeys("Selenium Test on " + LocalDate.now());
         page.getWebDriver().findElement(By.xpath("//input[@name='form_fields[email]' or @name='your-email']")).sendKeys("support@baeldung.com");
-        
-        page.getWebDriver().findElement(By.xpath("//textarea[@name='form_fields[message]' or @name='your-message']")).sendKeys("Test message from Selenium");        
+
+        page.getWebDriver().findElement(By.xpath("//textarea[@name='form_fields[message]' or @name='your-message']")).sendKeys("Test message from Selenium");
         // page.acceptCookie();
         page.getWebDriver().findElement(By.xpath("//input[contains(@value, 'Send your message')] | //button//*[contains(text(), 'Send')]")).click();
 
@@ -535,7 +532,7 @@ public class CommonUITest extends BaseUISeleniumTest {
                 logger.info("Skipping {}",link.getAnchorLink());
                 continue;
             }
-            tests.add(()-> assertTrue(page.anchorAndAnchorLinkAvailable(footerTag, link), String.format("Couldn't find Anchor Text: %s and Anchor Link: %s, on %s", link.getAnchorText(), link.getAnchorLink(), page.getBaseURL() + url)));            
+            tests.add(()-> assertTrue(page.anchorAndAnchorLinkAvailable(footerTag, link), String.format("Couldn't find Anchor Text: %s and Anchor Link: %s, on %s", link.getAnchorText(), link.getAnchorLink(), page.getBaseURL() + url)));
         }
 
         assertAll(tests.stream());
@@ -565,28 +562,28 @@ public class CommonUITest extends BaseUISeleniumTest {
             }
         }
     }
-    
+
     @ParameterizedTest(name = " {displayName} - on {0}")
     @MethodSource("com.baeldung.utility.TestUtils#popupTestDataProvider")
     @Tag(GlobalConstants.TAG_DAILY)
-    public final void givenAPage_whenThePageLoads_thenNoPopupAppearsOnThePage(String url, TestInfo testInfo) {      
-        
+    public final void givenAPage_whenThePageLoads_thenNoPopupAppearsOnThePage(String url, TestInfo testInfo) {
+
         String fullUrl = page.getBaseURL() + url;
         logger.info("Processing " + fullUrl);
         logger.info("Sleep time configured as:" + timeToWaitForPopup);
-        
-        
+
+
         page.setUrl(fullUrl);
 
         page.loadUrl();
-        
+
         TestUtils.sleep(timeToWaitForPopup);
 
         page.findElentWithHref("privacy-policy")
                 .ifPresent(element -> element.click());
     }
 
-    @Test    
+    @Test
     public final void givenAnArtifactId_thenListAllChildModules() throws IOException, GitAPIException {
 
         if (StringUtils.isBlank(parentArtifactId)) {
@@ -605,31 +602,31 @@ public class CommonUITest extends BaseUISeleniumTest {
 
         logger.info(ConsoleColors.magentaColordMessage("finished"));
     }
-    
 
-    @Test    
+
+    @Test
     public final void givenTutorialsRepo_whenAllModulesAnalysed_thenFolderNameAndArtifiactIdAndModuleNameMatch() throws IOException, GitAPIException {
         recordExecution(GlobalConstants.givenTutorialsRepo_whenAllModulesAnalysed_thenFolderNameAndArtifiactIdAndModuleNameMatch);
 
         //fetch tutorials repo
         String repoLocalDirectory = GlobalConstants.tutorialsRepoLocalPath;
         Path repoDirectoryPath = Paths.get(repoLocalDirectory);
-        Utils.fetchGitRepo(this.redownloadTutorialsRepo, repoDirectoryPath, GlobalConstants.tutorialsRepoGitUrl);               
-        
+        Utils.fetchGitRepo(this.redownloadTutorialsRepo, repoDirectoryPath, GlobalConstants.tutorialsRepoGitUrl);
+
         ModuleAlignmentValidatorFileVisitor moduleAlignmentValidatorFileVisitor = new ModuleAlignmentValidatorFileVisitor();
         Files.walkFileTree(repoDirectoryPath, moduleAlignmentValidatorFileVisitor);
-        
+
         Utils.logUnAlignedModulesResults(moduleAlignmentValidatorFileVisitor);
         Utils.logUnparsableModulesResults(moduleAlignmentValidatorFileVisitor);
         if (moduleAlignmentValidatorFileVisitor.getInvalidModules().size() > 0) {
             recordMetrics(moduleAlignmentValidatorFileVisitor.getInvalidModules().size(), FAILED);
             recordFailure(GlobalConstants.givenTutorialsRepo_whenAllModulesAnalysed_thenFolderNameAndArtifiactIdAndModuleNameMatch, moduleAlignmentValidatorFileVisitor.getInvalidModules().size());
             fail("Unaligned modules found. Please refer to the console log for details");
-        }                
-        
+        }
+
         logger.info(ConsoleColors.magentaColordMessage("finished"));
-    }    
-    
+    }
+
     @Test
     @Tag(GlobalConstants.TAG_GITHUB_RELATED)
     @Tag(GlobalConstants.TAG_SKIP_METRICS)
@@ -639,23 +636,23 @@ public class CommonUITest extends BaseUISeleniumTest {
         List<String> modulesWithNoneOrEmptyReadme = new ArrayList<>();
 
         for (GitHubRepoVO gitHubRepoVO : GlobalConstants.tutorialsRepos) {
-            Path repoDirectoryPath =  Paths.get(gitHubRepoVO.getRepoLoalPath()); // Paths.get("E:\\repos_temp_dir"); 
-             
-            Utils.fetchGitRepo(GlobalConstants.YES, repoDirectoryPath, gitHubRepoVO.getRepoUrl());
+            Path repoDirectoryPath =  Paths.get(gitHubRepoVO.repoLocalPath()); // Paths.get("E:\\repos_temp_dir");
 
-            EmptyReadmeFileVisitor emptyReadmeFileVisitor = new EmptyReadmeFileVisitor(gitHubRepoVO.getRepoLoalPath());
+            Utils.fetchGitRepo(GlobalConstants.YES, repoDirectoryPath, gitHubRepoVO.repoUrl());
+
+            EmptyReadmeFileVisitor emptyReadmeFileVisitor = new EmptyReadmeFileVisitor(gitHubRepoVO.repoLocalPath());
             Files.walkFileTree(repoDirectoryPath, emptyReadmeFileVisitor);
-           
+
             modulesWithNoneOrEmptyReadme.addAll(emptyReadmeFileVisitor.getEmptyReadmeList()
                 .stream()
-                .map(Utils.replaceTutorialLocalPathWithHttpUrl(gitHubRepoVO.getRepoLoalPath(), gitHubRepoVO.getRepoMasterHttpPath()))
+                .map(Utils.replaceTutorialLocalPathWithHttpUrl(gitHubRepoVO.repoLocalPath(), gitHubRepoVO.repoMasterHttpPath()))
                 .collect(toList()));
-            
-            MissingReadmeFileVisitor missingReadmeFileVisitor = new MissingReadmeFileVisitor(gitHubRepoVO.getRepoLoalPath());
+
+            MissingReadmeFileVisitor missingReadmeFileVisitor = new MissingReadmeFileVisitor(gitHubRepoVO.repoLocalPath());
             Files.walkFileTree(repoDirectoryPath, missingReadmeFileVisitor);
             modulesWithNoneOrEmptyReadme.addAll(missingReadmeFileVisitor.getMissingReadmeList()
                 .stream()
-                .map(Utils.replaceTutorialLocalPathWithHttpUrl(gitHubRepoVO.getRepoLoalPath(), gitHubRepoVO.getRepoMasterHttpPath()))
+                .map(Utils.replaceTutorialLocalPathWithHttpUrl(gitHubRepoVO.repoLocalPath(), gitHubRepoVO.repoMasterHttpPath()))
                 .collect(toList()));
         }
 
@@ -665,5 +662,5 @@ public class CommonUITest extends BaseUISeleniumTest {
             failTestWithLoggingTotalNoOfFailures("\n Modules found with missing or empty READMEs \n" + modulesWithNoneOrEmptyReadme.stream().collect(Collectors.joining("\n")));
         }
     }
-    
+
 }
