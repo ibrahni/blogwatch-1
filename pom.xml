@@ -15,7 +15,7 @@
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
-            <version>4.1.2</version>
+            <version>4.2.1</version>
             <exclusions>
                 <exclusion>
                     <groupId>com.google.guava</groupId>
@@ -32,7 +32,7 @@
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>htmlunit-driver</artifactId>
-            <version>3.59.0</version>
+            <version>3.62.0</version>
             <exclusions>
             	<exclusion>
             		<groupId>xml-apis</groupId>
@@ -125,7 +125,7 @@
 
         <dependency>
             <groupId>org.jdom</groupId>
-            <artifactId>jdom</artifactId>
+            <artifactId>jdom2</artifactId>
             <version>${jdom.version}</version>
         </dependency>
 
@@ -140,7 +140,7 @@
         <dependency>
             <groupId>com.github.javaparser</groupId>
             <artifactId>javaparser-symbol-solver-core</artifactId>
-            <version>3.12.0</version>
+            <version>3.24.2</version>
         </dependency>
 
 
@@ -183,7 +183,7 @@
         <dependency>
             <groupId>org.apache.maven</groupId>
             <artifactId>maven-model</artifactId>
-            <version>3.8.1</version>
+            <version>3.8.5</version>
         </dependency>
 
         <!-- test scoped -->
@@ -377,7 +377,7 @@
     </repositories>
 
     <properties>
-        <org.springframework-version>5.3.16</org.springframework-version>
+        <org.springframework-version>5.3.22</org.springframework-version>
         <spring.profiles.active>headless-browser</spring.profiles.active>
 
         <!-- commons and utils -->
@@ -385,7 +385,7 @@
         <commons-collections.version>4.4</commons-collections.version>
         <guava.version>31.1-jre</guava.version>
         <guava-retrying.version>2.0.0</guava-retrying.version>
-        <jdom.version>2.0.2</jdom.version>
+        <jdom.version>2.0.6.1</jdom.version>
         <snakeyaml.version>1.30</snakeyaml.version>
 
         <!-- logging -->
@@ -393,19 +393,19 @@
         <logback.version>1.2.11</logback.version>
 
         <!-- marshalling -->
-        <jackson.version>2.13.2</jackson.version>
+        <jackson.version>2.13.3</jackson.version>
 
         <!-- testing -->
         <rest-assured.version>4.5.1</rest-assured.version>
         <junit.jupiter.version>5.8.2</junit.jupiter.version>
         <org.hamcrest.version>2.2</org.hamcrest.version>
-        <mockito.version>4.4.0</mockito.version>
+        <mockito.version>4.5.1</mockito.version>
 
         <!-- maven plugins -->
-        <maven-surefire-plugin.version>3.0.0-M3</maven-surefire-plugin.version>
-        <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
+        <maven-surefire-plugin.version>3.0.0-M7</maven-surefire-plugin.version>
+        <maven-compiler-plugin.version>3.10.1</maven-compiler-plugin.version>
 
-        <assertj.version>3.20.2</assertj.version>
+        <assertj.version>3.22.0</assertj.version>
     </properties>
 
 </project>

@@ -1,5 +1,6 @@
 package com.baeldung.site;
 
+import java.time.Duration;
 import java.util.List;
 
 import org.openqa.selenium.By;
@@ -22,7 +23,7 @@ public class SpringMicroservicesGuidePage extends BlogBaseDriver {
 
     public void clickAccessTheGuideButton() {
 
-        WebDriverWait wait = new WebDriverWait(this.getWebDriver(), 30);
+        WebDriverWait wait = new WebDriverWait(this.getWebDriver(), Duration.ofSeconds(30));
         WebElement button = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//a//span[contains(text(), 'ACCESS THIS GUIDE')]")));
         button.click();
 

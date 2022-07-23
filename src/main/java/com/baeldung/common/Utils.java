@@ -54,6 +54,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.javaparser.JavaParser;
+import com.github.javaparser.ParseResult;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.rholder.retry.Retryer;
@@ -400,14 +401,19 @@ public class Utils {
     }
 
     private static void getJavaConstructsFromJavaCode(String code, List<JavaConstruct> javaConstructs) {
-        try {
-            CompilationUnit compilationUnit = JavaParser.parse(code);
-            compilationUnit.findAll(ClassOrInterfaceDeclaration.class).stream().forEach(c -> {
-                addNewJavaConstructToTheList(GlobalConstants.CONSTRUCT_TYPE_CLASS_OR_INTERFACE, null, c.getNameAsString(), javaConstructs);
-                c.getMethods().forEach(m -> addNewJavaConstructToTheList(GlobalConstants.CONSTRUCT_TYPE_METHOD, c.getNameAsString(), m.getNameAsString(), javaConstructs));
-            });
-        } catch (Exception e) {
+        final ParseResult<CompilationUnit> compilationUnit = new JavaParser().parse(code);
+
+        if (!compilationUnit.getProblems()
+            .isEmpty()) {
             getJavaConstructsFromJavaCodeWrappingIntoDummyClass(code, javaConstructs);
+        } else {
+            compilationUnit.getResult()
+                .ifPresent(result -> result.findAll(ClassOrInterfaceDeclaration.class)
+                    .forEach(c -> {
+                        addNewJavaConstructToTheList(GlobalConstants.CONSTRUCT_TYPE_CLASS_OR_INTERFACE, null, c.getNameAsString(), javaConstructs);
+                        c.getMethods()
+                            .forEach(m -> addNewJavaConstructToTheList(GlobalConstants.CONSTRUCT_TYPE_METHOD, c.getNameAsString(), m.getNameAsString(), javaConstructs));
+                    }));
         }
     }
 
@@ -427,15 +433,19 @@ public class Utils {
     }
 
     private static void getJavaConstructsFromJavaCodeWrappingIntoDummyClass(String code, List<JavaConstruct> javaConstructs) {
-        try {
+        final ParseResult<CompilationUnit> compilationUnit = new JavaParser().parse(GlobalConstants.CONSTRUCT_DUMMY_CLASS_START + code + GlobalConstants.CONSTRUCT_DUMMY_CLASS_END);
 
-            CompilationUnit compilationUnit = JavaParser.parse(GlobalConstants.CONSTRUCT_DUMMY_CLASS_START + code + GlobalConstants.CONSTRUCT_DUMMY_CLASS_END);
-            compilationUnit.findAll(ClassOrInterfaceDeclaration.class).stream().forEach(c -> {
-                addNewJavaConstructToTheList(GlobalConstants.CONSTRUCT_TYPE_CLASS_OR_INTERFACE, null, c.getNameAsString(), javaConstructs);
-                c.getMethods().forEach(m -> addNewJavaConstructToTheList(GlobalConstants.CONSTRUCT_TYPE_METHOD, c.getNameAsString(), m.getNameAsString(), javaConstructs));
-            });
-        } catch (Exception e) {
-            logger.error("Error occured while processing Java code: " + e.getMessage().substring(0, 100) + "\n" + code);
+        if (!compilationUnit.getProblems()
+            .isEmpty()) {
+            logger.error("Error occured while processing Java code: " + compilationUnit.getProblems().iterator().next().getMessage().substring(0,100) + "\n" + code);
+        } else {
+            compilationUnit.getResult()
+                .ifPresent(result -> result.findAll(ClassOrInterfaceDeclaration.class)
+                    .forEach(c -> {
+                        addNewJavaConstructToTheList(GlobalConstants.CONSTRUCT_TYPE_CLASS_OR_INTERFACE, null, c.getNameAsString(), javaConstructs);
+                        c.getMethods()
+                            .forEach(m -> addNewJavaConstructToTheList(GlobalConstants.CONSTRUCT_TYPE_METHOD, c.getNameAsString(), m.getNameAsString(), javaConstructs));
+                    }));
         }
     }
 

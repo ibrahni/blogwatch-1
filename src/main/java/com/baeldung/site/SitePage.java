@@ -103,7 +103,7 @@ public class SitePage extends BlogBaseDriver {
     public String findTotalOnTeachable(){
         logger.info("executing findTotalOnTeachable()");
 
-        WebDriverWait wait = new WebDriverWait(this.getWebDriver(), 20);
+        WebDriverWait wait = new WebDriverWait(this.getWebDriver(), Duration.ofSeconds(20));
         WebElement button = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(".//*[@data-testid='total-display']")));
         return button.getText();
     }
@@ -112,7 +112,7 @@ public class SitePage extends BlogBaseDriver {
         logger.info("executing containsTotalOnTeachable()");
 
         try {
-            WebDriverWait wait = new WebDriverWait(this.getWebDriver(), 20);
+            WebDriverWait wait = new WebDriverWait(this.getWebDriver(), Duration.ofSeconds(20));
             WebElement button = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(".//*[@data-testid='total-display']")));
             return button.isDisplayed();
         } catch (Exception e) {
@@ -725,7 +725,7 @@ public class SitePage extends BlogBaseDriver {
 
     public void clickOnPurchaseButton(PurchaseLink link) throws InterruptedException {
         logger.info("executing clickOnPurchaseButton()");
-        WebDriverWait wait = new WebDriverWait(this.getWebDriver(), 20);
+        WebDriverWait wait = new WebDriverWait(this.getWebDriver(), Duration.ofSeconds(20));
         WebElement button = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(link.getLinkId())));
         logger.info(button.getAttribute("href"));
         setUrl(button.getAttribute("href"));
