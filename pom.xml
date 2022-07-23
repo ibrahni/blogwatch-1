@@ -329,6 +329,26 @@
         </profile>
 
         <profile>
+            <id>headless-browser-mac-m1</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <systemPropertyVariables>
+                                <spring.profiles.active>headless-browser</spring.profiles.active>
+                                <target.env>mac-m1</target.env>
+                                <base.url>https://www.baeldung.com</base.url>
+                                <headless.browser.name>chrome-headless</headless.browser.name>
+                            </systemPropertyVariables>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
             <id>ui-browser-windows</id>
             <build>
                 <plugins>
