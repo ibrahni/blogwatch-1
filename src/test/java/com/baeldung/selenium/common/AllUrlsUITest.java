@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -178,6 +177,26 @@ public class AllUrlsUITest extends ConcurrentBaseUISeleniumTest {
                     badURLs.put(GlobalConstants.givenAllArticlesAndPages_whenAPageLoads_thenMetaOGImageAndTwitterImagePointToTheAbsolutePath, page.getUrlWithNewLineFeed());
                 }
             }).run(sitePage);
+    }
+
+    @ConcurrentTest
+    public final void givenAllArticlesAndPages_whenAPageLoads_thenMetaOGImageAndTwitterImageIsPresentAndPointToTheAbsolutePath(SitePage sitePage) {
+        new TestLogic(SitePage.Type.PAGE, SitePage.Type.ARTICLE).log(GlobalConstants.givenAllArticlesAndPages_whenAPageLoads_thenMetaOGImageAndTwitterImageExistAndPointToTheAbsolutePath)
+            .apply(page -> {
+                recordExecution(GlobalConstants.givenAllArticlesAndPages_whenAPageLoads_thenMetaOGImageAndTwitterImageExistAndPointToTheAbsolutePath);
+
+                if (shouldSkipUrl(page, GlobalConstants.givenAllArticlesAndPages_whenAPageLoads_thenMetaOGImageAndTwitterImageExistAndPointToTheAbsolutePath)) {
+                    return;
+                }
+
+                if (!page.findMetaTagWithOGImageExistAndPointingToTheAbsolutePath() || !page.findMetaTagWithTwitterImageExistAndPointingToTheAbsolutePath()) {
+                    recordMetrics(1, TestMetricTypes.FAILED);
+                    recordFailure(GlobalConstants.givenAllArticlesAndPages_whenAPageLoads_thenMetaOGImageAndTwitterImageExistAndPointToTheAbsolutePath);
+                    logger.info("og:image or twitter:image check failed for: {}", page.getUrl());
+                    badURLs.put(GlobalConstants.givenAllArticlesAndPages_whenAPageLoads_thenMetaOGImageAndTwitterImageExistAndPointToTheAbsolutePath, page.getUrlWithNewLineFeed());
+                }
+            })
+            .run(sitePage);
     }
 
     @ConcurrentTest
