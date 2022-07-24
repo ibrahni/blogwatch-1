@@ -170,7 +170,7 @@ public class TestUtils {
                     return true;
                 }
             } else {
-                logger.error("Cannot find supported Github repository for: {}", url);
+                logger.warn("Cannot find supported Github repository for: {}", url);
             }
         }
         return false;
