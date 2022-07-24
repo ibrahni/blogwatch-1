@@ -10,8 +10,7 @@ public record GitHubRepoVO(String repoName, String repoUrl, String repoLocalPath
         "https://github\\.com/(Baeldung|baeldung|eugenp)/(.*)/(tree|blob)/(master|[a-z\\d]+)/(.*)", Pattern.MULTILINE);
 
     public boolean canHandle(String url) {
-        // clear last "/"
-        url = url.lastIndexOf("/") == url.length() - 1  ? url.substring(0, url.lastIndexOf("/")) : url;
+        url = sanitizeUrl(url);
         // shortcut
         if (url.startsWith(repoMasterHttpPath) || repoUrl.equalsIgnoreCase(url + ".git")) {
             return true;
@@ -41,11 +40,24 @@ public record GitHubRepoVO(String repoName, String repoUrl, String repoLocalPath
 
         final Matcher matcher = REPO_URL_PATTERN.matcher(url);
         if (matcher.matches()) {
-            String path = matcher.group(5);
-            // clear url fragments, like: #readme
-            path = path.contains("#") ? path.substring(0, path.indexOf("#")) : path;
+            String path = sanitizeUrl(matcher.group(5));
             return path.isEmpty() ? baseDir : baseDir.resolve(path);
         }
         return null;
     }
+
+    /**
+     * Method does two things:
+     * <ul>
+     *     <li>clears last slash if any, like: "module/"</li>
+     *     <li>clears url fragments if any, like: "module#readme"</li>
+     * </ul>
+     */
+    private String sanitizeUrl(String url) {
+        // clear last "/"
+        url = (!url.isEmpty() && url.lastIndexOf("/") == url.length() - 1) ? url.substring(0, url.lastIndexOf("/")) : url;
+        // clear url fragments, like: #readme
+        return url.contains("#") ? url.substring(0, url.indexOf("#")) : url;
+    }
+
 }
