@@ -55,6 +55,7 @@ givenArticlesWithALinkToTheGitHubModule_whenTheArticleLoads_thenTheGitHubModuleL
   - /spring-boot-modules
   - /core-java-modules/multimodulemavenproject
   - /linux/wc-command
+  - /kotlin/
 givenArticlesWithALinkToTheGitHubModule_whenTheArticleLoads_thenTheArticleTitleAndGitHubLinkMatch:
 
 givenAllTheArticles_whenAnArticleLoads_thenTheAuthorIsNotFromTheExcludedList:
