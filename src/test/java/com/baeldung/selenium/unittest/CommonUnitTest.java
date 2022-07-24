@@ -64,7 +64,7 @@ public class CommonUnitTest {
     @Test
     void givenAReadmeWithLocalSystemPath_whenConvertToHttpURL_itReturn200OK() throws IOException {
         final Optional<GitHubRepoVO> tutorialsRepo = GlobalConstants.tutorialsRepos.stream()
-            .filter(r -> r.repoName().equals("Java-tutorials")).findFirst();
+            .filter(r -> r.repoName().equals("tutorials")).findFirst();
 
         assertTrue(tutorialsRepo.isPresent());
         assertNotNull(tutorialsRepo.get());

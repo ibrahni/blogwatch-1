@@ -9,9 +9,7 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 import java.util.function.BiConsumer;
@@ -235,11 +233,11 @@ public class TestUtils {
         });
     }
 
-    public static Multimap<Integer, String> checkLocalRepoDirectories(List<GitHubRepoVO> repositories, List<String> gitHubModuleLinks) {
+    public static Multimap<Integer, String> checkLocalRepoFiles(List<GitHubRepoVO> repositories, List<String> gitHubModuleLinks) {
         Multimap<Integer, String> errors = ArrayListMultimap.create();
         traverseLocalRepositories(gitHubModuleLinks, repositories, (repo, url) -> {
             final Path localPath = repo.getLocalPathByUrl(url);
-            if (localPath != null && !Files.isDirectory(localPath)) {
+            if (localPath != null && !Files.exists(localPath)) {
                 errors.put(404, url);
             }
         });

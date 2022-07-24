@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -413,7 +412,7 @@ public class AllUrlsUITest extends ConcurrentBaseUISeleniumTest {
                 if (shouldSkipUrl(page, GlobalConstants.givenAllArticlesLinkingToGitHubModule_whenAnArticleLoads_thenLinkedGitHubModulesReturns200OK) || Utils.excludePage(page.getUrl(), GlobalConstants.ARTILCE_JAVA_WEEKLY, false)) {
                     return;
                 }
-                Multimap<Integer, String> notFoundUrls = TestUtils.checkLocalRepoDirectories(GlobalConstants.tutorialsRepos, gitHubModulesLinkedOntheArticle);
+                Multimap<Integer, String> notFoundUrls = TestUtils.checkLocalRepoFiles(GlobalConstants.tutorialsRepos, gitHubModulesLinkedOntheArticle);
                 if (notFoundUrls.size() > 0) {
                     recordMetrics(notFoundUrls.size(), TestMetricTypes.FAILED);
                     recordFailure(GlobalConstants.givenAllArticlesLinkingToGitHubModule_whenAnArticleLoads_thenLinkedGitHubModulesReturns200OK, notFoundUrls.size());

@@ -230,11 +230,50 @@ public class GlobalConstants {
     public static final String scalaTutorialsRepoGitUrl = "https://github.com/Baeldung/scala-tutorials.git";
     public static final String scalaTutorialsRepoMasterPath = "https://github.com/Baeldung/scala-tutorials/tree/master";
 
-    public static final ImmutableList<GitHubRepoVO> tutorialsRepos = ImmutableList.of(
-        new GitHubRepoVO("Java-tutorials", tutorialsRepoGitUrl, tutorialsRepoLocalPath, tutorialsRepoMasterPath),
-        new GitHubRepoVO("Scala-tutorials", scalaTutorialsRepoGitUrl, scalaTutorialsRepoLocalPath, scalaTutorialsRepoMasterPath)
-    );
+    public static final String kotlinTutorialsRepoLocalPath = localRepoBasePath + "/kotlin-tutorials-source-code";
+    public static final String kotlinTutorialsRepoGitUrl = "https://github.com/Baeldung/kotlin-tutorials.git";
+    public static final String kotlinTutorialsRepoMasterPath = "https://github.com/Baeldung/kotlin-tutorials/tree/master";
 
+    public static final String springSecurityOauthRepoLocalPath = localRepoBasePath + "/spring-security-oauth-source-code";
+    public static final String springSecurityOauthRepoGitUrl = "https://github.com/Baeldung/spring-security-oauth.git";
+    public static final String springSecurityOauthRepoMasterPath = "https://github.com/Baeldung/spring-security-oauth/tree/master";
+
+    public static final String springSecurityRegistrationRepoLocalPath = localRepoBasePath + "/spring-security-registration-source-code";
+    public static final String springSecurityRegistrationRepoGitUrl = "https://github.com/Baeldung/spring-security-registration.git";
+    public static final String springSecurityRegistrationRepoMasterPath = "https://github.com/Baeldung/spring-security-registration/tree/master";
+
+    public static final String redditAppRepoLocalPath = localRepoBasePath + "/reddit-app-source-code";
+    public static final String redditAppRepoGitUrl = "https://github.com/Baeldung/reddit-app.git";
+    public static final String redditAppRepoMasterPath = "https://github.com/Baeldung/reddit-app/tree/master";
+
+    public static final String javaStackexchangeRepoLocalPath = localRepoBasePath + "/java-stackexchange-source-code";
+    public static final String javaStackexchangeRepoGitUrl = "https://github.com/eugenp/java-stackexchange.git";
+    public static final String javaStackexchangeRepoMasterPath = "https://github.com/eugenp/java-stackexchange/tree/master";
+
+    public static final String stackexchange2twitterRepoLocalPath = localRepoBasePath + "/stackexchange2twitter-source-code";
+    public static final String stackexchange2twitterRepoGitUrl = "https://github.com/eugenp/stackexchange2twitter.git";
+    public static final String stackexchange2twitterRepoMasterPath = "https://github.com/eugenp/stackexchange2twitter/tree/master";
+
+    public static final String oauthMicroservicesRepoLocalPath = localRepoBasePath + "/oauth-microservices-source-code";
+    public static final String oauthMicroservicesRepoGitUrl = "https://github.com/Baeldung/oauth-microservices.git";
+    public static final String oauthMicroservicesRepoMasterPath = "https://github.com/Baeldung/oauth-microservices/tree/master";
+
+    public static final String datastaxCassandraRepoLocalPath = localRepoBasePath + "/datastax-cassandra-source-code";
+    public static final String datastaxCassandraRepoGitUrl = "https://github.com/Baeldung/datastax-cassandra.git";
+    public static final String datastaxCassandraRepoMasterPath = "https://github.com/Baeldung/datastax-cassandra/tree/master";
+
+    public static final ImmutableList<GitHubRepoVO> tutorialsRepos = ImmutableList.of(
+        new GitHubRepoVO("tutorials", tutorialsRepoGitUrl, tutorialsRepoLocalPath, tutorialsRepoMasterPath),
+        new GitHubRepoVO("scala-tutorials", scalaTutorialsRepoGitUrl, scalaTutorialsRepoLocalPath, scalaTutorialsRepoMasterPath),
+        new GitHubRepoVO("kotlin-tutorials", kotlinTutorialsRepoGitUrl, kotlinTutorialsRepoLocalPath, kotlinTutorialsRepoMasterPath),
+        new GitHubRepoVO("spring-security-oauth", springSecurityOauthRepoGitUrl, springSecurityOauthRepoLocalPath, springSecurityOauthRepoMasterPath),
+        new GitHubRepoVO("spring-security-registration", springSecurityRegistrationRepoGitUrl, springSecurityRegistrationRepoLocalPath, springSecurityRegistrationRepoMasterPath),
+        new GitHubRepoVO("reddit-app", redditAppRepoGitUrl, redditAppRepoLocalPath, redditAppRepoMasterPath),
+        new GitHubRepoVO("java-stackexchange", javaStackexchangeRepoGitUrl, javaStackexchangeRepoLocalPath, javaStackexchangeRepoMasterPath),
+        new GitHubRepoVO("stackexchange2twitter", stackexchange2twitterRepoGitUrl, stackexchange2twitterRepoLocalPath, stackexchange2twitterRepoMasterPath),
+        new GitHubRepoVO("oauth-microservices", oauthMicroservicesRepoGitUrl, oauthMicroservicesRepoLocalPath, oauthMicroservicesRepoMasterPath),
+        new GitHubRepoVO("datastax-cassandra", datastaxCassandraRepoGitUrl, datastaxCassandraRepoLocalPath, datastaxCassandraRepoMasterPath)
+    );
 
     //for givenAGitHubModuleReadme_whenAnalysingTheReadme_thenLinksToAndFromGithubMatch
     public static final String STAGEING8_HOME_URL="http://staging8.baeldung.com";
