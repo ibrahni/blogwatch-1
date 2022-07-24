@@ -292,9 +292,11 @@ public class SitePage extends BlogBaseDriver {
             if (CollectionUtils.isEmpty(webElements)) {
                 return gitHubModuleLinks;
             }
-            for (WebElement element : webElements) {
-                gitHubModuleLinks.add(element.getAttribute("href"));
-            }
+            webElements.stream()
+                .map(el -> el.getAttribute("href"))
+                // filter irrelevant Github urls since they aren't modules, like: gist.github.com
+                .filter(href -> href.startsWith("http://github.com") || href.startsWith("https://github.com"))
+                .forEach(gitHubModuleLinks::add);
         } catch (Exception e) {
             logger.error("Error occurened while trying to extract GitHub moudles linked on the:" + this.getWebDriver().getCurrentUrl() + " error message:" + e.getMessage());
         }
@@ -390,7 +392,7 @@ public class SitePage extends BlogBaseDriver {
     public boolean linkExistsInthePage(String articleRelativeURL) {
 
         try {
-            return findElementWithTheRelativeURL(articleRelativeURL).stream().anyMatch(element -> element.isDisplayed());           
+            return findElementWithTheRelativeURL(articleRelativeURL).stream().anyMatch(element -> element.isDisplayed());
         } catch (NoSuchElementException e) {
             return false;
         }
@@ -510,8 +512,8 @@ public class SitePage extends BlogBaseDriver {
         }
     }
 
-    public boolean articleTitleMatchesWithTheGitHubLink(String articleHeading, String articleRelativeUrl) {        
-        return findElementWithTheRelativeURL(articleRelativeUrl).stream().anyMatch(element -> element.getText().equalsIgnoreCase(articleHeading));      
+    public boolean articleTitleMatchesWithTheGitHubLink(String articleHeading, String articleRelativeUrl) {
+        return findElementWithTheRelativeURL(articleRelativeUrl).stream().anyMatch(element -> element.getText().equalsIgnoreCase(articleHeading));
     }
 
     public String getTheFirstBaeldungURL() {
