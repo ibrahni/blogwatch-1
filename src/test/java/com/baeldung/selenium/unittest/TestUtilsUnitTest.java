@@ -27,6 +27,7 @@ public class TestUtilsUnitTest {
         // then: supports correct repo
         assertTrue(repo.canHandle("https://github.com/baeldung/repo"));
         assertTrue(repo.canHandle("https://github.com/Baeldung/repo"));
+        assertTrue(repo.canHandle("https://github.com/Baeldung/repo/"));
         assertTrue(repo.canHandle("https://github.com/baeldung/repo/tree/master"));
         assertTrue(repo.canHandle("https://github.com/baeldung/repo/tree/master/"));
         assertTrue(repo.canHandle("https://github.com/baeldung/repo/tree/master/module"));
@@ -56,6 +57,7 @@ public class TestUtilsUnitTest {
         // then: returns local dir path
         assertEquals(Path.of("/local/repo"), repo.getLocalPathByUrl("https://github.com/baeldung/repo"));
         assertEquals(Path.of("/local/repo"), repo.getLocalPathByUrl("https://github.com/Baeldung/repo"));
+        assertEquals(Path.of("/local/repo"), repo.getLocalPathByUrl("https://github.com/Baeldung/repo/"));
         assertEquals(Path.of("/local/repo"), repo.getLocalPathByUrl("https://github.com/baeldung/repo/tree/master"));
         assertEquals(Path.of("/local/repo"), repo.getLocalPathByUrl("https://github.com/baeldung/repo/tree/master/"));
         assertEquals(Path.of("/local/repo/module"), repo.getLocalPathByUrl("https://github.com/baeldung/repo/tree/master/module"));

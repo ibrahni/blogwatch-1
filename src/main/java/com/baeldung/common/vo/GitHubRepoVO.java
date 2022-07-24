@@ -10,6 +10,8 @@ public record GitHubRepoVO(String repoName, String repoUrl, String repoLocalPath
         "https://github\\.com/(Baeldung|baeldung|eugenp)/(.*)/(tree|blob)/(master|[a-z\\d]+)/(.*)", Pattern.MULTILINE);
 
     public boolean canHandle(String url) {
+        // clear last "/"
+        url = url.lastIndexOf("/") == url.length() - 1  ? url.substring(0, url.lastIndexOf("/")) : url;
         // shortcut
         if (url.startsWith(repoMasterHttpPath) || repoUrl.equalsIgnoreCase(url + ".git")) {
             return true;
