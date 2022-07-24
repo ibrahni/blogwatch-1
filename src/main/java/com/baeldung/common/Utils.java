@@ -818,7 +818,7 @@ public class Utils {
         } else if (GlobalConstants.NO.equalsIgnoreCase(redownloadTutorialsRepo)) {
             Git git = Git.open(repoDirectoryPath.toFile());
             try {
-                logger.info(magentaColordMessage("Firing git pull to downlaod updates (if any)"));
+                logger.info(magentaColordMessage("Firing git pull to download updates (if any)"));
                 PullResult result = git.pull().setRemote("origin").setRemoteBranchName("master").call();
                 if (result.isSuccessful()) {
                     logger.info(magentaColordMessage("Git pull finished successfully"));
