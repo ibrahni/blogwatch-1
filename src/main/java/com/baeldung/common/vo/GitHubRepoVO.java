@@ -40,6 +40,8 @@ public record GitHubRepoVO(String repoName, String repoUrl, String repoLocalPath
         final Matcher matcher = REPO_URL_PATTERN.matcher(url);
         if (matcher.matches()) {
             String path = matcher.group(5);
+            // clear url fragments, like: #readme
+            path = path.contains("#") ? path.substring(0, path.indexOf("#")) : path;
             return path.isEmpty() ? baseDir : baseDir.resolve(path);
         }
         return null;

@@ -34,6 +34,7 @@ public class TestUtilsUnitTest {
         assertTrue(repo.canHandle("https://github.com/baeldung/repo/tree/ef7400484c2409ae25a82874e16a1b8d53ba2b32/module/submodule"));
         assertTrue(repo.canHandle("https://github.com/baeldung/repo/blob/master/module/submodule"));
         assertTrue(repo.canHandle("https://github.com/baeldung/repo/blob/ef7400484c2409ae25a82874e16a1b8d53ba2b32/module/submodule"));
+        assertTrue(repo.canHandle("https://github.com/baeldung/repo/tree/master/module/submodule#readme"));
         // then: doesn't support irrelevant repo
         assertFalse(repo.canHandle("https://github.com/baeldung/repo-something-else/tree/master"));
         assertFalse(repo.canHandle("https://github.com/baeldung/repo-something-else/tree/master/"));
@@ -58,6 +59,7 @@ public class TestUtilsUnitTest {
         assertEquals(Path.of("/local/repo"), repo.getLocalPathByUrl("https://github.com/baeldung/repo/tree/master"));
         assertEquals(Path.of("/local/repo"), repo.getLocalPathByUrl("https://github.com/baeldung/repo/tree/master/"));
         assertEquals(Path.of("/local/repo/module"), repo.getLocalPathByUrl("https://github.com/baeldung/repo/tree/master/module"));
+        assertEquals(Path.of("/local/repo/module"), repo.getLocalPathByUrl("https://github.com/baeldung/repo/tree/master/module#readme"));
         assertEquals(Path.of("/local/repo/module/submodule"), repo.getLocalPathByUrl("https://github.com/baeldung/repo/tree/master/module/submodule"));
         assertEquals(Path.of("/local/repo/module/submodule"), repo.getLocalPathByUrl("https://github.com/baeldung/repo/tree/ef7400484c2409ae25a/module/submodule"));
         assertEquals(Path.of("/local/repo/module/submodule"), repo.getLocalPathByUrl("https://github.com/baeldung/repo/blob/master/module/submodule"));
