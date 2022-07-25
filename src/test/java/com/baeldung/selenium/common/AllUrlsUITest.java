@@ -180,20 +180,20 @@ public class AllUrlsUITest extends ConcurrentBaseUISeleniumTest {
     }
 
     @ConcurrentTest
-    public final void givenAllArticlesAndPages_whenAPageLoads_thenMetaOGImageAndTwitterImageExistAndPointToTheAbsolutePath(SitePage sitePage) {
-        new TestLogic(SitePage.Type.PAGE, SitePage.Type.ARTICLE).log(GlobalConstants.givenAllArticlesAndPages_whenAPageLoads_thenMetaOGImageAndTwitterImageExistAndPointToTheAbsolutePath)
+    public final void givenAllArticlesAndPages_whenAPageLoads_thenItHasAFeaturedImage(SitePage sitePage) {
+        new TestLogic(SitePage.Type.PAGE, SitePage.Type.ARTICLE).log(GlobalConstants.givenAllArticlesAndPages_whenAPageLoads_thenItHasAFeaturedImage)
             .apply(page -> {
-                recordExecution(GlobalConstants.givenAllArticlesAndPages_whenAPageLoads_thenMetaOGImageAndTwitterImageExistAndPointToTheAbsolutePath);
+                recordExecution(GlobalConstants.givenAllArticlesAndPages_whenAPageLoads_thenItHasAFeaturedImage);
 
-                if (shouldSkipUrl(page, GlobalConstants.givenAllArticlesAndPages_whenAPageLoads_thenMetaOGImageAndTwitterImageExistAndPointToTheAbsolutePath)) {
+                if (shouldSkipUrl(page, GlobalConstants.givenAllArticlesAndPages_whenAPageLoads_thenItHasAFeaturedImage)) {
                     return;
                 }
 
-                if (!page.findMetaTagWithOGImageExistAndPointingToTheAbsolutePath() || !page.findMetaTagWithTwitterImageExistAndPointingToTheAbsolutePath()) {
+                if (!page.findMetaTagWithOGImage() || !page.findMetaTagWithTwitterImage()) {
                     recordMetrics(1, TestMetricTypes.FAILED);
-                    recordFailure(GlobalConstants.givenAllArticlesAndPages_whenAPageLoads_thenMetaOGImageAndTwitterImageExistAndPointToTheAbsolutePath);
+                    recordFailure(GlobalConstants.givenAllArticlesAndPages_whenAPageLoads_thenItHasAFeaturedImage);
                     logger.info("og:image or twitter:image check failed for: {}", page.getUrl());
-                    badURLs.put(GlobalConstants.givenAllArticlesAndPages_whenAPageLoads_thenMetaOGImageAndTwitterImageExistAndPointToTheAbsolutePath, page.getUrlWithNewLineFeed());
+                    badURLs.put(GlobalConstants.givenAllArticlesAndPages_whenAPageLoads_thenItHasAFeaturedImage, page.getUrlWithNewLineFeed());
                 }
             })
             .run(sitePage);
