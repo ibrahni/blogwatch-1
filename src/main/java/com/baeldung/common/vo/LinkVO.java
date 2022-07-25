@@ -3,12 +3,12 @@ package com.baeldung.common.vo;
 public class LinkVO {
 
     String link;
-    String LinkText;
+    String linkText;
 
     public LinkVO(String link, String linkText) {
         super();
         this.link = link;
-        LinkText = linkText;
+        this.linkText = linkText;
     }
 
     public String getLink() {
@@ -20,16 +20,16 @@ public class LinkVO {
     }
 
     public String getLinkText() {
-        return LinkText;
+        return linkText;
     }
 
     public void setLinkText(String linkText) {
-        LinkText = linkText;
+        this.linkText = linkText;
     }
 
     @Override
     public String toString() {
-        return "\n" + LinkText + "( " + link + " )";
+        return "\n" + linkText + "( " + link + " )";
     }
 
 }

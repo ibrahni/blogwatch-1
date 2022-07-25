@@ -26,10 +26,17 @@ public class TestUtilsUnitTest {
         );
         // then: supports correct repo
         assertTrue(repo.canHandle("https://github.com/baeldung/repo"));
+        assertTrue(repo.canHandle("https://github.com/Baeldung/repo"));
+        assertTrue(repo.canHandle("https://github.com/Baeldung/repo/"));
+        assertTrue(repo.canHandle("https://github.com/baeldung/repo#readme"));
         assertTrue(repo.canHandle("https://github.com/baeldung/repo/tree/master"));
         assertTrue(repo.canHandle("https://github.com/baeldung/repo/tree/master/"));
         assertTrue(repo.canHandle("https://github.com/baeldung/repo/tree/master/module"));
         assertTrue(repo.canHandle("https://github.com/baeldung/repo/tree/master/module/submodule"));
+        assertTrue(repo.canHandle("https://github.com/baeldung/repo/tree/ef7400484c2409ae25a82874e16a1b8d53ba2b32/module/submodule"));
+        assertTrue(repo.canHandle("https://github.com/baeldung/repo/blob/master/module/submodule"));
+        assertTrue(repo.canHandle("https://github.com/baeldung/repo/blob/ef7400484c2409ae25a82874e16a1b8d53ba2b32/module/submodule"));
+        assertTrue(repo.canHandle("https://github.com/baeldung/repo/tree/master/module/submodule#readme"));
         // then: doesn't support irrelevant repo
         assertFalse(repo.canHandle("https://github.com/baeldung/repo-something-else/tree/master"));
         assertFalse(repo.canHandle("https://github.com/baeldung/repo-something-else/tree/master/"));
@@ -50,10 +57,17 @@ public class TestUtilsUnitTest {
         );
         // then: returns local dir path
         assertEquals(Path.of("/local/repo"), repo.getLocalPathByUrl("https://github.com/baeldung/repo"));
+        assertEquals(Path.of("/local/repo"), repo.getLocalPathByUrl("https://github.com/Baeldung/repo"));
+        assertEquals(Path.of("/local/repo"), repo.getLocalPathByUrl("https://github.com/Baeldung/repo/"));
+        assertEquals(Path.of("/local/repo"), repo.getLocalPathByUrl("https://github.com/baeldung/repo#readme"));
         assertEquals(Path.of("/local/repo"), repo.getLocalPathByUrl("https://github.com/baeldung/repo/tree/master"));
         assertEquals(Path.of("/local/repo"), repo.getLocalPathByUrl("https://github.com/baeldung/repo/tree/master/"));
         assertEquals(Path.of("/local/repo/module"), repo.getLocalPathByUrl("https://github.com/baeldung/repo/tree/master/module"));
+        assertEquals(Path.of("/local/repo/module"), repo.getLocalPathByUrl("https://github.com/baeldung/repo/tree/master/module#readme"));
         assertEquals(Path.of("/local/repo/module/submodule"), repo.getLocalPathByUrl("https://github.com/baeldung/repo/tree/master/module/submodule"));
+        assertEquals(Path.of("/local/repo/module/submodule"), repo.getLocalPathByUrl("https://github.com/baeldung/repo/tree/ef7400484c2409ae25a/module/submodule"));
+        assertEquals(Path.of("/local/repo/module/submodule"), repo.getLocalPathByUrl("https://github.com/baeldung/repo/blob/master/module/submodule"));
+        assertEquals(Path.of("/local/repo/module/submodule"), repo.getLocalPathByUrl("https://github.com/baeldung/repo/blob/ef7400484c2409ae25a/module/submodule"));
         // then: incorrect repo returns null
         assertNull(repo.getLocalPathByUrl("https://github.com/baeldung/repo-something-else/tree/master"));
         assertNull(repo.getLocalPathByUrl("https://github.com/baeldung/repo-something-else/tree/master/"));
@@ -79,12 +93,14 @@ public class TestUtilsUnitTest {
             "https://github.com/baeldung/repo2/tree/master"
         );
         // when: check modules
-        var errors = TestUtils.checkLocalRepoDirectories(List.of(repo1, repo2), List.of(
+        var errors = TestUtils.checkLocalRepoFiles(List.of(repo1, repo2), List.of(
             "https://github.com/baeldung/repo-not-supported/tree/master/module",
             "https://github.com/baeldung/repo1/tree/master/module1",
             "https://github.com/baeldung/repo1/tree/master/module2",
             "https://github.com/baeldung/repo2/tree/master/module1",
-            "https://github.com/baeldung/repo2/tree/master/module2"
+            "https://github.com/baeldung/repo2/tree/master/module2",
+            "https://github.com/baeldung/repo2/tree/master/module2/SomeFile.txt",
+            "https://github.com/baeldung/repo2/blob/master/module2/SomeBlobFile.blob"
         ));
         // then: not supported and existing modules aren't reported
         assertFalse(errors.get(404)
@@ -93,6 +109,12 @@ public class TestUtilsUnitTest {
             .contains("https://github.com/baeldung/repo1/tree/master/module1"));
         assertFalse(errors.get(404)
             .contains("https://github.com/baeldung/repo2/tree/master/module2"));
+        assertFalse(errors.get(404)
+            .contains("https://github.com/baeldung/repo2/tree/master/module2/SomeClass.java"));
+        assertFalse(errors.get(404)
+            .contains("https://github.com/baeldung/repo2/tree/master/module2/SomeOtherFile.txt"));
+        assertFalse(errors.get(404)
+            .contains("https://github.com/baeldung/repo2/blob/master/module2/SomeOtherFile2.xls"));
         // then: non-exitent modules are reported
         assertTrue(errors.get(404)
             .contains("https://github.com/baeldung/repo1/tree/master/module2"));
