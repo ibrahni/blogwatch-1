@@ -286,7 +286,7 @@ public class AllUrlsUITest extends ConcurrentBaseUISeleniumTest {
                 final String metaDescriptionTag = page.getMetaDescriptionContent();
                 final String excerptTag = page.getMetaExcerptContent();
 
-                if (StringUtils.isBlank(excerptTag) || !Objects.equals(excerptTag, metaDescriptionTag)) {
+                if (StringUtils.isBlank(excerptTag) || !Objects.equals(excerptTag.trim(), metaDescriptionTag.trim())) {
                     recordMetrics(1, TestMetricTypes.FAILED);
                     recordFailure(GlobalConstants.givenAllArticles_whenAnalyzingExcerpt_thenItShouldNotBeEmptyAndShouldMatchDescription, 1);
                     badURLs.put(GlobalConstants.givenAllArticles_whenAnalyzingExcerpt_thenItShouldNotBeEmptyAndShouldMatchDescription, page.getUrlWithNewLineFeed() + " ( description : [" + metaDescriptionTag + "], excerpt : [" + excerptTag + "] ) ");
