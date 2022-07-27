@@ -1,6 +1,7 @@
 package com.baeldung.site;
 
 import java.io.IOException;
+import java.time.Duration;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -23,7 +24,7 @@ public class OptInPageDriver extends BlogBaseDriver {
         logger.info("executing clickOnGetAccessLinkforSmallTeam()");
         acceptCookie();
         Thread.sleep(5000);
-        WebDriverWait wait = new WebDriverWait(this.getWebDriver(), 20);
+        WebDriverWait wait = new WebDriverWait(this.getWebDriver(), Duration.ofSeconds(20));
         WebElement button = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[contains(@class,'buy_team_small')]/a")));
         button.click();
     }
@@ -42,7 +43,7 @@ public class OptInPageDriver extends BlogBaseDriver {
     public boolean theFirstNameInputFieldIsDisplayed() throws InterruptedException, WebDriverException, IOException {
 
         logger.info("executing theFirstNameInputFieldIsDisplayed()");
-        WebDriverWait wait = new WebDriverWait(this.getWebDriver(), 20);
+        WebDriverWait wait = new WebDriverWait(this.getWebDriver(), Duration.ofSeconds(20));
         WebElement button = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("drip-first-name")));
         return button.isDisplayed();
 
@@ -51,7 +52,7 @@ public class OptInPageDriver extends BlogBaseDriver {
     public void clickOnGetAccessLinkforMediumTeam() throws InterruptedException {
         logger.info("executing clickOnGetAccessLinkforMediumTeam()");
         Thread.sleep(5000);
-        WebDriverWait wait = new WebDriverWait(this.getWebDriver(), 20);
+        WebDriverWait wait = new WebDriverWait(this.getWebDriver(), Duration.ofSeconds(20));
         WebElement button = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[contains(@class,'buy_team_medium')]/a")));
         button.click();
 
@@ -60,7 +61,7 @@ public class OptInPageDriver extends BlogBaseDriver {
     public void clickOnGetAccessLinkforLargeTeam() throws InterruptedException {
         logger.info("executing clickOnGetAccessLinkforLargeTeam()");
         Thread.sleep(5000);
-        WebDriverWait wait = new WebDriverWait(this.getWebDriver(), 20);
+        WebDriverWait wait = new WebDriverWait(this.getWebDriver(), Duration.ofSeconds(20));
         WebElement button = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[contains(@class,'buy_team_large')]/a")));
         button.click();
     }
