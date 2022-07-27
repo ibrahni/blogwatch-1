@@ -1,6 +1,7 @@
 package com.baeldung.site;
 
 import static com.baeldung.common.ConsoleColors.redBoldMessage;
+import static com.baeldung.common.ConsoleColors.greenMessage;
 import static java.util.stream.Collectors.toList;
 
 import java.time.Duration;
@@ -541,9 +542,11 @@ public class SitePage extends BlogBaseDriver {
     public boolean tableAnchorIsVisibleOnThePage() {
         try {
             WebElement element = Utils.findAnchorContainingText(this.getWebDriver(), "#table");
+            logger.info(greenMessage("element containing #table anchor found. innerHTML: {}"), element.getAttribute("innerHTML"));
             return Utils.matchTextInElement(element, "PRICING");
 
         } catch (NoSuchElementException e) {
+            logger.error(redBoldMessage("NoSuchElementException thrown fro NoSuchElementException()"));
             return false;
         }
     }
