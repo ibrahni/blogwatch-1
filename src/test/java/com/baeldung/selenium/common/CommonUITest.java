@@ -420,29 +420,6 @@ public class CommonUITest extends BaseUISeleniumTest {
 
     @Test
     @Tag(GlobalConstants.TAG_DAILY)
-    public final void givenOnCoursePages_whenAPageLoads_thenItContainsImportantAnchors() {
-
-        page.setUrl(page.getBaseURL() + GlobalConstants.COURSE_RWS_PAGE);
-        logger.info("RWS course page loaded");
-
-        page.loadUrl();
-
-        assertTrue(page.tableAnchorIsVisibleOnThePage(), "RWS Course page is missing #table(PRICING) anchor in the footer");
-        assertTrue(page.masterclassAnchorIsVisibleOnThePage(), "RWS Course page is missing #master-class anchor in the footer");
-        assertTrue(page.certificationclassAnchorIsVisibleOnThePage(), "RWS Course page is missing #certification-class anchor in the footer");
-
-        page.setUrl(page.getBaseURL() + GlobalConstants.COURSE_LSS_PAGE);
-        logger.info("LSS course page loaded");
-
-        page.loadUrl();
-
-        assertTrue(page.tableAnchorIsVisibleOnThePage(), "RWS Course page is missing #table(PRICING) anchor in the footer");
-        assertTrue(page.masterclassAnchorIsVisibleOnThePage(), "RWS Course page is missing #master-class anchor in the footer");
-        assertTrue(page.certificationclassAnchorIsVisibleOnThePage(), "RWS Course page is missing #certification-class anchor in the footer");
-    }
-
-    @Test
-    @Tag(GlobalConstants.TAG_DAILY)
     public final void givenTheBaeldungMediaKitURL_whenPageLoads_thenItReturns200OK() throws IOException {
 
         URL url = new URL(GlobalConstants.BAELDUNG_MEDIA_KIT_URL);

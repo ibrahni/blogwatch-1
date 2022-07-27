@@ -539,36 +539,6 @@ public class SitePage extends BlogBaseDriver {
         return feedURL.contains(GlobalConstants.BAELDUNG_HOME_PAGE_URL_WIThOUT_THE_PROTOCOL);
     }
 
-    public boolean tableAnchorIsVisibleOnThePage() {
-        try {
-            WebElement element = Utils.findAnchorContainingText(this.getWebDriver(), "#table");
-            logger.info(greenMessage("element containing #table anchor found. innerHTML: {}"), element.getAttribute("innerHTML"));
-            return Utils.matchTextInElement(element, "PRICING");
-
-        } catch (NoSuchElementException e) {
-            logger.error(redBoldMessage("NoSuchElementException thrown fro NoSuchElementException()"));
-            return false;
-        }
-    }
-
-    public boolean masterclassAnchorIsVisibleOnThePage() {
-        try {
-            WebElement element = Utils.findAnchorContainingText(this.getWebDriver(), "#master-class");
-            return Utils.matchTextInElement(element, "MASTER CLASS");
-        } catch (NoSuchElementException e) {
-            return false;
-        }
-    }
-
-    public boolean certificationclassAnchorIsVisibleOnThePage() {
-        try {
-            WebElement element = Utils.findAnchorContainingText(this.getWebDriver(), "#certification-class");
-            return Utils.matchTextInElement(element, "CERTIFICATION CLASS");
-        } catch (NoSuchElementException e) {
-            return false;
-        }
-    }
-
     public boolean findInvalidCharactersInTheArticle() {
         String pageSource = this.getWebDriver().getPageSource();
         if (pageSource.indexOf("”&gt;") != -1 || pageSource.indexOf("”>") != -1 || pageSource.indexOf("”\">") != -1 || pageSource.indexOf("”\"&gt;") != -1) {
