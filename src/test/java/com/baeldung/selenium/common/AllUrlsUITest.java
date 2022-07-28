@@ -402,6 +402,7 @@ public class AllUrlsUITest extends ConcurrentBaseUISeleniumTest {
                 givenAllArticles_whenAnalyzingCodeBlocks_thenCodeBlocksAreRenderedProperly(page);
                 givenAllArticles_whenAnalyzingImages_thenImagesDoNotHaveEmptyAltAttribute(page);
                 givenAllArticles_whenAnalyzingExcerpt_thenItShouldNotBeEmptyAndShouldMatchDescription(page);
+                givenAllArticlesAndPages_whenAPageLoads_thenItHasAFeaturedImage(page);
             } catch (Exception e) {
                 logger.error("Error occurred while processing: {}, error message: {}",
                     page.getUrl(), StringUtils.substring(e.getMessage(), 0, 100));
