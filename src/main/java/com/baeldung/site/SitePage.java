@@ -491,6 +491,16 @@ public class SitePage extends BlogBaseDriver {
         }
     }
 
+    public boolean findMetaTagWithOGImage() {
+        try {
+            return this.getWebDriver()
+                .findElement(By.xpath("//meta[@property = 'og:image']"))
+                .isEnabled();
+        } catch (NoSuchElementException e) {
+            return false; // test flag a post/article if meta og:image does not exist or does not contain absolute path.
+        }
+    }
+
     public boolean findMetaTagWithTwitterImagePointingToTheAbsolutePath() {
         try {
             return this.getWebDriver().findElement(By.xpath("//meta[(@name = 'twitter:image' and contains(@content, 'baeldung.com'))]")).isEnabled();
@@ -498,8 +508,18 @@ public class SitePage extends BlogBaseDriver {
             try {
                 return !this.getWebDriver().findElement(By.xpath("//meta[@name = 'twitter:image']")).isEnabled();
             } catch (NoSuchElementException ne) {
-                return true; // test shouldn't flag a post/article if meta twitter:image doesn't exits
+                return true; // test shouldn't flag a post/article if meta twitter:image doesn't exist.
             }
+        }
+    }
+
+    public boolean findMetaTagWithTwitterImage() {
+        try {
+            return this.getWebDriver()
+                .findElement(By.xpath("//meta[@name = 'twitter:image']"))
+                .isEnabled();
+        } catch (NoSuchElementException e) {
+            return false; // test flag a post/article if meta twitter:image or does not contain absolute path.
         }
     }
 
