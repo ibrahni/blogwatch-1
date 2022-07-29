@@ -199,7 +199,7 @@ public class TestUtils {
             final Path readme = localPath.resolve("README.md");
             if (Files.exists(readme)) {
                 try (var lines = Files.lines(readme)) {
-                    if (lines.anyMatch(line -> line.endsWith(format1) || line.endsWith(format2))) {
+                    if (lines.anyMatch(line -> line.trim().endsWith(format1) || line.trim().endsWith(format2))) {
                         return true;
                     }
                 } catch (IOException e) {

@@ -260,7 +260,7 @@ public class GlobalConstants {
 
     public static final String datastaxCassandraRepoLocalPath = localRepoBasePath + "/datastax-cassandra-source-code";
     public static final String datastaxCassandraRepoGitUrl = "https://github.com/Baeldung/datastax-cassandra.git";
-    public static final String datastaxCassandraRepoMasterPath = "https://github.com/Baeldung/datastax-cassandra/tree/master";
+    public static final String datastaxCassandraRepoMasterPath = "https://github.com/Baeldung/datastax-cassandra/tree/main";
 
     public static final ImmutableList<GitHubRepoVO> tutorialsRepos = ImmutableList.of(
         new GitHubRepoVO("tutorials", tutorialsRepoGitUrl, tutorialsRepoLocalPath, tutorialsRepoMasterPath),

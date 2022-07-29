@@ -325,7 +325,7 @@ public class CommonUITest extends BaseUISeleniumTest {
                         String reamdmeParentURL = Utils.replaceTutorialLocalPathWithHttpUrl(repo.repoLocalPath(), repo.repoMasterHttpPath())
                             .apply(reamdmeParentPath);
                         if (!page.getWebDriver().getPageSource().toLowerCase().contains(reamdmeParentURL.toLowerCase())) {
-                            badURLs.put(readmePath, link);
+                            badURLs.put(reamdmeParentURL, link);
                         }
                     });
                 } catch (Exception e) {
