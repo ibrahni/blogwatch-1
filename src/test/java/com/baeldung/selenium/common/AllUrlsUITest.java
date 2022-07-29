@@ -341,6 +341,10 @@ public class AllUrlsUITest extends ConcurrentBaseUISeleniumTest {
                 if (shouldSkipUrl(page, GlobalConstants.givenAllArticles_whenAnArticleLoads_thenItIsHasASingleOptinInTheSidebar, false)) {
                     return;
                 }
+                if (page.hasFullWidthTemplate()) {
+                    logger.info("page found which is based on full width template {}", page.getUrl());
+                    return;
+                }
                 if (page.getOptinsFromTheSideBar() != 1) {
                     logger.info("page found which doesn't have a single Opt-in in the sidebar {}", page.getUrl());
                     recordMetrics(1, TestMetricTypes.FAILED);
@@ -360,7 +364,10 @@ public class AllUrlsUITest extends ConcurrentBaseUISeleniumTest {
                 if (shouldSkipUrl(page, GlobalConstants.givenAllArticles_whenAnArticleLoads_thenItIsHasASingleOptinInTheAfterPostContent,false)) {
                     return;
                 }
-
+                if (page.hasFullWidthTemplate()) {
+                    logger.info("page found which is based on full width template {}", page.getUrl());
+                    return;
+                }
                 if (page.getOptinsFromTheAfterPostContent() != 1) {
                     logger.info("page found which doesn't have a single Opt-in in the after post content {}", page.getUrl());
                     recordMetrics(1, TestMetricTypes.FAILED);

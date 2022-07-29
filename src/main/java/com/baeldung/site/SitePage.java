@@ -800,6 +800,14 @@ public class SitePage extends BlogBaseDriver {
         }
     }
 
+    public boolean hasFullWidthTemplate() {
+        try {
+            return this.getWebDriver().findElement(By.xpath("//body[contains(@class, 'post-template-single-fullwidth')]")).isEnabled();
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
     public List<WebElement> findImagesWithEmptyAltAttribute() {
         return this.getWebDriver().findElements(By.xpath("//section//img[ not(@alt) or normalize-space(@alt)='' or @alt='\u00a0' ]"));
     }
