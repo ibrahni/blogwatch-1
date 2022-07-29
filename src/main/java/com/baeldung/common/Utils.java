@@ -12,6 +12,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -95,16 +96,17 @@ public class Utils {
     }
 
     public static Stream<String> fetchFilesAsList(List<String> fileNames) throws IOException {
-
-        File file = null;
         Stream<String> fileStream = Stream.empty();
         for (String fileName : fileNames) {
-            file = new File(Utils.class.getClassLoader().getResource(GlobalConstants.BLOG_URL_LIST_RESOUCE_FOLDER_PATH + fileName).getPath());
+            final String filePath = GlobalConstants.BLOG_URL_LIST_RESOUCE_FOLDER_PATH + fileName;
+            final URL resource = Utils.class.getClassLoader().getResource(filePath);
+            if (resource == null) {
+                throw new IllegalArgumentException("Cannot find resource " + filePath);
+            }
+            final File file = new File(resource.getPath());
             fileStream = Stream.concat(fileStream, Files.lines(Paths.get(file.getAbsolutePath())));
         }
-
         return fileStream;
-
     }
 
     public static Stream<String> fetchFileAsStream(String fileName) throws IOException {

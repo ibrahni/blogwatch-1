@@ -24,7 +24,6 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.apache.commons.lang3.StringUtils;
 import org.eclipse.jgit.api.errors.GitAPIException;
@@ -68,12 +67,10 @@ import com.baeldung.filevisitor.TutorialsParentModuleFinderFileVisitor;
 import com.baeldung.utility.TestUtils;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.rholder.retry.Retryer;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 
 import io.restassured.RestAssured;
-import io.restassured.config.RestAssuredConfig;
 import io.restassured.response.Response;
 
 @ExtendWith(TestMetricsExtension.class)
@@ -85,20 +82,11 @@ public class CommonUITest extends BaseUISeleniumTest {
     @Value("${GivenAGitHubModuleReadme_whenAnalysingTheReadme_thentheReadmeDoesNotLikTooManyArticles.limit-for-spring-realted-readme-having-articles}")
     private int limitForSpringRelatedReadmeHavingArticles;
 
-    @Value("${givenAListOfUrls_whenAUrlLoads_thenItReturns200OK.time-out-for-200OK-test}")
-    private int timeOutFor200OKTest;
-
-    @Value("${givenAListOfUrls_whenAUrlLoads_thenItReturns200OK.retries-for-200OK-test}")
-    private int retriesFor200OKTest;
-
     @Value("${givenAListOfUrls_whenAUrlLoads_thenItReturns200OK.mode-for-200OK-test}")
     private String modeFor200OKTest;
 
     @Value("${givenTheBaeldungRSSFeed_whenAnalysingFeed_thenItIsUptoDate.rss-feed-compare-days}")
     private int rssFeedShouldNotbeOlderThanDays;
-
-    @Value("#{'${givenAListOfUrls_whenAUrlLoads_thenItReturns200OK.site-status-check-url-file-names:course-pages.txt}'.split(',')}")
-    private List<String> pageStausCheckUrlFileNames;
 
     @Value("${givenURLsWithFooterLinks_whenAnaysingFooterLinks_thenAnchorTextAndAnchorLinksExist.verify-write-for-baeldung-footer-link}")
     private boolean verifyWriteForBaeldungFooterLink;
@@ -126,39 +114,6 @@ public class CommonUITest extends BaseUISeleniumTest {
 
             assertFalse(page.getCountOfElementsWithNotitleText() > 0, "page found with 'No Title' in body-->" + url);
         });
-    }
-
-    @Test
-    @Tag(GlobalConstants.TAG_SKIP_METRICS)
-    public final void givenAListOfUrls_whenAUrlLoads_thenItReturns200OK() throws IOException {
-
-        recordExecution(GlobalConstants.givenAListOfUrls_whenAUrlLoads_thenItReturns200OK);
-
-        logger.info("Configured retires: {}", retriesFor200OKTest);
-        logger.info("configure timeout for REST Assured: {}", timeOutFor200OKTest);
-        logger.info("Input files:{}", pageStausCheckUrlFileNames);
-        logger.info("Mode: {}", modeFor200OKTest);
-
-        Multimap<String, Integer> badURLs = ArrayListMultimap.create();
-        RestAssuredConfig restAssuredConfig = TestUtils.getRestAssuredCustomConfig(timeOutFor200OKTest);
-        Retryer<Boolean> retryer = Utils.getGuavaRetryer(retriesFor200OKTest);
-
-        try (Stream<String> alURls = Utils.fetchFilesAsList(pageStausCheckUrlFileNames)) {
-            alURls.forEach(URL -> {
-                //TestUtils.sleep(400);
-                String fullURL = page.getBaseURL() + URL;
-                logger.info("Verifying 200OK on: {}", fullURL);
-
-                TestUtils.hitURLUsingGuavaRetryer(restAssuredConfig, fullURL, badURLs, retryer, modeFor200OKTest);
-
-            });
-        }
-
-        if (badURLs.size() > 0) {
-            recordMetrics(badURLs.keySet().size(), FAILED);
-            recordFailure(GlobalConstants.givenAListOfUrls_whenAUrlLoads_thenItReturns200OK, badURLs.keySet().size());
-            fail("200OK Not received from following URLs:\n" + Utils.http200OKTestResultBuilder(badURLs));
-        }
     }
 
     @Test
