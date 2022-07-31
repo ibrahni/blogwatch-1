@@ -1,7 +1,6 @@
 package com.baeldung.site;
 
 import static com.baeldung.common.ConsoleColors.redBoldMessage;
-import static com.baeldung.common.ConsoleColors.greenMessage;
 import static java.util.stream.Collectors.toList;
 
 import java.time.Duration;
@@ -12,6 +11,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
@@ -815,6 +815,18 @@ public class SitePage extends BlogBaseDriver {
     public String getMetaExcerptContent() {
         try {
             return this.getWebDriver().findElement(By.xpath("//meta[@name = 'excerpt']")).getAttribute("content");
+        } catch (NoSuchElementException e) {
+            return null;
+        }
+    }
+
+    public Set<String> findPostTags() {
+        try {
+            return this.getWebDriver()
+                .findElements(By.xpath("//ul[@class='post-tags']/li/a"))
+                .stream()
+                .map(WebElement::getText)
+                .collect(Collectors.toSet());
         } catch (NoSuchElementException e) {
             return null;
         }

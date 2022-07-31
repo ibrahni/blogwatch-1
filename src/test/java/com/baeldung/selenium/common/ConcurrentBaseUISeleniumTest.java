@@ -1,12 +1,14 @@
 package com.baeldung.selenium.common;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.extension.ExtensionContext;
@@ -176,6 +178,17 @@ public class ConcurrentBaseUISeleniumTest extends BaseTest implements Supplier<S
     protected boolean shouldSkipUrl(SitePage page, String testName, List<String> entryList, boolean compareAfterAddingTrailingSlash) {
         if (Utils.excludePage(page.getUrl(), entryList, compareAfterAddingTrailingSlash)) {
             logger.info("Skipping {} for test: {}", page.getUrl(), testName);
+            return true;
+        }
+        return false;
+    }
+
+    protected boolean shouldSkipPageBasedOnTags(SitePage page, Set<String> pageTags, String testName) {
+        Set<String> excludedTags = YAMLProperties.exceptionsForTestsBasedOnTags.get(testName) != null ? YAMLProperties.exceptionsForTestsBasedOnTags.get(testName)
+            .stream()
+            .collect(Collectors.toSet()) : Collections.emptySet();
+        if (Utils.excludePage(pageTags, excludedTags)) {
+            logger.info("Skipping {} for test: {} because of exception tags {}", page.getUrl(), testName, excludedTags);
             return true;
         }
         return false;
