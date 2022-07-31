@@ -223,12 +223,12 @@ public class Utils {
         return false;
     }
 
-    public static boolean excludePage(Set<String> pageTags, Set<String> excludedTags) {
-        if (CollectionUtils.isEmpty(pageTags) || CollectionUtils.isEmpty(excludedTags)) {
+    public static boolean excludePage(Set<String> pageTags, Set<String> skipTags) {
+        if (CollectionUtils.isEmpty(pageTags) || CollectionUtils.isEmpty(skipTags)) {
             return false;
         }
         return pageTags.stream()
-            .anyMatch(excludedTags::contains);
+            .anyMatch(skipTags::contains);
     }
 
     public static void triggerTestFailure(String message) {

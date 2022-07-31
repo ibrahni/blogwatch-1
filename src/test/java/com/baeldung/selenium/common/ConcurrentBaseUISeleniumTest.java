@@ -184,11 +184,11 @@ public class ConcurrentBaseUISeleniumTest extends BaseTest implements Supplier<S
     }
 
     protected boolean shouldSkipPageBasedOnTags(SitePage page, Set<String> pageTags, String testName) {
-        Set<String> excludedTags = YAMLProperties.exceptionsForTestsBasedOnTags.get(testName) != null ? YAMLProperties.exceptionsForTestsBasedOnTags.get(testName)
+        Set<String> skipTags = YAMLProperties.exceptionsForTestsBasedOnTags.get(testName) != null ? YAMLProperties.exceptionsForTestsBasedOnTags.get(testName)
             .stream()
             .collect(Collectors.toSet()) : Collections.emptySet();
-        if (Utils.excludePage(pageTags, excludedTags)) {
-            logger.info("Skipping {} for test: {} because of exception tags {}", page.getUrl(), testName, excludedTags);
+        if (Utils.excludePage(pageTags, skipTags)) {
+            logger.info("Skipping {} for test: {} because of skip tags {}", page.getUrl(), testName, skipTags);
             return true;
         }
         return false;
