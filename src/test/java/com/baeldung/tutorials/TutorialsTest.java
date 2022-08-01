@@ -1,6 +1,7 @@
 package com.baeldung.tutorials;
 
 import com.baeldung.common.*;
+import static com.baeldung.common.ConsoleColors.*;
 import com.baeldung.common.config.CommonConfig;
 import com.baeldung.common.config.MyApplicationContextInitializer;
 import com.baeldung.common.vo.MavenProjectVO;
@@ -44,7 +45,7 @@ public class TutorialsTest extends BaseTest {
         List<String> testExceptions = getTestExceptions(testInfo);
 
         Path repoLocalPath = Paths.get(tutorialsRepoLocalPath);
-        Utils.fetchGitRepo(GlobalConstants.YES, repoLocalPath, tutorialsRepoGitUrl);
+        //Utils.fetchGitRepo(GlobalConstants.YES, repoLocalPath, tutorialsRepoGitUrl);
 
         MavenModulesDetailsFileVisitor modulesFileVisitor = new MavenModulesDetailsFileVisitor(GlobalConstants.tutorialsRepoLocalPath);
         Files.walkFileTree(repoLocalPath, modulesFileVisitor);
@@ -95,6 +96,7 @@ public class TutorialsTest extends BaseTest {
     private void markBuiltModules(Map<String, MavenProjectVO> allModules, HashMap<String, List<String>> modulesForProfiles, boolean defaultProfiles) {
         for (Map.Entry<String, List<String>> modulesForProfile : modulesForProfiles.entrySet()) {
             for (String module : modulesForProfile.getValue()) {
+                logger.info(magentaColordMessage("Processing moduele: {}"), module);
                 String artifactId = getArtifactId(module);
                 MavenProjectVO mavenProject = allModules.get(artifactId);
                 markBuiltHierarchy(mavenProject, defaultProfiles);
