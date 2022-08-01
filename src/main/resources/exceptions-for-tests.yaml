@@ -136,37 +136,9 @@ givenAGitHubModuleReadme_whenAnalysingTheReadme_thenLinksToAndFromGithubMatch:
  - https://github.com/eugenp/tutorials/tree/master/README.md
 
 givenAllArticles_whenAnArticleLoads_thenItIsHasASingleOptinInTheSidebar:
-  - /linux/
-  - /kotlin/
-  - /cs/
-  - /scala/
-  - /codota
-  - /cassandra-astra-rest-dashboard-updates
-  - /job/
-  - /java-weekly
-  - /java-web-weekly
-  - /cassandra-astra-stargate-dashboard
-  - /cassandra-astra-rest-dashboard-map
-  - /spring-data-cassandra-dates
-  - /spring-data-cassandra-logging-queries
-  - /spring-boot-datacassandratest
-  - /java-cassandra-unit
-  - /faunadb-spring
-  - /spring-boot-nosql-database
-  - /faunadb-spring-web-app
-  - /java-lightrun
+
 givenAllArticles_whenAnArticleLoads_thenItIsHasASingleOptinInTheAfterPostContent:
-  - /linux/
-  - /kotlin/
-  - /cs/
-  - /scala/
-  - /codota
-  - /cassandra-astra-rest-dashboard-updates
-  - /job/
-  - /java-weekly
-  - /java-web-weekly
-  - /spring-boot-datacassandratest
-  - /java-lightrun
+
 givenAllArticles_whenAnArticleLoads_thenTheArticleHasProperDotsInTitle:
   - /string/
 givenTheTutorialsRepository_listAllTheModulesThatAreNotBuildInBothDefautlAndIntegrationTests:
