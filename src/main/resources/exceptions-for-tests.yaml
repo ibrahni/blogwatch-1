@@ -136,9 +136,17 @@ givenAGitHubModuleReadme_whenAnalysingTheReadme_thenLinksToAndFromGithubMatch:
  - https://github.com/eugenp/tutorials/tree/master/README.md
 
 givenAllArticles_whenAnArticleLoads_thenItIsHasASingleOptinInTheSidebar:
-
+  - /linux/
+  - /kotlin/
+  - /cs/
+  - /scala/
+  - /job/
 givenAllArticles_whenAnArticleLoads_thenItIsHasASingleOptinInTheAfterPostContent:
-
+  - /linux/
+  - /kotlin/
+  - /cs/
+  - /scala/
+  - /job/
 givenAllArticles_whenAnArticleLoads_thenTheArticleHasProperDotsInTitle:
   - /string/
 givenTheTutorialsRepository_listAllTheModulesThatAreNotBuildInBothDefautlAndIntegrationTests:
