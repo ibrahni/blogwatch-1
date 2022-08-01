@@ -45,7 +45,7 @@ public class TutorialsTest extends BaseTest {
         List<String> testExceptions = getTestExceptions(testInfo);
 
         Path repoLocalPath = Paths.get(tutorialsRepoLocalPath);
-        //Utils.fetchGitRepo(GlobalConstants.YES, repoLocalPath, tutorialsRepoGitUrl);
+        Utils.fetchGitRepo(GlobalConstants.YES, repoLocalPath, tutorialsRepoGitUrl);
 
         MavenModulesDetailsFileVisitor modulesFileVisitor = new MavenModulesDetailsFileVisitor(GlobalConstants.tutorialsRepoLocalPath);
         Files.walkFileTree(repoLocalPath, modulesFileVisitor);
