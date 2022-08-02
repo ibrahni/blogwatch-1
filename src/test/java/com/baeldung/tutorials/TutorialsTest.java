@@ -99,6 +99,10 @@ public class TutorialsTest extends BaseTest {
                 logger.info(magentaColordMessage("Processing moduele: {}"), module);
                 String artifactId = getArtifactId(module);
                 MavenProjectVO mavenProject = allModules.get(artifactId);
+                if (null == mavenProject) {
+                    logger.error(ConsoleColors.redBoldMessage("Couldn't retrieve MavenProjectVO for {}, perhaps module directory and artifactId don't match"), module);
+                    continue;
+                }
                 markBuiltHierarchy(mavenProject, defaultProfiles);
             }
         }
