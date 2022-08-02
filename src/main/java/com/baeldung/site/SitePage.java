@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -43,6 +44,8 @@ public class SitePage extends BlogBaseDriver {
 
     private Type type;
 
+    private Set<String> wpTags;
+
     public enum Type {
         PAGE, ARTICLE;
     }
@@ -62,6 +65,24 @@ public class SitePage extends BlogBaseDriver {
 
     public Type getType() {
         return this.type;
+    }
+
+    public Set<String> getWpTags(){
+       return wpTags;
+    }
+
+    public void setWpTags() {
+        Set<String> wordPressTags;
+        try {
+            wordPressTags = this.getWebDriver()
+                .findElements(By.xpath("//ul[@class='post-tags']/li/a"))
+                .stream()
+                .map(WebElement::getText)
+                .collect(Collectors.toSet());
+        } catch (NoSuchElementException e) {
+            wordPressTags = Collections.emptySet();
+        }
+        this.wpTags = wordPressTags;
     }
 
     public WebElement findContentDiv() {
@@ -820,15 +841,4 @@ public class SitePage extends BlogBaseDriver {
         }
     }
 
-    public Set<String> findPostTags() {
-        try {
-            return this.getWebDriver()
-                .findElements(By.xpath("//ul[@class='post-tags']/li/a"))
-                .stream()
-                .map(WebElement::getText)
-                .collect(Collectors.toSet());
-        } catch (NoSuchElementException e) {
-            return null;
-        }
-    }
 }

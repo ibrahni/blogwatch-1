@@ -224,9 +224,6 @@ public class Utils {
     }
 
     public static boolean excludePage(Set<String> pageTags, Set<String> skipTags) {
-        if (CollectionUtils.isEmpty(pageTags) || CollectionUtils.isEmpty(skipTags)) {
-            return false;
-        }
         return pageTags.stream()
             .anyMatch(skipTags::contains);
     }
@@ -1039,6 +1036,16 @@ public class Utils {
 
         sb.append(blueColordMessage("=============================End of the Summary===============================")).append(separator);
         return sb.toString();
+    }
+
+    public static boolean hasSkipTags(String testName) {
+        return YAMLProperties.exceptionsForTestsBasedOnTags.get(testName) != null && CollectionUtils.isNotEmpty(YAMLProperties.exceptionsForTestsBasedOnTags.get(testName));
+    }
+
+    public static Set<String> getSkipTags(String testName) {
+        return YAMLProperties.exceptionsForTestsBasedOnTags.get(testName)
+            .stream()
+            .collect(Collectors.toSet());
     }
 
 }
