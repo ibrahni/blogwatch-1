@@ -116,3 +116,8 @@ ignoreReadmeEndingWith:
   - /algorithms-modules
   - /core-groovy-modules
   - /rxjava-modules
+  - /quarkus-modules
+  - /json-modules
+  - /lombok-modules
+  - /spring-5-reactive-modules
+  - /akka-modules
