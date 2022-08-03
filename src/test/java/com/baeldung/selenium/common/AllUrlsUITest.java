@@ -562,7 +562,7 @@ public class AllUrlsUITest extends ConcurrentBaseUISeleniumTest {
 
                     if (shouldSkipUrl(page, GlobalConstants.givenAllArticles_whenAnArticleLoads_thenTheArticleHasProperDotsInTitle)
                         || Utils.excludePage(page.getUrl(), GlobalConstants.ARTILCE_JAVA_WEEKLY, false)
-                        || page.hasCategoryOrTag(level2ExceptionsForTitleProperDotsTest)) {
+                        || page.hasCategory(level2ExceptionsForTitleProperDotsTest)) {
                         return;
                     }
 
