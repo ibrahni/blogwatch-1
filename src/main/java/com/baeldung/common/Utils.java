@@ -1,10 +1,18 @@
 package com.baeldung.common;
 
-import static com.baeldung.common.ConsoleColors.*;
+import static com.baeldung.common.ConsoleColors.blueColordMessage;
+import static com.baeldung.common.ConsoleColors.colordHeading;
+import static com.baeldung.common.ConsoleColors.greenBoledUnderlined;
+import static com.baeldung.common.ConsoleColors.greenMessage;
+import static com.baeldung.common.ConsoleColors.magentaColordMessage;
+import static com.baeldung.common.ConsoleColors.redBoldMessage;
+import static com.baeldung.common.ConsoleColors.redBoldUnderlined;
+import static com.baeldung.common.GlobalConstants.CODE_TAG;
+import static com.baeldung.common.GlobalConstants.LANGUAGE_JAVA_CLASS_NAME;
 import static com.baeldung.common.GlobalConstants.POM_FILE_NAME_LOWERCASE;
 import static com.baeldung.common.GlobalConstants.tutorialsRepoLocalPath;
+import static com.baeldung.common.GlobalConstants.tutorialsRepoMasterPath;
 import static com.baeldung.common.GlobalConstants.tutorialsRepos;
-import static com.baeldung.common.GlobalConstants.*;
 import static java.util.stream.Collectors.toList;
 import static org.junit.jupiter.api.Assertions.fail;
 
@@ -16,7 +24,13 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.ListIterator;
+import java.util.Map;
+import java.util.Set;
 import java.util.function.BiPredicate;
 import java.util.function.Function;
 import java.util.regex.Matcher;
@@ -24,7 +38,6 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import com.baeldung.common.vo.*;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -45,6 +58,12 @@ import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.baeldung.common.vo.AnchorLinksTestDataVO;
+import com.baeldung.common.vo.EventTrackingVO;
+import com.baeldung.common.vo.GitHubRepoVO;
+import com.baeldung.common.vo.JavaConstruct;
+import com.baeldung.common.vo.LinkVO;
+import com.baeldung.common.vo.MavenProjectVO;
 import com.baeldung.filevisitor.ModuleAlignmentValidatorFileVisitor;
 import com.baeldung.filevisitor.ReadmeFileVisitor;
 import com.baeldung.filevisitor.TutorialsParentModuleFinderFileVisitor;
@@ -204,6 +223,11 @@ public class Utils {
         }
 
         return false;
+    }
+
+    public static boolean excludePage(Set<String> pageTags, Set<String> skipTags) {
+        return pageTags.stream()
+            .anyMatch(skipTags::contains);
     }
 
     public static void triggerTestFailure(String message) {
@@ -1014,6 +1038,16 @@ public class Utils {
 
         sb.append(blueColordMessage("=============================End of the Summary===============================")).append(separator);
         return sb.toString();
+    }
+
+    public static boolean hasSkipTags(String testName) {
+        return YAMLProperties.exceptionsForTestsBasedOnTags.get(testName) != null && CollectionUtils.isNotEmpty(YAMLProperties.exceptionsForTestsBasedOnTags.get(testName));
+    }
+
+    public static Set<String> getSkipTags(String testName) {
+        return YAMLProperties.exceptionsForTestsBasedOnTags.get(testName)
+            .stream()
+            .collect(Collectors.toSet());
     }
 
 }

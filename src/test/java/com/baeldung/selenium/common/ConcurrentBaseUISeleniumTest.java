@@ -8,6 +8,7 @@ import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.ParameterContext;
@@ -164,18 +165,28 @@ public class ConcurrentBaseUISeleniumTest extends BaseTest implements Supplier<S
         }
     }
 
-
     protected boolean shouldSkipUrl(SitePage page, String testName) {
         return shouldSkipUrl(page, testName, true);
     }
 
     protected boolean shouldSkipUrl(SitePage page, String testName, boolean compareAfterAddingTrailingSlash) {
-        return shouldSkipUrl(page, testName, YAMLProperties.exceptionsForTests.get(testName), compareAfterAddingTrailingSlash);
+        return shouldSkipUrl(page, testName, YAMLProperties.exceptionsForTests.get(testName), compareAfterAddingTrailingSlash) || shouldSkipPageBasedOnTags(page, testName);
     }
 
     protected boolean shouldSkipUrl(SitePage page, String testName, List<String> entryList, boolean compareAfterAddingTrailingSlash) {
         if (Utils.excludePage(page.getUrl(), entryList, compareAfterAddingTrailingSlash)) {
             logger.info("Skipping {} for test: {}", page.getUrl(), testName);
+            return true;
+        }
+        return false;
+    }
+
+    private boolean shouldSkipPageBasedOnTags(SitePage page, String testName) {
+        if (CollectionUtils.isEmpty(page.getWpTags()) || !Utils.hasSkipTags(testName)) {
+            return false;
+        }
+        if (Utils.excludePage(page.getWpTags(), Utils.getSkipTags(testName))) {
+            logger.info("Skipping {} for test: {} because of skip tags {}", page.getUrl(), testName, Utils.getSkipTags(testName));
             return true;
         }
         return false;

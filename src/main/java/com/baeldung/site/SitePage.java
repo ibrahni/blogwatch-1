@@ -1,7 +1,6 @@
 package com.baeldung.site;
 
 import static com.baeldung.common.ConsoleColors.redBoldMessage;
-import static com.baeldung.common.ConsoleColors.greenMessage;
 import static java.util.stream.Collectors.toList;
 
 import java.time.Duration;
@@ -10,8 +9,10 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
@@ -43,6 +44,8 @@ public class SitePage extends BlogBaseDriver {
 
     private Type type;
 
+    private Set<String> wpTags;
+
     public enum Type {
         PAGE, ARTICLE;
     }
@@ -62,6 +65,24 @@ public class SitePage extends BlogBaseDriver {
 
     public Type getType() {
         return this.type;
+    }
+
+    public Set<String> getWpTags(){
+       return wpTags;
+    }
+
+    public void setWpTags() {
+        Set<String> wordPressTags;
+        try {
+            wordPressTags = this.getWebDriver()
+                .findElements(By.xpath("//ul[@class='post-tags']/li/a"))
+                .stream()
+                .map(WebElement::getText)
+                .collect(Collectors.toSet());
+        } catch (NoSuchElementException e) {
+            wordPressTags = Collections.emptySet();
+        }
+        this.wpTags = wordPressTags;
     }
 
     public WebElement findContentDiv() {
@@ -613,17 +634,17 @@ public class SitePage extends BlogBaseDriver {
         return labels.contains(GlobalConstants.springCategoryOnTheSite.toLowerCase()) && subCategories.size() > 0;
     }
 
-    public boolean hasCategoryOrTag(List<String> categoriesAndTags) {
+    public boolean hasCategory(List<String> categories) {
         final List<WebElement> elements = this.getWebDriver()
-            .findElements(By.xpath("//a[contains(@rel, 'category tag') or contains(@rel, 'post tag')]"));
+            .findElements(By.xpath("//a[contains(@rel, 'category tag')]"));
 
-        final List<String> pageCategoriesAndTags = elements.stream()
+        final List<String> pageCategories = elements.stream()
             .map(element -> element.getAttribute("innerHTML"))
             .map(label -> label == null ? label : label.toLowerCase())
             .collect(Collectors.toList());
 
-        return categoriesAndTags.stream()
-            .anyMatch(pageCategoriesAndTags::contains);
+        return categories.stream()
+            .anyMatch(pageCategories::contains);
     }
 
 
@@ -819,4 +840,5 @@ public class SitePage extends BlogBaseDriver {
             return null;
         }
     }
+
 }

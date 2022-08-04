@@ -86,5 +86,4 @@ givenAllArticles_whenAnArticleLoads_thenTheArticleHasProperTitleCapitalization:
  - List(index)
  
 givenAllArticles_whenAnArticleLoads_thenTheArticleHasProperDotsInTitle:
- - job
  - series

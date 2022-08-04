@@ -120,6 +120,8 @@ public class AllUrlsUITest extends ConcurrentBaseUISeleniumTest {
             logger.info("Skipping {} as it's newer than {} weeks", page.getUrl(), ignoreUrlsNewerThanWeeks);
             loadNextURL(page);
         }
+        page.setWpTags();
+
 
         if (shouldSkipUrl(page, GlobalConstants.givenAllLongRunningTests_whenHittingAllArticles_thenOK)) {
             loadNextURL(page);
@@ -560,7 +562,7 @@ public class AllUrlsUITest extends ConcurrentBaseUISeleniumTest {
 
                     if (shouldSkipUrl(page, GlobalConstants.givenAllArticles_whenAnArticleLoads_thenTheArticleHasProperDotsInTitle)
                         || Utils.excludePage(page.getUrl(), GlobalConstants.ARTILCE_JAVA_WEEKLY, false)
-                        || page.hasCategoryOrTag(level2ExceptionsForTitleProperDotsTest)) {
+                        || page.hasCategory(level2ExceptionsForTitleProperDotsTest)) {
                         return;
                     }
 
