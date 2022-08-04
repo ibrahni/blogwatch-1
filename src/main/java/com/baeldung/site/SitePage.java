@@ -695,8 +695,8 @@ public class SitePage extends BlogBaseDriver {
                 elements.addAll(spanElements);
             }
         } else {
-            elements = this.getWebDriver().findElements(By.xpath("//a[contains(@href,'" + link.getAnchorLink() + "')]"));
-            spanElements =  this.getWebDriver().findElements(By.xpath("//a[contains(@href,'" + link.getAnchorLink() + "')]//span"));
+            elements = this.getWebDriver().findElements(By.xpath("//section[last()]//li[@class='elementor-icon-list-item']//a[contains(@href,'" + link.getAnchorLink() + "')]"));
+            spanElements =  this.getWebDriver().findElements(By.xpath("//section[last()]//li[@class='elementor-icon-list-item']//a[contains(@href,'" + link.getAnchorLink() + "')]//span"));
             if (CollectionUtils.isNotEmpty(spanElements)) {
                 elements.addAll(spanElements);
             }
