@@ -303,7 +303,10 @@ public class AllUrlsUITest extends ConcurrentBaseUISeleniumTest {
                 }
 
                 final String metaDescriptionTag = page.getMetaDescriptionContent();
-                final String excerptTag = page.getMetaExcerptContent();
+                String excerptTag = page.getMetaExcerptContent();
+                if(null != excerptTag) {                    
+                    excerptTag = excerptTag.replace("\u00a0", " ");
+                }
 
                 if (StringUtils.isBlank(excerptTag) || !Objects.equals(excerptTag.trim(), metaDescriptionTag.trim())) {
                     recordMetrics(1, TestMetricTypes.FAILED);
