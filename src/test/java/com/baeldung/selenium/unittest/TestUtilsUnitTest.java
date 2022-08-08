@@ -144,6 +144,13 @@ public class TestUtilsUnitTest {
         ), "Sample Title for Article 1");
         // then: title matches
         assertTrue(found);
+        // when: check article title from repo1 special case markdown escape
+        found = TestUtils.checkLocalRepoArticleLinkAndTitleMatches(List.of(repo1, repo2), List.of(
+            "https://github.com/baeldung/repo1/tree/master/module1",
+            "https://github.com/baeldung/repo2/tree/master/module2"
+        ), "How to Convert Mono<List<T>> Into Flux<T>");
+        // then: title matches
+        assertTrue(found);
         // when: check article title from repo1
         found = TestUtils.checkLocalRepoArticleLinkAndTitleMatches(List.of(repo1, repo2), List.of(
             "https://github.com/baeldung/repo1/tree/master/module1",

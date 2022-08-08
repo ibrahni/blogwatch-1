@@ -202,7 +202,7 @@ public class TestUtils {
                 try (var lines = Files.lines(readme)) {
                     final boolean match = lines.anyMatch(line -> {
                         if (matcher.reset(line).find()) {
-                            return matcher.group(1).trim().equals(articleHeading);
+                            return sanitizeTitle(matcher.group(1)).equals(articleHeading);
                         }
                         return false;
                     });
@@ -215,6 +215,22 @@ public class TestUtils {
             }
             return false;
         });
+    }
+
+    /**
+     * This method clears the article title in terms of two points:
+     * <ul>
+     *     <li>Remove leading and trailing whitespaces (trim)</li>
+     *     <li>Clears blackslashes for markdown/html escape, like: Flux&lt;\T&gt; => Flux&lt;T&gt;</li>
+     * </ul>
+     * Better to implement handling of future special cases here.
+     *
+     * @param title article title
+     * @return cleared title
+     */
+    private static String sanitizeTitle(String title) {
+        return title.trim()
+            .replace("\\>", ">");
     }
 
     final static Pattern ARTICLE_TITLE_AND_LINK_ON_GITHUB_MODULE_PATTERN = Pattern.compile("-\\s+\\[(.*)]\\(\\s*(\\S+)\\s*\\)");
