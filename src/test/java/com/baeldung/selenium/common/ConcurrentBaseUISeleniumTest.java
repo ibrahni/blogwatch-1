@@ -3,18 +3,17 @@ package com.baeldung.selenium.common;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-import org.apache.commons.collections4.CollectionUtils;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.ParameterContext;
 import org.junit.jupiter.api.extension.ParameterResolutionException;
 import org.junit.jupiter.api.extension.ParameterResolver;
 import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.api.extension.support.TypeBasedParameterResolver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.ApplicationContext;
@@ -25,19 +24,13 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import com.baeldung.common.BaseTest;
-import com.baeldung.common.GlobalConstants;
-import com.baeldung.common.Utils;
-import com.baeldung.common.YAMLProperties;
+import com.baeldung.common.ConcurrentBaseTest;
 import com.baeldung.common.config.CommonConfig;
 import com.baeldung.common.config.MyApplicationContextInitializer;
 import com.baeldung.crawler4j.config.Crawler4jMainCofig;
 import com.baeldung.selenium.config.SeleniumContextConfiguration;
 import com.baeldung.selenium.config.headlessBrowserConfig;
 import com.baeldung.site.SitePage;
-import com.google.common.collect.Multimap;
-
-import dev.yavuztas.junit.ConcurrentExtension;
 
 @ContextConfiguration(classes = {
     CommonConfig.class,
@@ -46,21 +39,12 @@ import dev.yavuztas.junit.ConcurrentExtension;
     ConcurrentBaseUISeleniumTest.SitePageConfiguration.class
 }, initializers = MyApplicationContextInitializer.class)
 @ExtendWith(SpringExtension.class)
-public class ConcurrentBaseUISeleniumTest extends BaseTest implements Supplier<SitePage> {
+public class ConcurrentBaseUISeleniumTest extends ConcurrentBaseTest implements Supplier<SitePage> {
 
     @RegisterExtension
-    static ConcurrentExtension extension = ConcurrentExtension
-        .withGlobalThreadCount(CONCURRENCY_LEVEL);
-
-    @RegisterExtension
-    static ParameterResolver nullResolver = new ParameterResolver() {
+    static ParameterResolver nullResolver = new TypeBasedParameterResolver<SitePage>() {
         @Override
-        public boolean supportsParameter(ParameterContext parameterContext, ExtensionContext extensionContext) throws ParameterResolutionException {
-            return parameterContext.getParameter().getType().equals(SitePage.class);
-        }
-
-        @Override
-        public Object resolveParameter(ParameterContext parameterContext, ExtensionContext extensionContext) throws ParameterResolutionException {
+        public SitePage resolveParameter(ParameterContext parameterContext, ExtensionContext extensionContext) throws ParameterResolutionException {
             return null;
         }
     };
@@ -163,37 +147,6 @@ public class ConcurrentBaseUISeleniumTest extends BaseTest implements Supplier<S
         private boolean ensureTag(SitePage sitePage) {
             return ensureTypes.isEmpty() || ensureTypes.contains(sitePage.getType());
         }
-    }
-
-    protected boolean shouldSkipUrl(SitePage page, String testName) {
-        return shouldSkipUrl(page, testName, true);
-    }
-
-    protected boolean shouldSkipUrl(SitePage page, String testName, boolean compareAfterAddingTrailingSlash) {
-        return shouldSkipUrl(page, testName, YAMLProperties.exceptionsForTests.get(testName), compareAfterAddingTrailingSlash) || shouldSkipPageBasedOnTags(page, testName);
-    }
-
-    protected boolean shouldSkipUrl(SitePage page, String testName, List<String> entryList, boolean compareAfterAddingTrailingSlash) {
-        if (Utils.excludePage(page.getUrl(), entryList, compareAfterAddingTrailingSlash)) {
-            logger.info("Skipping {} for test: {}", page.getUrl(), testName);
-            return true;
-        }
-        return false;
-    }
-
-    private boolean shouldSkipPageBasedOnTags(SitePage page, String testName) {
-        if (CollectionUtils.isEmpty(page.getWpTags()) || !Utils.hasSkipTags(testName)) {
-            return false;
-        }
-        if (Utils.excludePage(page.getWpTags(), Utils.getSkipTags(testName))) {
-            logger.info("Skipping {} for test: {} because of skip tags {}", page.getUrl(), testName, Utils.getSkipTags(testName));
-            return true;
-        }
-        return false;
-    }
-
-    protected void triggerTestFailure(Multimap<String, String> badURLs, Multimap<Integer, String> resultsForGitHubHttpStatusTest) {
-        Utils.triggerTestFailure(badURLs, resultsForGitHubHttpStatusTest, "Failed tests-->", getMetrics(GlobalConstants.TestMetricTypes.FAILED));
     }
 
 }

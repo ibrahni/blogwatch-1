@@ -11,6 +11,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.TestInfo;
 import org.openqa.selenium.WebElement;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.CollectionUtils;
@@ -82,8 +83,11 @@ public class AllUrlsUITest extends ConcurrentBaseUISeleniumTest {
     }
 
     @BeforeEach
-    @Tag(GlobalConstants.TAG_GITHUB_RELATED)
-    public void loadGitHubRepositories() {
+    public void loadGitHubRepositories(TestInfo testInfo) {
+        // run only for tagged "github-related"
+        if (!testInfo.getTags().contains(GlobalConstants.TAG_GITHUB_RELATED)) {
+            return;
+        }
         logger.info("Loading Github repositories into local");
         for (GitHubRepoVO gitHubRepo : GlobalConstants.tutorialsRepos) {
             try {
@@ -306,7 +310,7 @@ public class AllUrlsUITest extends ConcurrentBaseUISeleniumTest {
 
                 final String metaDescriptionTag = page.getMetaDescriptionContent();
                 String excerptTag = page.getMetaExcerptContent();
-                if(null != excerptTag) {                    
+                if(null != excerptTag) {
                     excerptTag = excerptTag.replace("\u00a0", " ");
                 }
 
