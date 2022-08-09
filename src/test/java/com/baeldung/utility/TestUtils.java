@@ -16,6 +16,8 @@ import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 
 import java.util.function.BiPredicate;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 import org.apache.commons.io.FileUtils;
@@ -187,9 +189,8 @@ public class TestUtils {
         });
     }
 
-    public static boolean checkLocalRepoArticleLinkAndTitleMatches(List<GitHubRepoVO> repositories, List<String> gitHubModuleLinks, String articleRelativeURL, String articleHeading) {
-        final String format1 = "[%s](%s%s)".formatted(articleHeading, GlobalConstants.BAELDUNG_HOME_PAGE_URL_WITH_HTTP, articleRelativeURL);
-        final String format2 = "[%s](%s%s)".formatted(articleHeading, GlobalConstants.BAELDUNG_HOME_PAGE_URL, articleRelativeURL);
+    public static boolean checkLocalRepoArticleLinkAndTitleMatches(List<GitHubRepoVO> repositories, List<String> gitHubModuleLinks, String articleHeading) {
+        final Matcher matcher = ARTICLE_TITLE_AND_LINK_ON_GITHUB_MODULE_PATTERN.matcher("");
 
         return findInLocalRepositories(gitHubModuleLinks, repositories, (repo, url) -> {
             final Path localPath = repo.getLocalPathByUrl(url);
@@ -199,7 +200,13 @@ public class TestUtils {
             final Path readme = localPath.resolve("README.md");
             if (Files.exists(readme)) {
                 try (var lines = Files.lines(readme)) {
-                    if (lines.anyMatch(line -> line.trim().endsWith(format1) || line.trim().endsWith(format2))) {
+                    final boolean match = lines.anyMatch(line -> {
+                        if (matcher.reset(line).find()) {
+                            return sanitizeTitle(matcher.group(1)).equals(articleHeading);
+                        }
+                        return false;
+                    });
+                    if (match) {
                         return true;
                     }
                 } catch (IOException e) {
@@ -210,9 +217,27 @@ public class TestUtils {
         });
     }
 
+    /**
+     * This method clears the article title in terms of two points:
+     * <ul>
+     *     <li>Remove leading and trailing whitespaces (trim)</li>
+     *     <li>Clears blackslashes for markdown/html escape, like: Flux&lt;\T&gt; => Flux&lt;T&gt;</li>
+     * </ul>
+     * Better to implement handling of future special cases here.
+     *
+     * @param title article title
+     * @return cleared title
+     */
+    private static String sanitizeTitle(String title) {
+        return title.trim()
+            .replace("\\>", ">");
+    }
+
+    final static Pattern ARTICLE_TITLE_AND_LINK_ON_GITHUB_MODULE_PATTERN = Pattern.compile("-\\s+\\[(.*)]\\(\\s*(\\S+)\\s*\\)");
     public static boolean checkLocalRepoArticleLinkFoundOnModule(List<GitHubRepoVO> repositories, List<String> gitHubModuleLinks, String articleRelativeURL) {
-        final String format1 = "(%s%s)".formatted(GlobalConstants.BAELDUNG_HOME_PAGE_URL_WITH_HTTP, articleRelativeURL);
-        final String format2 = "(%s%s)".formatted(GlobalConstants.BAELDUNG_HOME_PAGE_URL, articleRelativeURL);
+        final String checkUrl1 = "%s%s".formatted(GlobalConstants.BAELDUNG_HOME_PAGE_URL_WITH_HTTP, articleRelativeURL);
+        final String checkUrl2 = "%s%s".formatted(GlobalConstants.BAELDUNG_HOME_PAGE_URL, articleRelativeURL);
+        final Matcher matcher = ARTICLE_TITLE_AND_LINK_ON_GITHUB_MODULE_PATTERN.matcher("");
 
         return findInLocalRepositories(gitHubModuleLinks, repositories, (repo, url) -> {
             final Path localPath = repo.getLocalPathByUrl(url);
@@ -222,7 +247,13 @@ public class TestUtils {
             final Path readme = localPath.resolve("README.md");
             if (Files.exists(readme)) {
                 try (var lines = Files.lines(readme)) {
-                    if (lines.anyMatch(line -> line.endsWith(format1) || line.endsWith(format2))) {
+                    final boolean match = lines.anyMatch(line -> {
+                        if (matcher.reset(line).find()) {
+                            return matcher.group(2).equals(checkUrl1) || matcher.group(2).equals(checkUrl2);
+                        }
+                        return false;
+                    });
+                    if (match) {
                         return true;
                     }
                 } catch (IOException e) {

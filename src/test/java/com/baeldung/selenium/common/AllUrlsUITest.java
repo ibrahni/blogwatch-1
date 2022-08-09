@@ -306,7 +306,7 @@ public class AllUrlsUITest extends ConcurrentBaseUISeleniumTest {
 
                 final String metaDescriptionTag = page.getMetaDescriptionContent();
                 String excerptTag = page.getMetaExcerptContent();
-                if(null != excerptTag) {                    
+                if(null != excerptTag) {
                     excerptTag = excerptTag.replace("\u00a0", " ");
                 }
 
@@ -468,7 +468,7 @@ public class AllUrlsUITest extends ConcurrentBaseUISeleniumTest {
                     recordFailure(GlobalConstants.givenArticlesWithALinkToTheGitHubModule_whenTheArticleLoads_thenTheGitHubModuleLinksBackToTheArticle);
                     badURLs.put(GlobalConstants.givenArticlesWithALinkToTheGitHubModule_whenTheArticleLoads_thenTheGitHubModuleLinksBackToTheArticle, page.getUrlWithNewLineFeed());
                 } else if (!shouldSkipUrl(page, GlobalConstants.givenArticlesWithALinkToTheGitHubModule_whenTheArticleLoads_thenTheArticleTitleAndGitHubLinkMatch)
-                        && !TestUtils.checkLocalRepoArticleLinkAndTitleMatches(GlobalConstants.tutorialsRepos, linksToTheGithubModule, articleRelativeUrl, articleHeading)) {
+                        && !TestUtils.checkLocalRepoArticleLinkAndTitleMatches(GlobalConstants.tutorialsRepos, linksToTheGithubModule, articleHeading)) {
                     recordMetrics(1, TestMetricTypes.FAILED);
                     recordFailure(GlobalConstants.givenArticlesWithALinkToTheGitHubModule_whenTheArticleLoads_thenTheArticleTitleAndGitHubLinkMatch);
                     badURLs.put(GlobalConstants.givenArticlesWithALinkToTheGitHubModule_whenTheArticleLoads_thenTheArticleTitleAndGitHubLinkMatch, page.getUrlWithNewLineFeed());
