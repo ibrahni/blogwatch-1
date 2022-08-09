@@ -8,6 +8,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.text.StringEscapeUtils;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
@@ -307,7 +308,7 @@ public class AllUrlsUITest extends ConcurrentBaseUISeleniumTest {
                 final String metaDescriptionTag = page.getMetaDescriptionContent();
                 String excerptTag = page.getMetaExcerptContent();
                 if(null != excerptTag) {
-                    excerptTag = excerptTag.replace("\u00a0", " ");
+                    excerptTag = StringEscapeUtils.unescapeHtml4(excerptTag).replace("\u00a0", " ");
                 }
 
                 if (StringUtils.isBlank(excerptTag) || !Objects.equals(excerptTag.trim(), metaDescriptionTag.trim())) {
