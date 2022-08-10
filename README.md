@@ -107,10 +107,16 @@ Explicit invocation of these methods is needed in the following situations:
 - the test is invoked from another test  (eg: AllUrlsUITest.givenAllTestsRelatedTechnicalArea_whenHittingAllArticles_thenOK)
 
 ### Parallel Execution of Tests
-Currently, _concurrency.level_ property is only in effect for [_AllUrlsUITest_](https://github.com/Baeldung/blogwatch/blob/master/src/test/java/com/baeldung/selenium/common/AllUrlsUITest.java).
+Currently, _concurrency.level_ property is only in effect for these tests: 
+- [_CommonConcurrentUITest_](https://github.com/Baeldung/blogwatch/blob/master/src/test/java/com/baeldung/selenium/common/CommonConcurrentUITest.java).
+- [_AllUrlsUITest_](https://github.com/Baeldung/blogwatch/blob/master/src/test/java/com/baeldung/selenium/common/AllUrlsUITest.java).
 
-Concurrency supported tests are done by extending a special base class, [_ConcurrentBaseUISeleniumTest_](https://github.com/Baeldung/blogwatch/blob/master/src/test/java/com/baeldung/selenium/common/ConcurrentBaseUISeleniumTest.java), 
-which provides an isolated instance of _SitePage_ for each threads. 
+Concurrency supported tests are done by extending a special base class, 
+[_ConcurrentBaseUISeleniumTest_](https://github.com/Baeldung/blogwatch/blob/master/src/test/java/com/baeldung/selenium/common/ConcurrentBaseUISeleniumTest.java), 
+which provides an isolated instance of _SitePage_ for each thread.
+
+When we don't need selenium we can use a simpler one, [_ConcurrentBaseTest_](https://github.com/Baeldung/blogwatch/blob/master/src/test/java/com/baeldung/common/ConcurrentBaseTest.java).
+which only provides concurrent execution support. 
 
 To migrate any other tests into its concurrent version, simply extend it from the new base class instead of _BaseUISeleniumTest_:
 ```java
@@ -127,19 +133,19 @@ public class ConcurrentTest extends ConcurrentBaseUISeleniumTest {
     }
 
     @ConcurrentTest
-    public final void testMethod(SitePage sitePage) {
-        new TestLogic()
-            .log("testMethod")
-            .apply(page -> {
-                // individual test logic
-            }).run(sitePage);
+    @PageTypes({ SitePage.Type.PAGE, SitePage.Type.ARTICLE })
+    @LogOnce("testMethod")
+    public final void testMethod(SitePage page) {
+        // individual test logic
+        // SitePage parameter traverses possible URLs in a thread-safe way
     }
 
     @ConcurrentTest
-    public final void testBulk() {
-        new TestLogic().apply(page -> {
-            testMethod(page);
-        }).run();
+    @PageTypes({ SitePage.Type.PAGE, SitePage.Type.ARTICLE })
+    @LogOnce("testBulk")
+    public final void testBulk(SitePage page) {
+        // We can give already provided page into methods
+        testMethod(page);
     }
 }
 ```
