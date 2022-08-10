@@ -345,4 +345,6 @@ public class GlobalConstants {
     public static final String givenURLsWithAnchorsLinkingWithinSamePage_whenAnaysingPage_thenAnHtmlElementExistsForEachAnchor = "givenURLsWithAnchorsLinkingWithinSamePage_whenAnaysingPage_thenAnHtmlElementExistsForEachAnchor";
     public static final String givenTheContactForm_whenAMessageIsSubmitted_thenItIsSentSuccessfully = "givenTheContactForm_whenAMessageIsSubmitted_thenItIsSentSuccessfully";
     public static final String givenAllTheArticles_whenAnArticleLoads_thenJavaClassesAndMethodsCanBeFoundOnGitHub = "givenAllTheArticles_whenAnArticleLoads_thenJavaClassesAndMethodsCanBeFoundOnGitHub";
+    public static final String givenAllTestsRelatedTechnicalArea_whenHittingAllUrls_thenOK = "givenAllTestsRelatedTechnicalArea_whenHittingAllUrls_thenOK";
+    public static final String givenAllEditorialTests_whenHittingAllArticles_thenOK = "givenAllEditorialTests_whenHittingAllArticles_thenOK";
 }

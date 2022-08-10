@@ -1,10 +1,5 @@
 package com.baeldung.selenium.common;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.Set;
-import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,6 +20,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.baeldung.common.ConcurrentBaseTest;
+import com.baeldung.common.SitePageConcurrentExtension;
 import com.baeldung.common.config.CommonConfig;
 import com.baeldung.common.config.MyApplicationContextInitializer;
 import com.baeldung.crawler4j.config.Crawler4jMainCofig;
@@ -41,10 +37,19 @@ import com.baeldung.site.SitePage;
 @ExtendWith(SpringExtension.class)
 public class ConcurrentBaseUISeleniumTest extends ConcurrentBaseTest implements Supplier<SitePage> {
 
+    /**
+     * Overwrites ConcurrentBaseTest.extension
+     */
+    @RegisterExtension
+    SitePageConcurrentExtension extension = new SitePageConcurrentExtension(
+        CONCURRENCY_LEVEL, this, () -> logger, this::loadNextURL);
+
     @RegisterExtension
     static ParameterResolver nullResolver = new TypeBasedParameterResolver<SitePage>() {
         @Override
         public SitePage resolveParameter(ParameterContext parameterContext, ExtensionContext extensionContext) throws ParameterResolutionException {
+            // SitePage parameters are resolved in SitePageConcurrentExtension!
+            // This is a workaround to prevent Junit's "No ParameterResolver registered" exception
             return null;
         }
     };
@@ -75,78 +80,8 @@ public class ConcurrentBaseUISeleniumTest extends ConcurrentBaseTest implements 
         return appContext.getBean("onDemandSitePage", SitePage.class);
     }
 
-    /**
-     * Runs a command on a new window, automatically handles closing.
-     */
-    protected void onNewWindow(Consumer<SitePage> cmd) {
-        final SitePage page = get();
-        try {
-            page.openNewWindow();
-            cmd.accept(page);
-        } finally {
-            page.quiet();
-        }
-    }
-
     protected boolean loadNextURL(SitePage page) {
         return false;
-    }
-
-    /**
-     * Encapsulates the test logic, determines how to run the test, in bulk or for single page.
-     */
-    protected class TestLogic {
-
-        final Set<SitePage.Type> ensureTypes;
-        final Set<String> testNames = new LinkedHashSet<>();
-
-        Consumer<SitePage> consumer;
-
-        public TestLogic(SitePage.Type... types) {
-            this.ensureTypes = new HashSet<>(Arrays.asList(types));
-        }
-
-        public TestLogic log(String testName) {
-            this.testNames.add(testName);
-            return this;
-        }
-
-        public TestLogic apply(Consumer<SitePage> consumer) {
-            this.consumer = page -> {
-                if (ensureTag(page)) {
-                    consumer.accept(page);
-                }
-            };
-            return this;
-        }
-
-        public void run(SitePage page) {
-            if (page == null) {
-                run();
-            } else {
-                // run test logic on a single page
-                consumer.accept(page);
-            }
-        }
-
-        public void run() {
-            // log testnames only once
-            log();
-            // run test logic against all urls
-            onNewWindow(newPage -> {
-                while (loadNextURL(newPage)) {
-                    consumer.accept(newPage);
-                }
-            });
-        }
-
-        private void log() {
-            testNames.forEach(name -> logger.info("Running Test - {}", name));
-        }
-
-        private boolean ensureTag(SitePage sitePage) {
-            return ensureTypes.isEmpty() || ensureTypes.contains(sitePage.getType());
-        }
     }
 
 }
