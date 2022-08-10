@@ -10,7 +10,7 @@ The project uses Selenium framework, Crawler4J, jsoup and REST Assured for UI te
 
 ### Running Tests from the IDE
 
-The default configuration executes tests with headless mode in windows environment, target URL is https://www.baeldung.com, and the concurrency level is 3. 
+The default configuration executes tests with headless mode in Windows environment, target URL is https://www.baeldung.com, and the concurrency level is 3. 
 The configuration can be changed using following properties:
 
   - _spring.profiles.active_ - environment variable to either "headless-browser" and "ui-browser"
@@ -54,7 +54,7 @@ Headless browser can be configured using following system property
 ### Updating List of Posts and Pages
 
 
-Run _UpdateArticlesAndPagesLinks#updateLinks_ test for updataing list of articles and pages. 
+Run _UpdateArticlesAndPagesLinks#updateLinks_ test for updating list of articles and pages. 
 
 ### JUnit Tags
 
@@ -66,7 +66,7 @@ Following tags are available for running tests selectively. Refer Java docs in _
   - _github-related_
   - _technical_
 
-### Excluding a URL for tests running in the bi-monthly bild
+### Excluding a URL for tests running in the bi-monthly build
 
 URLs can be added to the following file to skip a specific test from the bi-monthly build - https://github.com/eugenp/blogwatch/blob/master/src/main/resources/exceptions-for-tests.yaml
 
