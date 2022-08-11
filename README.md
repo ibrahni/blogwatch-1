@@ -26,7 +26,7 @@ These can be set as environment variables via the Eclipse run configuration.
 Three Maven profiles are available for running tests: 
   - _headless-browser-windows_
   - _headless-browser-linux_ 
-  - _ui-brower-windows_
+  - _ui-browser-windows_
 
 The target URL for all profiles is https://www.baeldung.com, and the concurrency level is 3.
 This can be changed using following properties:
@@ -115,21 +115,42 @@ Concurrency supported tests are done by extending a special base class,
 [_ConcurrentBaseUISeleniumTest_](https://github.com/Baeldung/blogwatch/blob/master/src/test/java/com/baeldung/selenium/common/ConcurrentBaseUISeleniumTest.java), 
 which provides an isolated instance of _SitePage_ for each thread.
 
-When we don't need selenium we can use a simpler one, [_ConcurrentBaseTest_](https://github.com/Baeldung/blogwatch/blob/master/src/test/java/com/baeldung/common/ConcurrentBaseTest.java).
+When we don't need Selenium we can use a simpler one, [_ConcurrentBaseTest_](https://github.com/Baeldung/blogwatch/blob/master/src/test/java/com/baeldung/common/ConcurrentBaseTest.java).
 which only provides concurrent execution support. 
 
-To migrate any other tests into its concurrent version, simply extend it from the new base class instead of _BaseUISeleniumTest_:
+To migrate any other tests into its concurrent version, simply extend it from _ConcurrentBaseUISeleniumTest_ (or _ConcurrentBaseTest_ if we don't need Selenium):
 ```java
 public class ConcurrentTest extends ConcurrentBaseUISeleniumTest {
+
+    private UrlIterator urlIterator;
     
     @BeforeEach
     public void setup() {
-        // prepare shared state which is accessed by concurrent threads
+        // prepare shared state which will be accessed by concurrent threads
+        urlIterator = new UrlIterator();
+        // configure urls by type 
+        urlIterator.append(SitePage.Type.ARTICLE, Utils.fetchAllArtilcesAsListIterator());
+        urlIterator.append(SitePage.Type.PAGE, Utils.fetchAllPagesAsListIterator());
+        // ...
     }
 
     @AfterEach
     public void clear() {
-        // checking and triggering failures
+        // check and trigger failures
+    }
+
+    @Override
+    protected boolean loadNextURL(SitePage page) {
+        Optional<UrlIterator.UrlElement> next = urlIterator.getNext();
+        if (next.isEmpty()) {
+            return false;
+        }
+        // load next url if exists
+        UrlIterator.UrlElement element = next.get();
+        page.setUrl(page.getBaseURL() + element.url());
+        page.setType(SitePage.Type.valueOf(element.tag()));
+        page.loadUrl();
+        return true;
     }
 
     @ConcurrentTest
@@ -137,7 +158,8 @@ public class ConcurrentTest extends ConcurrentBaseUISeleniumTest {
     @LogOnce("testMethod")
     public final void testMethod(SitePage page) {
         // individual test logic
-        // SitePage parameter traverses possible URLs in a thread-safe way
+        // runs for each configured URL in urlIterator
+        // Different instances of SitePage is provided for each thread
     }
 
     @ConcurrentTest

@@ -5,6 +5,7 @@ import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
@@ -113,14 +114,13 @@ public class AllUrlsUITest extends ConcurrentBaseUISeleniumTest {
     @Override
     protected boolean loadNextURL(SitePage page) {
 
-        synchronized (this) {
-            if (!urlIterator.hasNext()) {
-                return false;
-            }
-            final UrlIterator.UrlElement element = urlIterator.next();
-            page.setUrl(page.getBaseURL() + element.url());
-            page.setType(SitePage.Type.valueOf(element.tag()));
+        Optional<UrlIterator.UrlElement> next = urlIterator.getNext();
+        if (next.isEmpty()) {
+            return false;
         }
+        UrlIterator.UrlElement element = next.get();
+        page.setUrl(page.getBaseURL() + element.url());
+        page.setType(SitePage.Type.valueOf(element.tag()));
 
         logger.info("Loading - {}", page.getUrl());
         page.loadUrl();
@@ -130,8 +130,7 @@ public class AllUrlsUITest extends ConcurrentBaseUISeleniumTest {
         }
         page.setWpTags();
 
-
-        if (shouldSkipUrl(page, GlobalConstants.givenAllLongRunningTests_whenHittingAllArticles_thenOK)) {
+        if (shouldSkipUrl(page, GlobalConstants.givenAllLongRunningTests_whenHittingAllUrls_thenOK)) {
             loadNextURL(page);
         }
 
