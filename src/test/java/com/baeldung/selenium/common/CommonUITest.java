@@ -274,13 +274,13 @@ public class CommonUITest extends BaseUISeleniumTest {
                     List<LinkVO> urlsInReadmeFile = Utils.extractBaeldungLinksFromReadmeFile(Path.of(readmePath)); // get all the articles linked in this README
                     urlsInReadmeFile.forEach(link -> {
                         String staging8Url = Utils.changeLiveUrlWithStaging8(link.getLink());
+                        String readmeParentURL = Utils.replaceTutorialLocalPathWithHttpUrl(repo.repoLocalPath(), repo.repoMasterHttpPath())
+                            .apply(reamdmeParentPath);
 
                         page.setUrl(staging8Url);
                         page.loadUrl(); // loads an article in the browser
-                        String reamdmeParentURL = Utils.replaceTutorialLocalPathWithHttpUrl(repo.repoLocalPath(), repo.repoMasterHttpPath())
-                            .apply(reamdmeParentPath);
-                        if (!page.getWebDriver().getPageSource().toLowerCase().contains(reamdmeParentURL.toLowerCase())) {
-                            badURLs.put(reamdmeParentURL, link);
+                        if (!page.containsGithubModuleLink(readmeParentURL)) {
+                            badURLs.put(readmeParentURL, link);
                         }
                     });
                 } catch (Exception e) {
