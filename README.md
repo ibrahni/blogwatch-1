@@ -112,15 +112,15 @@ Currently, _concurrency.level_ property is only in effect for these tests:
 - [_AllUrlsUITest_](https://github.com/Baeldung/blogwatch/blob/master/src/test/java/com/baeldung/selenium/common/AllUrlsUITest.java).
 
 Concurrency supported tests are done by extending a special base class, 
-[_ConcurrentBaseUISeleniumTest_](https://github.com/Baeldung/blogwatch/blob/master/src/test/java/com/baeldung/selenium/common/ConcurrentBaseUISeleniumTest.java), 
+[_ConcurrentSitePageTest_](https://github.com/Baeldung/blogwatch/blob/master/src/test/java/com/baeldung/selenium/common/ConcurrentSitePageTest.java), 
 which provides an isolated instance of _SitePage_ for each thread.
 
 When we don't need Selenium we can use a simpler one, [_ConcurrentBaseTest_](https://github.com/Baeldung/blogwatch/blob/master/src/test/java/com/baeldung/common/ConcurrentBaseTest.java).
 which only provides concurrent execution support. 
 
-To migrate any other tests into its concurrent version, simply extend it from _ConcurrentBaseUISeleniumTest_ (or _ConcurrentBaseTest_ if we don't need Selenium):
+To migrate any other tests into its concurrent version, simply extend it from _ConcurrentSitePageTest_ (or _ConcurrentBaseTest_ if we don't need Selenium):
 ```java
-public class ConcurrentTest extends ConcurrentBaseUISeleniumTest {
+public class ConcurrentTest extends ConcurrentSitePageTest {
 
     private UrlIterator urlIterator;
     

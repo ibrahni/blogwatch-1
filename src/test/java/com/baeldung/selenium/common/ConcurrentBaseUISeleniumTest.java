@@ -28,6 +28,9 @@ import com.baeldung.selenium.config.SeleniumContextConfiguration;
 import com.baeldung.selenium.config.headlessBrowserConfig;
 import com.baeldung.site.SitePage;
 
+/**
+ * A base class to supply prototype-scoped {@link SitePage} bean for thread-safe concurrent executions.
+ */
 @ContextConfiguration(classes = {
     CommonConfig.class,
     SeleniumContextConfiguration.class,
@@ -36,23 +39,6 @@ import com.baeldung.site.SitePage;
 }, initializers = MyApplicationContextInitializer.class)
 @ExtendWith(SpringExtension.class)
 public class ConcurrentBaseUISeleniumTest extends ConcurrentBaseTest implements Supplier<SitePage> {
-
-    /**
-     * Overwrites ConcurrentBaseTest.extension
-     */
-    @RegisterExtension
-    SitePageConcurrentExtension extension = new SitePageConcurrentExtension(
-        CONCURRENCY_LEVEL, this, () -> logger, this::loadNextURL);
-
-    @RegisterExtension
-    static ParameterResolver nullResolver = new TypeBasedParameterResolver<SitePage>() {
-        @Override
-        public SitePage resolveParameter(ParameterContext parameterContext, ExtensionContext extensionContext) throws ParameterResolutionException {
-            // SitePage parameters are resolved in SitePageConcurrentExtension!
-            // This is a workaround to prevent Junit's "No ParameterResolver registered" exception
-            return null;
-        }
-    };
 
     @Autowired
     ApplicationContext appContext;
@@ -78,10 +64,6 @@ public class ConcurrentBaseUISeleniumTest extends ConcurrentBaseTest implements 
     @Override
     public SitePage get() {
         return appContext.getBean("onDemandSitePage", SitePage.class);
-    }
-
-    protected boolean loadNextURL(SitePage page) {
-        return false;
     }
 
 }

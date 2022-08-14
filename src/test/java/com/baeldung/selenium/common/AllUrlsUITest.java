@@ -48,7 +48,7 @@ import dev.yavuztas.junit.ConcurrentTest;
  * Default parallel thread count is 8. This configuration can be set via the system property -Dconcurrency.level=8.
  * For details see: {@link com.baeldung.common.BaseTest}
  */
-public class AllUrlsUITest extends ConcurrentBaseUISeleniumTest {
+public class AllUrlsUITest extends ConcurrentSitePageTest {
 
     @Value("#{'${givenAllArticles_whenWeCheckTheAuthor_thenTheyAreNotOnTheInternalTeam.site-excluded-authors}'.split(',')}")
     private List<String> excludedListOfAuthors;
@@ -389,17 +389,26 @@ public class AllUrlsUITest extends ConcurrentBaseUISeleniumTest {
             givenAllArticlesAndPages_whenAPageLoads_thenMetaOGImageAndTwitterImagePointToTheAbsolutePath(page);
             givenAllArticlesAndPages_whenAPageLoads_thenItDoesNotContainOverlappingText(page);
             givenAllArticlesAndPages_whenAPageLoads_thenItHasAFeaturedImage(page);
-            // run below methods only when page type is ARTICLE
-            if (SitePageConcurrentExtension.ensureTag(page, SitePage.Type.ARTICLE)) {
-                givenAllArticles_whenAnArticleLoads_thenArticleHasNoEmptyCodeBlock(page);
-                givenAllArticles_whenAnArticleLoads_thenItHasSingleShortcodeAtTheTop(page);
-                givenAllArticles_whenAnArticleLoads_thenItIsHasASingleOptinInTheSidebar(page);
-                givenAllArticles_whenAnArticleLoads_thenItIsHasASingleOptinInTheAfterPostContent(page);
-                givenAllArticles_whenAnArticleLoads_thenItHasSingleShortcodeAtTheEnd(page);
-                givenAllArticles_whenAnalyzingCodeBlocks_thenCodeBlocksAreRenderedProperly(page);
-                givenAllArticles_whenAnalyzingImages_thenImagesDoNotHaveEmptyAltAttribute(page);
-                givenAllArticles_whenAnalyzingExcerpt_thenItShouldNotBeEmptyAndShouldMatchDescription(page);
-            }
+        } catch (Exception e) {
+            logger.error("Error occurred while processing: {}, error message: {}",
+                page.getUrl(), StringUtils.substring(e.getMessage(), 0, 100));
+        }
+    }
+
+    @ConcurrentTest
+    @Tag(GlobalConstants.TAG_TECHNICAL)
+    @PageTypes(SitePage.Type.ARTICLE)
+    @LogOnce(GlobalConstants.givenAllTestsRelatedTechnicalArea_whenHittingArticles_thenOK)
+    public final void givenAllTestsRelatedTechnicalArea_whenHittingArticles_thenOK(SitePage page) {
+        try {
+            givenAllArticles_whenAnArticleLoads_thenArticleHasNoEmptyCodeBlock(page);
+            givenAllArticles_whenAnArticleLoads_thenItHasSingleShortcodeAtTheTop(page);
+            givenAllArticles_whenAnArticleLoads_thenItIsHasASingleOptinInTheSidebar(page);
+            givenAllArticles_whenAnArticleLoads_thenItIsHasASingleOptinInTheAfterPostContent(page);
+            givenAllArticles_whenAnArticleLoads_thenItHasSingleShortcodeAtTheEnd(page);
+            givenAllArticles_whenAnalyzingCodeBlocks_thenCodeBlocksAreRenderedProperly(page);
+            givenAllArticles_whenAnalyzingImages_thenImagesDoNotHaveEmptyAltAttribute(page);
+            givenAllArticles_whenAnalyzingExcerpt_thenItShouldNotBeEmptyAndShouldMatchDescription(page);
         } catch (Exception e) {
             logger.error("Error occurred while processing: {}, error message: {}",
                 page.getUrl(), StringUtils.substring(e.getMessage(), 0, 100));
@@ -457,31 +466,6 @@ public class AllUrlsUITest extends ConcurrentBaseUISeleniumTest {
             recordMetrics(1, TestMetricTypes.FAILED);
             recordFailure(GlobalConstants.givenArticlesWithALinkToTheGitHubModule_whenTheArticleLoads_thenTheArticleTitleAndGitHubLinkMatch);
             badURLs.put(GlobalConstants.givenArticlesWithALinkToTheGitHubModule_whenTheArticleLoads_thenTheArticleTitleAndGitHubLinkMatch, page.getUrlWithNewLineFeed());
-        }
-    }
-
-    @ConcurrentTest
-    @PageTypes({ SitePage.Type.PAGE, SitePage.Type.ARTICLE })
-    @LogOnce(GlobalConstants.givenAllArticlesAndPages_whenAPageLoads_thenTheMetaDescriptionExists)
-    public final void givenAllArticlesAndPages_whenAPageLoads_thenTheMetaDescriptionExists(SitePage page) {
-        recordExecution(GlobalConstants.givenAllArticlesAndPages_whenAPageLoads_thenTheMetaDescriptionExists);
-
-        if (shouldSkipUrl(page, GlobalConstants.givenAllArticlesAndPages_whenAPageLoads_thenTheMetaDescriptionExists)
-            // also skip the pages contain thanks, thank-you
-            || shouldSkipUrl(
-            page,
-            GlobalConstants.givenAllArticlesAndPages_whenAPageLoads_thenTheMetaDescriptionExists,
-            GlobalConstants.PAGES_THANK_YOU,
-            false
-        )
-        ) {
-            return;
-        }
-
-        if (!page.metaDescriptionTagsAvailable()) {
-            recordMetrics(1, TestMetricTypes.FAILED);
-            recordFailure(GlobalConstants.givenAllArticlesAndPages_whenAPageLoads_thenTheMetaDescriptionExists);
-            badURLs.put(GlobalConstants.givenAllArticlesAndPages_whenAPageLoads_thenTheMetaDescriptionExists, page.getUrlWithNewLineFeed());
         }
     }
 
@@ -599,11 +583,36 @@ public class AllUrlsUITest extends ConcurrentBaseUISeleniumTest {
 
     @ConcurrentTest
     @Tag(GlobalConstants.TAG_EDITORIAL)
+    @PageTypes({ SitePage.Type.PAGE, SitePage.Type.ARTICLE })
+    @LogOnce(GlobalConstants.givenAllArticlesAndPages_whenAPageLoads_thenTheMetaDescriptionExists)
+    public final void givenAllArticlesAndPages_whenAPageLoads_thenTheMetaDescriptionExists(SitePage page) {
+        recordExecution(GlobalConstants.givenAllArticlesAndPages_whenAPageLoads_thenTheMetaDescriptionExists);
+
+        if (shouldSkipUrl(page, GlobalConstants.givenAllArticlesAndPages_whenAPageLoads_thenTheMetaDescriptionExists)
+            // also skip the pages contain thanks, thank-you
+            || shouldSkipUrl(
+            page,
+            GlobalConstants.givenAllArticlesAndPages_whenAPageLoads_thenTheMetaDescriptionExists,
+            GlobalConstants.PAGES_THANK_YOU,
+            false
+        )
+        ) {
+            return;
+        }
+
+        if (!page.metaDescriptionTagsAvailable()) {
+            recordMetrics(1, TestMetricTypes.FAILED);
+            recordFailure(GlobalConstants.givenAllArticlesAndPages_whenAPageLoads_thenTheMetaDescriptionExists);
+            badURLs.put(GlobalConstants.givenAllArticlesAndPages_whenAPageLoads_thenTheMetaDescriptionExists, page.getUrlWithNewLineFeed());
+        }
+    }
+
+    @ConcurrentTest
+    @Tag(GlobalConstants.TAG_EDITORIAL)
     @PageTypes(SitePage.Type.ARTICLE)
     @LogOnce(GlobalConstants.givenAllEditorialTests_whenHittingAllArticles_thenOK)
     public final void givenAllEditorialTests_whenHittingAllArticles_thenOK(SitePage page) {
         try {
-            givenAllArticlesAndPages_whenAPageLoads_thenTheMetaDescriptionExists(page);
             givenAllArticles_whenWeCheckTheAuthor_thenTheyAreNotOnTheInternalTeam(page);
             givenAllArticles_whenAnArticleLoads_thenTheArticleDoesNotCotainWrongQuotations(page);
             givenAllArticles_whenAnArticleLoads_thenTheArticleHasProperTitleCapitalization(page);

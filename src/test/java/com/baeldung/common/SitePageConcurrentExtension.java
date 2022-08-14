@@ -18,6 +18,12 @@ import com.baeldung.site.SitePage;
 
 import dev.yavuztas.junit.ConcurrentExtension;
 
+/**
+ * A custom Junit extension to run concurrent UI tests on {@link SitePage},
+ * with support of some helper annotations: {@link LogOnce}, {@link PageTypes}.
+ * <br/>
+ * See {@link com.baeldung.selenium.common.AllUrlsUITest} for an example implementation.
+ */
 public class SitePageConcurrentExtension extends ConcurrentExtension {
 
     private final Supplier<SitePage> pageSupplier;
