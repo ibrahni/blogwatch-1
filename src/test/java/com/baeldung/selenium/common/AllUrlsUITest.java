@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Tag;
 import org.openqa.selenium.WebElement;
 import org.springframework.util.CollectionUtils;
 
+import com.baeldung.common.AllUrlsConcurrentExtension;
 import com.baeldung.common.GlobalConstants;
 import com.baeldung.common.GlobalConstants.TestMetricTypes;
 import com.baeldung.common.LogOnce;
@@ -34,7 +35,7 @@ import dev.yavuztas.junit.ConcurrentTest;
  * Default parallel thread count is 8. This configuration can be set via the system property -Dconcurrency.level=8.
  * For details see: {@link com.baeldung.common.BaseTest}
  */
-public class AllUrlsUITest extends AllUrlsUIBaseTest {    
+public class AllUrlsUITest extends AllUrlsUIBaseTest {
 
     @ConcurrentTest
     @PageTypes({ SitePage.Type.PAGE, SitePage.Type.ARTICLE })
@@ -443,9 +444,8 @@ public class AllUrlsUITest extends AllUrlsUIBaseTest {
 
         }
     }
-    
+
     @ConcurrentTest
-    @Tag(GlobalConstants.TAG_EDITORIAL)
     @PageTypes({ SitePage.Type.PAGE, SitePage.Type.ARTICLE })
     @LogOnce(GlobalConstants.givenAllArticlesAndPages_whenAPageLoads_thenTheMetaDescriptionExists)
     public final void givenAllArticlesAndPages_whenAPageLoads_thenTheMetaDescriptionExists(SitePage page) {
@@ -472,21 +472,25 @@ public class AllUrlsUITest extends AllUrlsUIBaseTest {
 
     @ConcurrentTest
     @Tag(GlobalConstants.TAG_EDITORIAL)
-    @PageTypes(SitePage.Type.ARTICLE)
+    @PageTypes({ SitePage.Type.PAGE, SitePage.Type.ARTICLE })
     @LogOnce(GlobalConstants.givenAllEditorialTests_whenHittingAllArticles_thenOK)
     public final void givenAllEditorialTests_whenHittingAllArticles_thenOK(SitePage page) {
         try {
-            givenAllArticles_whenWeCheckTheAuthor_thenTheyAreNotOnTheInternalTeam(page);
-            givenAllArticles_whenAnArticleLoads_thenTheArticleDoesNotCotainWrongQuotations(page);
-            givenAllArticles_whenAnArticleLoads_thenTheArticleHasProperTitleCapitalization(page);
-            givenAllArticles_whenAnalyzingCategories_thenTheArticleDoesNotContainUnnecessaryCategory(page);
-            givenAllArticles_whenAnArticleLoads_thenItDoesNotLinkToOldJavaDocs(page);
+            givenAllArticlesAndPages_whenAPageLoads_thenTheMetaDescriptionExists(page);
+            // below tests are only for articles
+            if (AllUrlsConcurrentExtension.ensureTag(page, SitePage.Type.ARTICLE)) {
+                givenAllArticles_whenWeCheckTheAuthor_thenTheyAreNotOnTheInternalTeam(page);
+                givenAllArticles_whenAnArticleLoads_thenTheArticleDoesNotCotainWrongQuotations(page);
+                givenAllArticles_whenAnArticleLoads_thenTheArticleHasProperTitleCapitalization(page);
+                givenAllArticles_whenAnalyzingCategories_thenTheArticleDoesNotContainUnnecessaryCategory(page);
+                givenAllArticles_whenAnArticleLoads_thenItDoesNotLinkToOldJavaDocs(page);
+            }
         } catch (Exception e) {
             logger.error("Error occurred while processing: {}, error message: {}",
                 page.getUrl(), StringUtils.substring(e.getMessage(), 0, 100));
         }
     }
-    
+
     @ConcurrentTest
     @Tag(GlobalConstants.TAG_TECHNICAL)
     @PageTypes({ SitePage.Type.PAGE, SitePage.Type.ARTICLE })
@@ -497,30 +501,21 @@ public class AllUrlsUITest extends AllUrlsUIBaseTest {
             givenAllArticlesAndPages_whenAPageLoads_thenMetaOGImageAndTwitterImagePointToTheAbsolutePath(page);
             givenAllArticlesAndPages_whenAPageLoads_thenItDoesNotContainOverlappingText(page);
             givenAllArticlesAndPages_whenAPageLoads_thenItHasAFeaturedImage(page);
+            // below tests are only for articles
+            if (AllUrlsConcurrentExtension.ensureTag(page, SitePage.Type.ARTICLE)) {
+                givenAllArticles_whenAnArticleLoads_thenArticleHasNoEmptyCodeBlock(page);
+                givenAllArticles_whenAnArticleLoads_thenItHasSingleShortcodeAtTheTop(page);
+                givenAllArticles_whenAnArticleLoads_thenItIsHasASingleOptinInTheSidebar(page);
+                givenAllArticles_whenAnArticleLoads_thenItIsHasASingleOptinInTheAfterPostContent(page);
+                givenAllArticles_whenAnArticleLoads_thenItHasSingleShortcodeAtTheEnd(page);
+                givenAllArticles_whenAnalyzingCodeBlocks_thenCodeBlocksAreRenderedProperly(page);
+                givenAllArticles_whenAnalyzingImages_thenImagesDoNotHaveEmptyAltAttribute(page);
+                givenAllArticles_whenAnalyzingExcerpt_thenItShouldNotBeEmptyAndShouldMatchDescription(page);
+            }
         } catch (Exception e) {
             logger.error("Error occurred while processing: {}, error message: {}",
                 page.getUrl(), StringUtils.substring(e.getMessage(), 0, 100));
         }
     }
-
-    @ConcurrentTest
-    @Tag(GlobalConstants.TAG_TECHNICAL)
-    @PageTypes(SitePage.Type.ARTICLE)
-    @LogOnce(GlobalConstants.givenAllTestsRelatedTechnicalArea_whenHittingArticles_thenOK)
-    public final void givenAllTestsRelatedTechnicalArea_whenHittingArticles_thenOK(SitePage page) {
-        try {
-            givenAllArticles_whenAnArticleLoads_thenArticleHasNoEmptyCodeBlock(page);
-            givenAllArticles_whenAnArticleLoads_thenItHasSingleShortcodeAtTheTop(page);
-            givenAllArticles_whenAnArticleLoads_thenItIsHasASingleOptinInTheSidebar(page);
-            givenAllArticles_whenAnArticleLoads_thenItIsHasASingleOptinInTheAfterPostContent(page);
-            givenAllArticles_whenAnArticleLoads_thenItHasSingleShortcodeAtTheEnd(page);
-            givenAllArticles_whenAnalyzingCodeBlocks_thenCodeBlocksAreRenderedProperly(page);
-            givenAllArticles_whenAnalyzingImages_thenImagesDoNotHaveEmptyAltAttribute(page);
-            givenAllArticles_whenAnalyzingExcerpt_thenItShouldNotBeEmptyAndShouldMatchDescription(page);
-        } catch (Exception e) {
-            logger.error("Error occurred while processing: {}, error message: {}",
-                page.getUrl(), StringUtils.substring(e.getMessage(), 0, 100));
-        }
-    }    
 
 }
