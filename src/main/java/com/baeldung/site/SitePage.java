@@ -841,4 +841,32 @@ public class SitePage extends BlogBaseDriver {
         }
     }
 
+    public boolean containsGithubModuleLink(String readmeParentURL) {
+        String lowerCase = readmeParentURL.toLowerCase();
+        String endRemoved = StringUtils.removeEnd(lowerCase, "/tree/master");
+
+        // try to check different possibilities, see SitePageUnitTest.
+        String checkHref1 = "href=\"%s\"".formatted(lowerCase);
+        String checkHref2 = "href=\"%s\"".formatted(endRemoved);
+        String checkHref3 = "href=\"%s#readme\"".formatted(lowerCase);
+        String checkHref4 = "href=\"%s#readme\"".formatted(endRemoved);
+        String checkHref5 = "href=\"%s/\"".formatted(lowerCase);
+        String checkHref6 = "href=\"%s/\"".formatted(endRemoved);
+        String checkHref7 = "href=\"%s/#readme\"".formatted(lowerCase);
+        String checkHref8 = "href=\"%s/#readme\"".formatted(endRemoved);
+
+        String pageSource = this.getWebDriver()
+            .getPageSource()
+            .toLowerCase();
+
+        return pageSource.contains(checkHref1)
+            || pageSource.contains(checkHref2)
+            || pageSource.contains(checkHref3)
+            || pageSource.contains(checkHref4)
+            || pageSource.contains(checkHref5)
+            || pageSource.contains(checkHref6)
+            || pageSource.contains(checkHref7)
+            || pageSource.contains(checkHref8);
+    }
+
 }

@@ -233,7 +233,7 @@ public class TestUtils {
             .replace("\\>", ">");
     }
 
-    final static Pattern ARTICLE_TITLE_AND_LINK_ON_GITHUB_MODULE_PATTERN = Pattern.compile("-\\s+\\[(.*)]\\(\\s*(\\S+)\\s*\\)");
+    final static Pattern ARTICLE_TITLE_AND_LINK_ON_GITHUB_MODULE_PATTERN = Pattern.compile("\\[(.*)]\\(\\s*(\\S+)\\s*\\)");
     public static boolean checkLocalRepoArticleLinkFoundOnModule(List<GitHubRepoVO> repositories, List<String> gitHubModuleLinks, String articleRelativeURL) {
         final String checkUrl1 = "%s%s".formatted(GlobalConstants.BAELDUNG_HOME_PAGE_URL_WITH_HTTP, articleRelativeURL);
         final String checkUrl2 = "%s%s".formatted(GlobalConstants.BAELDUNG_HOME_PAGE_URL, articleRelativeURL);
