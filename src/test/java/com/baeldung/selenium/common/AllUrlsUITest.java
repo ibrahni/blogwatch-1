@@ -1,38 +1,24 @@
 package com.baeldung.selenium.common;
 
-import java.io.IOException;
-import java.nio.file.Paths;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.text.StringEscapeUtils;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.TestInfo;
 import org.openqa.selenium.WebElement;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.CollectionUtils;
 
 import com.baeldung.common.GlobalConstants;
 import com.baeldung.common.GlobalConstants.TestMetricTypes;
 import com.baeldung.common.LogOnce;
 import com.baeldung.common.PageTypes;
-import com.baeldung.common.AllUrlsConcurrentExtension;
-import com.baeldung.common.UrlIterator;
 import com.baeldung.common.Utils;
-import com.baeldung.common.YAMLProperties;
-import com.baeldung.common.vo.GitHubRepoVO;
 import com.baeldung.site.InvalidTitles;
 import com.baeldung.site.SitePage;
 import com.baeldung.utility.TestUtils;
-import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
-import com.google.common.collect.Multimaps;
 
 import dev.yavuztas.junit.ConcurrentTest;
 
@@ -48,94 +34,7 @@ import dev.yavuztas.junit.ConcurrentTest;
  * Default parallel thread count is 8. This configuration can be set via the system property -Dconcurrency.level=8.
  * For details see: {@link com.baeldung.common.BaseTest}
  */
-public class AllUrlsUITest extends AllUrlsUIBaseTest {
-
-    @Value("#{'${givenAllArticles_whenWeCheckTheAuthor_thenTheyAreNotOnTheInternalTeam.site-excluded-authors}'.split(',')}")
-    private List<String> excludedListOfAuthors;
-
-    @Value("${ignore.urls.newer.than.weeks}")
-    private int ignoreUrlsNewerThanWeeks;
-
-    @Value("${min.java.docs.accepted.version:11}")
-    private String minJavDocsAcceptedVersion;
-
-    @Value("${single-url-to-run-all-tests}")
-    private String singleURL;
-
-    private UrlIterator urlIterator;
-
-    private Multimap<String, String> badURLs;
-    private Multimap<Integer, String> resultsForGitHubHttpStatusTest;
-
-    List<String> level2ExceptionsForJavaDocTest= YAMLProperties.exceptionsForTestsLevel2.get(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenItDoesNotLinkToOldJavaDocs);
-    List<String> level2ExceptionsForTitleCapitalizationTest= YAMLProperties.exceptionsForTestsLevel2.get(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenTheArticleHasProperTitleCapitalization);
-    List<String> level2ExceptionsForTitleProperDotsTest= YAMLProperties.exceptionsForTestsLevel2.get(GlobalConstants.givenAllArticles_whenAnArticleLoads_thenTheArticleHasProperDotsInTitle);
-
-    @BeforeEach
-    public void setup() throws IOException {
-        logger.info("The test will ignore URls newer than {} weeks", ignoreUrlsNewerThanWeeks);
-        urlIterator = new UrlIterator();
-        if (StringUtils.isNotEmpty(singleURL)) {
-            // when a single url is given, all tests run against only that url
-            urlIterator.append(SitePage.Type.ARTICLE, Collections.singleton(singleURL).iterator());
-        } else {
-            // otherwise load all pages
-            urlIterator.append(SitePage.Type.ARTICLE, Utils.fetchAllArtilcesAsListIterator());
-            urlIterator.append(SitePage.Type.PAGE, Utils.fetchAllPagesAsListIterator());
-        }
-        badURLs = Multimaps.synchronizedListMultimap(ArrayListMultimap.create());
-        resultsForGitHubHttpStatusTest = Multimaps.synchronizedListMultimap(ArrayListMultimap.create());
-    }
-
-    @BeforeEach
-    public void loadGitHubRepositories(TestInfo testInfo) {
-        // run only for tagged "github-related"
-        if (!testInfo.getTags().contains(GlobalConstants.TAG_GITHUB_RELATED)) {
-            return;
-        }
-        logger.info("Loading Github repositories into local");
-        for (GitHubRepoVO gitHubRepo : GlobalConstants.tutorialsRepos) {
-            try {
-                Utils.fetchGitRepo(GlobalConstants.YES, Paths.get(gitHubRepo.repoLocalPath()), gitHubRepo.repoUrl());
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
-
-    @AfterEach
-    public void clear() {
-        // if any bad urls in each test then fail
-        if (badURLs.size() > 0 || resultsForGitHubHttpStatusTest.size() > 0) {
-            triggerTestFailure(badURLs, resultsForGitHubHttpStatusTest);
-        }
-    }
-
-    @Override
-    protected boolean loadNextURL(SitePage page) {
-
-        Optional<UrlIterator.UrlElement> next = urlIterator.getNext();
-        if (next.isEmpty()) {
-            return false;
-        }
-        UrlIterator.UrlElement element = next.get();
-        page.setUrl(page.getBaseURL() + element.url());
-        page.setType(SitePage.Type.valueOf(element.tag()));
-
-        logger.info("Loading - {}", page.getUrl());
-        page.loadUrl();
-        if (page.isNewerThan(ignoreUrlsNewerThanWeeks)) {
-            logger.info("Skipping {} as it's newer than {} weeks", page.getUrl(), ignoreUrlsNewerThanWeeks);
-            loadNextURL(page);
-        }
-        page.setWpTags();
-
-        if (shouldSkipUrl(page, GlobalConstants.givenAllLongRunningTests_whenHittingAllUrls_thenOK)) {
-            loadNextURL(page);
-        }
-
-        return true;
-    }
+public class AllUrlsUITest extends AllUrlsUIBaseTest {    
 
     @ConcurrentTest
     @PageTypes({ SitePage.Type.PAGE, SitePage.Type.ARTICLE })
