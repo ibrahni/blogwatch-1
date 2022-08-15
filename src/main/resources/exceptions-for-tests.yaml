@@ -115,11 +115,9 @@ givenAllArticles_whenAnalyzingCategories_thenTheArticleDoesNotContainUnnecessary
 
 givenAllArticles_whenAnalyzingCodeBlocks_thenCodeBlocksAreRenderedProperly:
 
-givenAllLongRunningTests_whenHittingAllArticles_thenOK:
+givenAllLongRunningTests_whenHittingAllUrls_thenOK:
   - /junit-5-preview
   - /r2dbc-operations
-
-givenAllLongRunningTests_whenHittingAllPages_thenOK:
 
 givenAllArticlesLinkingToGitHubModule_whenAnArticleLoads_thenLinkedGitHubModulesReturns200OK:
 

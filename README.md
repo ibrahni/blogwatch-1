@@ -10,7 +10,7 @@ The project uses Selenium framework, Crawler4J, jsoup and REST Assured for UI te
 
 ### Running Tests from the IDE
 
-The default configuration executes tests with headless mode in windows environment, target URL is https://www.baeldung.com, and the concurrency level is 3. 
+The default configuration executes tests with headless mode in Windows environment, target URL is https://www.baeldung.com, and the concurrency level is 3. 
 The configuration can be changed using following properties:
 
   - _spring.profiles.active_ - environment variable to either "headless-browser" and "ui-browser"
@@ -26,7 +26,7 @@ These can be set as environment variables via the Eclipse run configuration.
 Three Maven profiles are available for running tests: 
   - _headless-browser-windows_
   - _headless-browser-linux_ 
-  - _ui-brower-windows_
+  - _ui-browser-windows_
 
 The target URL for all profiles is https://www.baeldung.com, and the concurrency level is 3.
 This can be changed using following properties:
@@ -54,7 +54,7 @@ Headless browser can be configured using following system property
 ### Updating List of Posts and Pages
 
 
-Run _UpdateArticlesAndPagesLinks#updateLinks_ test for updataing list of articles and pages. 
+Run _UpdateArticlesAndPagesLinks#updateLinks_ test for updating list of articles and pages. 
 
 ### JUnit Tags
 
@@ -66,7 +66,7 @@ Following tags are available for running tests selectively. Refer Java docs in _
   - _github-related_
   - _technical_
 
-### Excluding a URL for tests running in the bi-monthly bild
+### Excluding a URL for tests running in the bi-monthly build
 
 URLs can be added to the following file to skip a specific test from the bi-monthly build - https://github.com/eugenp/blogwatch/blob/master/src/main/resources/exceptions-for-tests.yaml
 
@@ -107,39 +107,67 @@ Explicit invocation of these methods is needed in the following situations:
 - the test is invoked from another test  (eg: AllUrlsUITest.givenAllTestsRelatedTechnicalArea_whenHittingAllArticles_thenOK)
 
 ### Parallel Execution of Tests
-Currently, _concurrency.level_ property is only in effect for [_AllUrlsUITest_](https://github.com/Baeldung/blogwatch/blob/master/src/test/java/com/baeldung/selenium/common/AllUrlsUITest.java).
+Currently, _concurrency.level_ property is only in effect for these tests: 
+- [_CommonConcurrentUITest_](https://github.com/Baeldung/blogwatch/blob/master/src/test/java/com/baeldung/selenium/common/CommonConcurrentUITest.java).
+- [_AllUrlsUITest_](https://github.com/Baeldung/blogwatch/blob/master/src/test/java/com/baeldung/selenium/common/AllUrlsUITest.java).
 
-Concurrency supported tests are done by extending a special base class, [_ConcurrentBaseUISeleniumTest_](https://github.com/Baeldung/blogwatch/blob/master/src/test/java/com/baeldung/selenium/common/ConcurrentBaseUISeleniumTest.java), 
-which provides an isolated instance of _SitePage_ for each threads. 
+Concurrency supported tests are done by extending a special base class, 
+[_ConcurrentSitePageTest_](https://github.com/Baeldung/blogwatch/blob/master/src/test/java/com/baeldung/selenium/common/ConcurrentSitePageTest.java), 
+which provides an isolated instance of _SitePage_ for each thread.
 
-To migrate any other tests into its concurrent version, simply extend it from the new base class instead of _BaseUISeleniumTest_:
+When we don't need Selenium we can use a simpler one, [_ConcurrentBaseTest_](https://github.com/Baeldung/blogwatch/blob/master/src/test/java/com/baeldung/common/ConcurrentBaseTest.java).
+which only provides concurrent execution support. 
+
+To migrate any other tests into its concurrent version, simply extend it from _ConcurrentSitePageTest_ (or _ConcurrentBaseTest_ if we don't need Selenium):
 ```java
-public class ConcurrentTest extends ConcurrentBaseUISeleniumTest {
+public class ConcurrentTest extends ConcurrentSitePageTest {
+
+    private UrlIterator urlIterator;
     
     @BeforeEach
     public void setup() {
-        // prepare shared state which is accessed by concurrent threads
+        // prepare shared state which will be accessed by concurrent threads
+        urlIterator = new UrlIterator();
+        // configure urls by type 
+        urlIterator.append(SitePage.Type.ARTICLE, Utils.fetchAllArtilcesAsListIterator());
+        urlIterator.append(SitePage.Type.PAGE, Utils.fetchAllPagesAsListIterator());
+        // ...
     }
 
     @AfterEach
     public void clear() {
-        // checking and triggering failures
+        // check and trigger failures
+    }
+
+    @Override
+    protected boolean loadNextURL(SitePage page) {
+        Optional<UrlIterator.UrlElement> next = urlIterator.getNext();
+        if (next.isEmpty()) {
+            return false;
+        }
+        // load next url if exists
+        UrlIterator.UrlElement element = next.get();
+        page.setUrl(page.getBaseURL() + element.url());
+        page.setType(SitePage.Type.valueOf(element.tag()));
+        page.loadUrl();
+        return true;
     }
 
     @ConcurrentTest
-    public final void testMethod(SitePage sitePage) {
-        new TestLogic()
-            .log("testMethod")
-            .apply(page -> {
-                // individual test logic
-            }).run(sitePage);
+    @PageTypes({ SitePage.Type.PAGE, SitePage.Type.ARTICLE })
+    @LogOnce("testMethod")
+    public final void testMethod(SitePage page) {
+        // individual test logic
+        // runs for each configured URL in urlIterator
+        // Different instances of SitePage is provided for each thread
     }
 
     @ConcurrentTest
-    public final void testBulk() {
-        new TestLogic().apply(page -> {
-            testMethod(page);
-        }).run();
+    @PageTypes({ SitePage.Type.PAGE, SitePage.Type.ARTICLE })
+    @LogOnce("testBulk")
+    public final void testBulk(SitePage page) {
+        // We can give already provided page into methods
+        testMethod(page);
     }
 }
 ```

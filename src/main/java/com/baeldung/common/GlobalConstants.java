@@ -321,8 +321,7 @@ public class GlobalConstants {
     public static final String givenAllArticles_whenAnArticleLoads_thenTheArticleHasProperDotsInTitle = "givenAllArticles_whenAnArticleLoads_thenTheArticleHasProperDotsInTitle";
     public static final String givenAllArticles_whenAnalyzingCategories_thenTheArticleDoesNotContainUnnecessaryCategory = "givenAllArticles_whenAnalyzingCategories_thenTheArticleDoesNotContainUnnecessaryCategory";
     public static final String givenAllArticles_whenAnalyzingCodeBlocks_thenCodeBlocksAreRenderedProperly = "givenAllArticles_whenAnalyzingCodeBlocks_thenCodeBlocksAreRenderedProperly";;
-    public static final String givenAllLongRunningTests_whenHittingAllArticles_thenOK = "givenAllLongRunningTests_whenHittingAllArticles_thenOK";
-    public static final String givenAllLongRunningTests_whenHittingAllPages_thenOK = "givenAllLongRunningTests_whenHittingAllPages_thenOK";
+    public static final String givenAllLongRunningTests_whenHittingAllUrls_thenOK = "givenAllLongRunningTests_whenHittingAllUrls_thenOK";
     public static final String givenAllArticlesLinkingToGitHubModule_whenAnArticleLoads_thenLinkedGitHubModulesReturns200OK = "givenAllArticlesLinkingToGitHubModule_whenAnArticleLoads_thenLinkedGitHubModulesReturns200OK";
     public static final String givenAllArticlesAndPages_whenAPageLoads_thenItDoesNotContainOverlappingText = "givenAllArticlesAndPages_whenAPageLoads_thenItDoesNotContainOverlappingText";
     public static final String givenAllArticles_whenAnArticleLoads_thenItDoesNotContainOverlappingText = "givenAllArticles_whenAnArticleLoads_thenItDoesNotContainOverlappingText";
@@ -345,4 +344,7 @@ public class GlobalConstants {
     public static final String givenURLsWithAnchorsLinkingWithinSamePage_whenAnaysingPage_thenAnHtmlElementExistsForEachAnchor = "givenURLsWithAnchorsLinkingWithinSamePage_whenAnaysingPage_thenAnHtmlElementExistsForEachAnchor";
     public static final String givenTheContactForm_whenAMessageIsSubmitted_thenItIsSentSuccessfully = "givenTheContactForm_whenAMessageIsSubmitted_thenItIsSentSuccessfully";
     public static final String givenAllTheArticles_whenAnArticleLoads_thenJavaClassesAndMethodsCanBeFoundOnGitHub = "givenAllTheArticles_whenAnArticleLoads_thenJavaClassesAndMethodsCanBeFoundOnGitHub";
+    public static final String givenAllTestsRelatedTechnicalArea_whenHittingAllUrls_thenOK = "givenAllTestsRelatedTechnicalArea_whenHittingAllUrls_thenOK";
+    public static final String givenAllTestsRelatedTechnicalArea_whenHittingArticles_thenOK = "givenAllTestsRelatedTechnicalArea_whenHittingArticles_thenOK";
+    public static final String givenAllEditorialTests_whenHittingAllArticles_thenOK = "givenAllEditorialTests_whenHittingAllArticles_thenOK";
 }

@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 import javax.annotation.concurrent.ThreadSafe;
 
@@ -46,6 +47,18 @@ public class UrlIterator implements Iterator<UrlIterator.UrlElement> {
             .orElseThrow();
 
         return new UrlElement(found, iterators.get(found).next());
+    }
+
+    /**
+     * To get the next element in Optional. Thread-safe and exception-safe way to get.
+     *
+     * @return UrlElement
+     */
+    public synchronized Optional<UrlElement> getNext() {
+        if (!hasNext()) {
+            return Optional.empty();
+        }
+        return Optional.of(next());
     }
 
     public record UrlElement(String tag, String url) {

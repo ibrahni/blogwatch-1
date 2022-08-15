@@ -9,11 +9,16 @@ import java.util.stream.Stream;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import com.baeldung.common.ConcurrentBaseTest;
 import com.baeldung.common.GlobalConstants;
 import com.baeldung.common.UrlIterator;
 import com.baeldung.common.Utils;
+import com.baeldung.common.config.MyApplicationContextInitializer;
 import com.baeldung.utility.TestUtils;
 import com.github.rholder.retry.Retryer;
 import com.google.common.collect.ArrayListMultimap;
@@ -23,7 +28,9 @@ import com.google.common.collect.Multimaps;
 import dev.yavuztas.junit.ConcurrentTest;
 import io.restassured.config.RestAssuredConfig;
 
-public class CommonConcurrentUITest extends ConcurrentBaseUISeleniumTest {
+@ContextConfiguration(initializers = MyApplicationContextInitializer.class)
+@ExtendWith(SpringExtension.class)
+public class CommonConcurrentUITest extends ConcurrentBaseTest {
 
     @Value("${givenAListOfUrls_whenAUrlLoads_thenItReturns200OK.time-out-for-200OK-test}")
     private int timeOutFor200OKTest;
