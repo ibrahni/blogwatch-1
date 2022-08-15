@@ -24,13 +24,13 @@ import dev.yavuztas.junit.ConcurrentExtension;
  * <br/>
  * See {@link com.baeldung.selenium.common.AllUrlsUITest} for an example implementation.
  */
-public class SitePageConcurrentExtension extends ConcurrentExtension {
+public class AllUrlsConcurrentExtension extends ConcurrentExtension {
 
     private final Supplier<SitePage> pageSupplier;
     private final Supplier<Logger> loggerSupplier;
     private final Predicate<SitePage> hasNextUrl;
 
-    public SitePageConcurrentExtension(int concurrency, Supplier<SitePage> pageSupplier, Supplier<Logger> loggerSupplier, Predicate<SitePage> hasNextUrl) {
+    public AllUrlsConcurrentExtension(int concurrency, Supplier<SitePage> pageSupplier, Supplier<Logger> loggerSupplier, Predicate<SitePage> hasNextUrl) {
         this.pageSupplier = pageSupplier;
         this.loggerSupplier = loggerSupplier;
         this.hasNextUrl = hasNextUrl;
@@ -81,7 +81,7 @@ public class SitePageConcurrentExtension extends ConcurrentExtension {
         }
 
         private boolean ensureTag(SitePage sitePage) {
-            return ensureTypes.length == 0 || SitePageConcurrentExtension.ensureTag(sitePage, ensureTypes);
+            return ensureTypes.length == 0 || AllUrlsConcurrentExtension.ensureTag(sitePage, ensureTypes);
         }
     }
 

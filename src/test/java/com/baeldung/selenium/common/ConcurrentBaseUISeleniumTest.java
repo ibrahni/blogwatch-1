@@ -20,7 +20,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.baeldung.common.ConcurrentBaseTest;
-import com.baeldung.common.SitePageConcurrentExtension;
+import com.baeldung.common.AllUrlsConcurrentExtension;
 import com.baeldung.common.config.CommonConfig;
 import com.baeldung.common.config.MyApplicationContextInitializer;
 import com.baeldung.crawler4j.config.Crawler4jMainCofig;

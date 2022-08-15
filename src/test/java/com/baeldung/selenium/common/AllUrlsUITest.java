@@ -22,7 +22,7 @@ import com.baeldung.common.GlobalConstants;
 import com.baeldung.common.GlobalConstants.TestMetricTypes;
 import com.baeldung.common.LogOnce;
 import com.baeldung.common.PageTypes;
-import com.baeldung.common.SitePageConcurrentExtension;
+import com.baeldung.common.AllUrlsConcurrentExtension;
 import com.baeldung.common.UrlIterator;
 import com.baeldung.common.Utils;
 import com.baeldung.common.YAMLProperties;
@@ -48,7 +48,7 @@ import dev.yavuztas.junit.ConcurrentTest;
  * Default parallel thread count is 8. This configuration can be set via the system property -Dconcurrency.level=8.
  * For details see: {@link com.baeldung.common.BaseTest}
  */
-public class AllUrlsUITest extends ConcurrentSitePageTest {
+public class AllUrlsUITest extends AllUrlsUIBaseTest {
 
     @Value("#{'${givenAllArticles_whenWeCheckTheAuthor_thenTheyAreNotOnTheInternalTeam.site-excluded-authors}'.split(',')}")
     private List<String> excludedListOfAuthors;
@@ -379,42 +379,6 @@ public class AllUrlsUITest extends ConcurrentSitePageTest {
         }
     }
 
-    @ConcurrentTest
-    @Tag(GlobalConstants.TAG_TECHNICAL)
-    @PageTypes({ SitePage.Type.PAGE, SitePage.Type.ARTICLE })
-    @LogOnce(GlobalConstants.givenAllTestsRelatedTechnicalArea_whenHittingAllUrls_thenOK)
-    public final void givenAllTestsRelatedTechnicalArea_whenHittingAllUrls_thenOK(SitePage page) {
-        try {
-            givenAllArticlesAndPages_whenAnalysingImages_thenImagesDoNotPoinToTheDraftsSite(page);
-            givenAllArticlesAndPages_whenAPageLoads_thenMetaOGImageAndTwitterImagePointToTheAbsolutePath(page);
-            givenAllArticlesAndPages_whenAPageLoads_thenItDoesNotContainOverlappingText(page);
-            givenAllArticlesAndPages_whenAPageLoads_thenItHasAFeaturedImage(page);
-        } catch (Exception e) {
-            logger.error("Error occurred while processing: {}, error message: {}",
-                page.getUrl(), StringUtils.substring(e.getMessage(), 0, 100));
-        }
-    }
-
-    @ConcurrentTest
-    @Tag(GlobalConstants.TAG_TECHNICAL)
-    @PageTypes(SitePage.Type.ARTICLE)
-    @LogOnce(GlobalConstants.givenAllTestsRelatedTechnicalArea_whenHittingArticles_thenOK)
-    public final void givenAllTestsRelatedTechnicalArea_whenHittingArticles_thenOK(SitePage page) {
-        try {
-            givenAllArticles_whenAnArticleLoads_thenArticleHasNoEmptyCodeBlock(page);
-            givenAllArticles_whenAnArticleLoads_thenItHasSingleShortcodeAtTheTop(page);
-            givenAllArticles_whenAnArticleLoads_thenItIsHasASingleOptinInTheSidebar(page);
-            givenAllArticles_whenAnArticleLoads_thenItIsHasASingleOptinInTheAfterPostContent(page);
-            givenAllArticles_whenAnArticleLoads_thenItHasSingleShortcodeAtTheEnd(page);
-            givenAllArticles_whenAnalyzingCodeBlocks_thenCodeBlocksAreRenderedProperly(page);
-            givenAllArticles_whenAnalyzingImages_thenImagesDoNotHaveEmptyAltAttribute(page);
-            givenAllArticles_whenAnalyzingExcerpt_thenItShouldNotBeEmptyAndShouldMatchDescription(page);
-        } catch (Exception e) {
-            logger.error("Error occurred while processing: {}, error message: {}",
-                page.getUrl(), StringUtils.substring(e.getMessage(), 0, 100));
-        }
-    }
-
     /**
      * The test looks into four locations for searching a back-link
      * First URL - the URL linked from the article
@@ -580,7 +544,7 @@ public class AllUrlsUITest extends ConcurrentSitePageTest {
 
         }
     }
-
+    
     @ConcurrentTest
     @Tag(GlobalConstants.TAG_EDITORIAL)
     @PageTypes({ SitePage.Type.PAGE, SitePage.Type.ARTICLE })
@@ -623,5 +587,41 @@ public class AllUrlsUITest extends ConcurrentSitePageTest {
                 page.getUrl(), StringUtils.substring(e.getMessage(), 0, 100));
         }
     }
+    
+    @ConcurrentTest
+    @Tag(GlobalConstants.TAG_TECHNICAL)
+    @PageTypes({ SitePage.Type.PAGE, SitePage.Type.ARTICLE })
+    @LogOnce(GlobalConstants.givenAllTestsRelatedTechnicalArea_whenHittingAllUrls_thenOK)
+    public final void givenAllTestsRelatedTechnicalArea_whenHittingAllUrls_thenOK(SitePage page) {
+        try {
+            givenAllArticlesAndPages_whenAnalysingImages_thenImagesDoNotPoinToTheDraftsSite(page);
+            givenAllArticlesAndPages_whenAPageLoads_thenMetaOGImageAndTwitterImagePointToTheAbsolutePath(page);
+            givenAllArticlesAndPages_whenAPageLoads_thenItDoesNotContainOverlappingText(page);
+            givenAllArticlesAndPages_whenAPageLoads_thenItHasAFeaturedImage(page);
+        } catch (Exception e) {
+            logger.error("Error occurred while processing: {}, error message: {}",
+                page.getUrl(), StringUtils.substring(e.getMessage(), 0, 100));
+        }
+    }
+
+    @ConcurrentTest
+    @Tag(GlobalConstants.TAG_TECHNICAL)
+    @PageTypes(SitePage.Type.ARTICLE)
+    @LogOnce(GlobalConstants.givenAllTestsRelatedTechnicalArea_whenHittingArticles_thenOK)
+    public final void givenAllTestsRelatedTechnicalArea_whenHittingArticles_thenOK(SitePage page) {
+        try {
+            givenAllArticles_whenAnArticleLoads_thenArticleHasNoEmptyCodeBlock(page);
+            givenAllArticles_whenAnArticleLoads_thenItHasSingleShortcodeAtTheTop(page);
+            givenAllArticles_whenAnArticleLoads_thenItIsHasASingleOptinInTheSidebar(page);
+            givenAllArticles_whenAnArticleLoads_thenItIsHasASingleOptinInTheAfterPostContent(page);
+            givenAllArticles_whenAnArticleLoads_thenItHasSingleShortcodeAtTheEnd(page);
+            givenAllArticles_whenAnalyzingCodeBlocks_thenCodeBlocksAreRenderedProperly(page);
+            givenAllArticles_whenAnalyzingImages_thenImagesDoNotHaveEmptyAltAttribute(page);
+            givenAllArticles_whenAnalyzingExcerpt_thenItShouldNotBeEmptyAndShouldMatchDescription(page);
+        } catch (Exception e) {
+            logger.error("Error occurred while processing: {}, error message: {}",
+                page.getUrl(), StringUtils.substring(e.getMessage(), 0, 100));
+        }
+    }    
 
 }

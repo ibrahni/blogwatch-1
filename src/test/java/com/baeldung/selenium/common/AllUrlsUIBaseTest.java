@@ -7,19 +7,19 @@ import org.junit.jupiter.api.extension.ParameterResolver;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.junit.jupiter.api.extension.support.TypeBasedParameterResolver;
 
-import com.baeldung.common.SitePageConcurrentExtension;
+import com.baeldung.common.AllUrlsConcurrentExtension;
 import com.baeldung.site.SitePage;
 
 /**
- * Enables {@link SitePageConcurrentExtension} Junit extension.
+ * Enables {@link AllUrlsConcurrentExtension} Junit extension.
  */
-public class ConcurrentSitePageTest extends ConcurrentBaseUISeleniumTest {
+public class AllUrlsUIBaseTest extends ConcurrentBaseUISeleniumTest {
 
     /**
      * Overwrites ConcurrentBaseTest.extension
      */
     @RegisterExtension
-    SitePageConcurrentExtension extension = new SitePageConcurrentExtension(
+    AllUrlsConcurrentExtension extension = new AllUrlsConcurrentExtension(
         CONCURRENCY_LEVEL, this, () -> logger, this::loadNextURL);
 
     @RegisterExtension
