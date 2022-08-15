@@ -97,7 +97,7 @@ public class AllUrlsUIBaseTest extends ConcurrentBaseUISeleniumTest {
         logger.info("Loading Github repositories into local");
         for (GitHubRepoVO gitHubRepo : GlobalConstants.tutorialsRepos) {
             try {
-                Utils.fetchGitRepo(GlobalConstants.YES, Paths.get(gitHubRepo.repoLocalPath()), gitHubRepo.repoUrl());
+               Utils.fetchGitRepo(GlobalConstants.YES, Paths.get(gitHubRepo.repoLocalPath()), gitHubRepo.repoUrl());
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
