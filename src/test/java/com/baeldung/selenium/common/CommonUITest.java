@@ -1,6 +1,6 @@
 package com.baeldung.selenium.common;
 
-import static com.baeldung.common.ConsoleColors.*;
+import static com.baeldung.common.ConsoleColors.magentaColordMessage;
 import static com.baeldung.common.GlobalConstants.TestMetricTypes.FAILED;
 import static java.util.stream.Collectors.toList;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -58,8 +59,8 @@ import com.baeldung.common.YAMLProperties;
 import com.baeldung.common.vo.AnchorLinksTestDataVO;
 import com.baeldung.common.vo.EventTrackingVO;
 import com.baeldung.common.vo.FooterLinksDataVO;
-import com.baeldung.common.vo.GitHubRepoVO;
 import com.baeldung.common.vo.FooterLinksDataVO.FooterLinkCategory;
+import com.baeldung.common.vo.GitHubRepoVO;
 import com.baeldung.common.vo.LinkVO;
 import com.baeldung.filevisitor.EmptyReadmeFileVisitor;
 import com.baeldung.filevisitor.MissingReadmeFileVisitor;
@@ -640,4 +641,12 @@ public class CommonUITest extends BaseUISeleniumTest {
         }
     }
 
+    @ParameterizedTest(name = " {displayName} - on {0}")
+    @MethodSource("com.baeldung.utility.TestUtils#pageTagsVerifierProvider")
+    public void givenAPage_whenThePageLoads_verifyTags(String url, Set<String> expectedTags) {
+        page.setUrl(page.getBaseURL() + url);
+        page.loadUrl();
+        page.setWpTags();
+        assertEquals(expectedTags, page.getWpTags());
+    }
 }

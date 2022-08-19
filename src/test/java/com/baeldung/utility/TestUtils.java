@@ -5,22 +5,24 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 import java.net.HttpURLConnection;
 import java.net.URL;
-
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.concurrent.ExecutionException;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
-
 import java.util.function.BiPredicate;
 import java.util.stream.Stream;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.http.HttpStatus;
-
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.junit.jupiter.params.provider.Arguments;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -35,9 +37,6 @@ import com.baeldung.common.YAMLProperties;
 import com.baeldung.common.vo.AdSlotsVO;
 import com.baeldung.common.vo.CoursePurchaseLinksVO;
 import com.baeldung.common.vo.FooterLinksDataVO;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-
 import com.baeldung.common.vo.GitHubRepoVO;
 import com.baeldung.site.SitePage;
 import com.fasterxml.jackson.core.JsonParseException;
@@ -399,4 +398,13 @@ public class TestUtils {
             return false;
         }
     };
+
+    public static Stream<Arguments> pageTagsVerifierProvider() {
+        Map<String, Set<String>> pages = new HashMap<>();
+        pages.put("/linux/seach-text-files-in-directory", Set.of("file", "find", "grep"));
+        pages.put("/faunadb-spring", Set.of("Fauna", "no-ads", "no-before-post", "no-optins", "sponsored"));
+        return pages.entrySet()
+            .stream()
+            .map(es -> Arguments.of(es.getKey(), es.getValue()));
+    }
 }
