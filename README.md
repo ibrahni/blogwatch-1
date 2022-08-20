@@ -111,55 +111,30 @@ Currently, _concurrency.level_ property is only in effect for these tests:
 - [_CommonConcurrentUITest_](https://github.com/Baeldung/blogwatch/blob/master/src/test/java/com/baeldung/selenium/common/CommonConcurrentUITest.java).
 - [_AllUrlsUITest_](https://github.com/Baeldung/blogwatch/blob/master/src/test/java/com/baeldung/selenium/common/AllUrlsUITest.java).
 
-Concurrency supported tests are done by extending a special base class, 
-[_ConcurrentSitePageTest_](https://github.com/Baeldung/blogwatch/blob/master/src/test/java/com/baeldung/selenium/common/ConcurrentSitePageTest.java), 
-which provides an isolated instance of _SitePage_ for each thread.
+Concurrency supported tests are done by extending special base classes:
+- [_AllUrlsUIBaseTest_](https://github.com/Baeldung/blogwatch/blob/master/src/test/java/com/baeldung/selenium/common/AllUrlsUIBaseTest.java): provides a pre-configured thread-safe URL iterator for all Articles and Pages. 
+- [_ConcurrentBaseUISeleniumTest_](https://github.com/Baeldung/blogwatch/blob/master/src/test/java/com/baeldung/selenium/common/ConcurrentBaseUISeleniumTest.java): provides an isolated instance of _SitePage_ for each thread.
+- [_ConcurrentBaseTest_](https://github.com/Baeldung/blogwatch/blob/master/src/test/java/com/baeldung/common/ConcurrentBaseTest.java): provides the basic concurrent execution support. (When we don't need Selenium, see: [_CommonConcurrentUITest_](https://github.com/Baeldung/blogwatch/blob/master/src/test/java/com/baeldung/selenium/common/CommonConcurrentUITest.java))
 
-When we don't need Selenium we can use a simpler one, [_ConcurrentBaseTest_](https://github.com/Baeldung/blogwatch/blob/master/src/test/java/com/baeldung/common/ConcurrentBaseTest.java).
-which only provides concurrent execution support. 
-
-To migrate any other tests into its concurrent version, simply extend it from _ConcurrentSitePageTest_ (or _ConcurrentBaseTest_ if we don't need Selenium):
+To perform UI tests on all Articles and Pages concurrently, we can extend our test class from _AllUrlsUIBaseTest_:
 ```java
-public class ConcurrentTest extends ConcurrentSitePageTest {
-
-    private UrlIterator urlIterator;
-    
-    @BeforeEach
-    public void setup() {
-        // prepare shared state which will be accessed by concurrent threads
-        urlIterator = new UrlIterator();
-        // configure urls by type 
-        urlIterator.append(SitePage.Type.ARTICLE, Utils.fetchAllArtilcesAsListIterator());
-        urlIterator.append(SitePage.Type.PAGE, Utils.fetchAllPagesAsListIterator());
-        // ...
-    }
-
-    @AfterEach
-    public void clear() {
-        // check and trigger failures
-    }
-
-    @Override
-    protected boolean loadNextURL(SitePage page) {
-        Optional<UrlIterator.UrlElement> next = urlIterator.getNext();
-        if (next.isEmpty()) {
-            return false;
-        }
-        // load next url if exists
-        UrlIterator.UrlElement element = next.get();
-        page.setUrl(page.getBaseURL() + element.url());
-        page.setType(SitePage.Type.valueOf(element.tag()));
-        page.loadUrl();
-        return true;
-    }
+public class ConcurrentTest extends AllUrlsUIBaseTest {
 
     @ConcurrentTest
     @PageTypes({ SitePage.Type.PAGE, SitePage.Type.ARTICLE })
-    @LogOnce("testMethod")
-    public final void testMethod(SitePage page) {
+    @LogOnce("testMethodForAll")
+    public final void testMethodForAll(SitePage page) {
         // individual test logic
-        // runs for each configured URL in urlIterator
+        // runs for each configured URL in AllUrlsUIBaseTest
         // Different instances of SitePage is provided for each thread
+    }
+
+    @ConcurrentTest
+    @PageTypes(SitePage.Type.ARTICLE)
+    @LogOnce("testMethodOnlyArticles")
+    public final void testMethodOnlyArticles(SitePage page) {
+        // runs for only articles configured in AllUrlsUIBaseTest
+        // here the page parameter has always the type ARTICLE
     }
 
     @ConcurrentTest
@@ -168,6 +143,10 @@ public class ConcurrentTest extends ConcurrentSitePageTest {
     public final void testBulk(SitePage page) {
         // We can give already provided page into methods
         testMethod(page);
+        // Type specific individual tests must be guarded by the correct type!
+        if (AllUrlsConcurrentExtension.ensureTag(page, SitePage.Type.ARTICLE)) {
+            testMethodOnlyArticles(page);
+        }
     }
 }
 ```
