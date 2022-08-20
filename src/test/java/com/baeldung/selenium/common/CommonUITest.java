@@ -641,12 +641,4 @@ public class CommonUITest extends BaseUISeleniumTest {
         }
     }
 
-    @ParameterizedTest(name = " {displayName} - on {0}")
-    @MethodSource("com.baeldung.utility.TestUtils#pageTagsVerifierProvider")
-    public void givenAPage_whenThePageLoads_verifyTags(String url, Set<String> expectedTags) {
-        page.setUrl(page.getBaseURL() + url);
-        page.loadUrl();
-        page.setWpTags();
-        assertEquals(expectedTags, page.getWpTags());
-    }
 }

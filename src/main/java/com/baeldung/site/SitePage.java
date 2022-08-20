@@ -76,7 +76,8 @@ public class SitePage extends BlogBaseDriver {
         Set<String> wordPressTags;
         try {
             wordPressTags = Set.copyOf((List<String>) getJavaScriptExecuter().executeScript("return ba_tags"));
-        } catch (JavascriptException javascriptException) {
+        } catch (JavascriptException e) {
+            logger.error(ConsoleColors.redBoldMessage(e.getMessage()), e);
             wordPressTags = Collections.emptySet();
         }
         this.wpTags = wordPressTags;
