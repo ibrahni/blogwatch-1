@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptException;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -74,12 +75,9 @@ public class SitePage extends BlogBaseDriver {
     public void setWpTags() {
         Set<String> wordPressTags;
         try {
-            wordPressTags = this.getWebDriver()
-                .findElements(By.xpath("//ul[@class='post-tags']/li/a"))
-                .stream()
-                .map(WebElement::getText)
-                .collect(Collectors.toSet());
-        } catch (NoSuchElementException e) {
+            wordPressTags = Set.copyOf((List<String>) getJavaScriptExecuter().executeScript("return ba_tags"));
+        } catch (JavascriptException e) {
+            logger.error(ConsoleColors.redBoldMessage(e.getMessage()), e);
             wordPressTags = Collections.emptySet();
         }
         this.wpTags = wordPressTags;
