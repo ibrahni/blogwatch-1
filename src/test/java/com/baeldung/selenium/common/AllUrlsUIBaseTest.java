@@ -50,7 +50,7 @@ public class AllUrlsUIBaseTest extends ConcurrentBaseUISeleniumTest {
             return null;
         }
     };
-    
+
     @Value("#{'${givenAllArticles_whenWeCheckTheAuthor_thenTheyAreNotOnTheInternalTeam.site-excluded-authors}'.split(',')}")
     protected List<String> excludedListOfAuthors;
 
@@ -62,6 +62,9 @@ public class AllUrlsUIBaseTest extends ConcurrentBaseUISeleniumTest {
 
     @Value("${single-url-to-run-all-tests}")
     protected String singleURL;
+
+    @Value("${local.repo.download}")
+    protected String localRepoDownload;
 
     protected UrlIterator urlIterator;
 
@@ -97,7 +100,7 @@ public class AllUrlsUIBaseTest extends ConcurrentBaseUISeleniumTest {
         logger.info("Loading Github repositories into local");
         for (GitHubRepoVO gitHubRepo : GlobalConstants.tutorialsRepos) {
             try {
-               Utils.fetchGitRepo(GlobalConstants.YES, Paths.get(gitHubRepo.repoLocalPath()), gitHubRepo.repoUrl());
+               Utils.fetchGitRepo(localRepoDownload, Paths.get(gitHubRepo.repoLocalPath()), gitHubRepo.repoUrl());
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
@@ -111,7 +114,7 @@ public class AllUrlsUIBaseTest extends ConcurrentBaseUISeleniumTest {
             triggerTestFailure(badURLs, resultsForGitHubHttpStatusTest);
         }
     }
-    
+
     protected boolean loadNextURL(SitePage page) {
 
         Optional<UrlIterator.UrlElement> next = urlIterator.getNext();
