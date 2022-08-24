@@ -867,4 +867,14 @@ public class SitePage extends BlogBaseDriver {
             || pageSource.contains(checkHref8);
     }
 
+    public boolean hasNoindexMetaTag() {
+        try {
+            return this.getWebDriver()
+                .findElement(By.xpath("//meta[(@name = 'robots and contains(@content, 'noindex'))]"))
+                .isEnabled();
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
 }

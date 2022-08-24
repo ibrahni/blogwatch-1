@@ -1,0 +1,17 @@
+#Values listed below represent regex expressions, so it is very important to
+#escape special characters when adding new entries.
+- \/tag\/*
+- \/page\/*
+- \/category\/*
+- \/linux\/tag\/*
+- \/linux\/page\/*
+- \/linux\/category\/*
+- \/scala\/tag\/*
+- \/scala\/page\/*
+- \/scala\/category\/*
+- \/cs\/tag\/*
+- \/cs\/page\/*
+- \/cs\/category\/*
+- \/kotlin\/tag\/*
+- \/kotlin\/page\/*
+- \/kotlin\/category\/*

@@ -1,6 +1,7 @@
 package com.baeldung.common;
 
 import java.util.List;
+import java.util.regex.Pattern;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.junit.jupiter.api.extension.RegisterExtension;
@@ -47,4 +48,18 @@ public class ConcurrentBaseTest extends BaseTest {
         Utils.triggerTestFailure(badURLs, resultsForGitHubHttpStatusTest, "Failed tests-->", getMetrics(GlobalConstants.TestMetricTypes.FAILED));
     }
 
+    private boolean matchesUrlPattern(SitePage sitePage, String regex) {
+        Pattern pattern = Pattern.compile(regex);
+        return pattern.matcher(sitePage.getUrl())
+            .find();
+    }
+
+    protected boolean matchesUrlPattern(SitePage sitePage, List<String> regExpressions) {
+        for (String regex : regExpressions) {
+            if (matchesUrlPattern(sitePage, regex)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
