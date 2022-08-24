@@ -2,6 +2,7 @@ package com.baeldung.common.config;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Arrays;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -44,8 +45,10 @@ public class MyApplicationContextInitializer implements ApplicationContextInitia
             System.setProperty(GlobalConstants.ENV_PROPERTY_HEADLESS_BROWSER_NAME, GlobalConstants.TARGET_ENV_DEFAULT_HEADLESS_BROWSER);
         }
 
+        final String[] profiles = environment.getActiveProfiles();
+        logger.info("Spring Active Profiles: {}", Arrays.toString(profiles));
         final MutablePropertySources propertySources = environment.getPropertySources();
-        for (String profile : environment.getActiveProfiles()) {
+        for (String profile : profiles) {
             try {
                 propertySources.addFirst(new ResourcePropertySource("classpath:%s.properties".formatted(profile)));
             } catch (FileNotFoundException e) {

@@ -12,7 +12,7 @@ import com.baeldung.selenium.BlogLinksExtractor;
 
 @Configuration
 @ComponentScan("com.baeldung.site")
-@PropertySource({ "classpath:blog.properties" })
+@PropertySource({ "classpath:common.properties" })
 public class SeleniumContextConfiguration {
 
     @Bean

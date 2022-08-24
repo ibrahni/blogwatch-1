@@ -63,8 +63,8 @@ public class AllUrlsUIBaseTest extends ConcurrentBaseUISeleniumTest {
     @Value("${single-url-to-run-all-tests}")
     protected String singleURL;
 
-    @Value("${local.repo.download}")
-    protected String localRepoDownload;
+    @Value("${redownload-repo}")
+    protected String redownloadRepo;
 
     protected UrlIterator urlIterator;
 
@@ -100,7 +100,7 @@ public class AllUrlsUIBaseTest extends ConcurrentBaseUISeleniumTest {
         logger.info("Loading Github repositories into local");
         for (GitHubRepoVO gitHubRepo : GlobalConstants.tutorialsRepos) {
             try {
-               Utils.fetchGitRepo(localRepoDownload, Paths.get(gitHubRepo.repoLocalPath()), gitHubRepo.repoUrl());
+               Utils.fetchGitRepo(redownloadRepo, Paths.get(gitHubRepo.repoLocalPath()), gitHubRepo.repoUrl());
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
