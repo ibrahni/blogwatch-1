@@ -17,7 +17,7 @@ public class GlobalConstants {
     public static final String ENV_PROPERTY_HEADLESS_BROWSER_NAME = "headless.browser.name";
     public static final String ENV_PROPERTY_CONCURRENCY_LEVEL = "concurrency.level";
 
-    public static final String[] DEFAULT_SPRING_PROFILE = new String[] { "jenkins", "headless-browser" };
+    public static final String[] DEFAULT_SPRING_PROFILE = new String[] { "local", "headless-browser" };
 
     // targent env
     public static final String TARGET_ENV_WINDOWS = "win";
