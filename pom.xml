@@ -357,7 +357,7 @@
                         <artifactId>maven-surefire-plugin</artifactId>
                         <configuration>
                             <systemPropertyVariables>
-                                <spring.profiles.active>jenkins,ui-browser</spring.profiles.active>
+                                <spring.profiles.active>local,ui-browser</spring.profiles.active>
                                 <target.env>win</target.env>
                                 <base.url>https://www.baeldung.com</base.url>
                             </systemPropertyVariables>
