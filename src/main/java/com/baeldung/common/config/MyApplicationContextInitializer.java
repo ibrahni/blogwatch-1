@@ -1,5 +1,6 @@
 package com.baeldung.common.config;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import org.apache.commons.lang3.StringUtils;
@@ -43,13 +44,15 @@ public class MyApplicationContextInitializer implements ApplicationContextInitia
             System.setProperty(GlobalConstants.ENV_PROPERTY_HEADLESS_BROWSER_NAME, GlobalConstants.TARGET_ENV_DEFAULT_HEADLESS_BROWSER);
         }
 
-        try {
-            final MutablePropertySources propertySources = environment.getPropertySources();
-            propertySources.addLast(new ResourcePropertySource("classpath:jenkins.properties"));
-            propertySources.addFirst(new ResourcePropertySource("classpath:local.properties"));
-        } catch (IOException e) {
-            logger.error("Cannot load property resources", e);
+        final MutablePropertySources propertySources = environment.getPropertySources();
+        for (String profile : environment.getActiveProfiles()) {
+            try {
+                propertySources.addFirst(new ResourcePropertySource("classpath:%s.properties".formatted(profile)));
+            } catch (FileNotFoundException e) {
+                // ignore resource not found
+            } catch (IOException e) {
+                logger.error("Cannot load property resource", e);
+            }
         }
-
     }
 }

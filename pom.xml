@@ -298,7 +298,7 @@
                         <artifactId>maven-surefire-plugin</artifactId>
                         <configuration>
                             <systemPropertyVariables>
-                                <spring.profiles.active>headless-browser</spring.profiles.active>
+                                <spring.profiles.active>jenkins,headless-browser</spring.profiles.active>
                                 <target.env>win</target.env>
                                 <base.url>https://www.baeldung.com</base.url>
                                 <headless.browser.name>phantomJS</headless.browser.name>
@@ -317,7 +317,7 @@
                         <artifactId>maven-surefire-plugin</artifactId>
                         <configuration>
                             <systemPropertyVariables>
-                                <spring.profiles.active>headless-browser</spring.profiles.active>
+                                <spring.profiles.active>jenkins,headless-browser</spring.profiles.active>
                                 <target.env>linux</target.env>
                                 <base.url>https://www.baeldung.com</base.url>
                                 <headless.browser.name>phantomJS</headless.browser.name>
@@ -337,7 +337,7 @@
                         <artifactId>maven-surefire-plugin</artifactId>
                         <configuration>
                             <systemPropertyVariables>
-                                <spring.profiles.active>headless-browser</spring.profiles.active>
+                                <spring.profiles.active>jenkins,headless-browser</spring.profiles.active>
                                 <target.env>mac-m1</target.env>
                                 <base.url>https://www.baeldung.com</base.url>
                                 <headless.browser.name>chrome-headless</headless.browser.name>
@@ -357,7 +357,7 @@
                         <artifactId>maven-surefire-plugin</artifactId>
                         <configuration>
                             <systemPropertyVariables>
-                                <spring.profiles.active>ui-browser</spring.profiles.active>
+                                <spring.profiles.active>jenkins,ui-browser</spring.profiles.active>
                                 <target.env>win</target.env>
                                 <base.url>https://www.baeldung.com</base.url>
                             </systemPropertyVariables>
@@ -378,7 +378,7 @@
 
     <properties>
         <org.springframework-version>5.3.22</org.springframework-version>
-        <spring.profiles.active>headless-browser</spring.profiles.active>
+        <spring.profiles.active>jenkins,headless-browser</spring.profiles.active>
 
         <!-- commons and utils -->
         <commons-lang3.version>3.12.0</commons-lang3.version>
