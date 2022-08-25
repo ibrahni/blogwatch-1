@@ -16,7 +16,6 @@ public class YAMLProperties {
     public static Map<String, List<String>> exceptionsForTestsLevel2 = fetchYMLPropertiesMap("exceptions-for-tests-level-2.yaml");
     public static Map<String, List<String>> multiSiteTargetUrls = fetchYMLPropertiesMap("multi-site-tests-target-urls.yaml");    
     public static Map<String, String> redirectsTestData = fetchYMLProperties("redirects.yaml");
-    public static List<String> noIndexMetaTagPatterns = fetchYMLPropertiesList("noindex-meta-tag-patterns.yaml");
 
     public static Map<String, List<String>> fetchYMLPropertiesMap(String fileName) {
         Map<String, List<String>> output = new HashMap<>();
@@ -36,13 +35,6 @@ public class YAMLProperties {
         Map<String, String> output = new HashMap<>();
         InputStream fileStream = YAMLProperties.class.getClassLoader().getResourceAsStream(fileName);
         output = yaml.load(fileStream);
-        return output;
-    }
-
-    public static List<String> fetchYMLPropertiesList(String fileName) {
-        InputStream fileStream = YAMLProperties.class.getClassLoader()
-            .getResourceAsStream(fileName);
-        List<String> output = yaml.load(fileStream);
         return output;
     }
 

@@ -16,7 +16,6 @@ import com.baeldung.common.GlobalConstants.TestMetricTypes;
 import com.baeldung.common.LogOnce;
 import com.baeldung.common.PageTypes;
 import com.baeldung.common.Utils;
-import com.baeldung.common.YAMLProperties;
 import com.baeldung.site.InvalidTitles;
 import com.baeldung.site.SitePage;
 import com.baeldung.utility.TestUtils;
@@ -473,23 +472,18 @@ public class AllUrlsUITest extends AllUrlsUIBaseTest {
 
     @ConcurrentTest
     @PageTypes({ SitePage.Type.PAGE, SitePage.Type.ARTICLE })
-    @LogOnce(GlobalConstants.givenAllArticlesAndPages_whenAPageLoads_thenValidateNoindexMetaTag)
-    public final void givenAllArticlesAndPages_whenAPageLoads_thenValidateNoindexMetaTag(SitePage page) {
-        recordExecution(GlobalConstants.givenAllArticlesAndPages_whenAPageLoads_thenValidateNoindexMetaTag);
+    @LogOnce(GlobalConstants.givenAllArticlesAndPages_whenAPageLoads_thenItDoesNotContainNoindexTag)
+    public final void givenAllArticlesAndPages_whenAPageLoads_thenItDoesNotContainNoindexTag(SitePage page) {
+        recordExecution(GlobalConstants.givenAllArticlesAndPages_whenAPageLoads_thenItDoesNotContainNoindexTag);
 
-        if (shouldSkipUrl(page, GlobalConstants.givenAllArticlesAndPages_whenAPageLoads_thenValidateNoindexMetaTag)) {
+        if (shouldSkipUrl(page, GlobalConstants.givenAllArticlesAndPages_whenAPageLoads_thenItDoesNotContainNoindexTag)) {
             return;
         }
-        boolean isFailure;
-        if (matchesUrlPattern(page, YAMLProperties.noIndexMetaTagPatterns)) {
-            isFailure = !page.hasNoindexMetaTag();
-        } else {
-            isFailure = page.hasNoindexMetaTag();
-        }
-        if (isFailure) {
+
+        if (page.hasNoindexMetaTag()) {
             recordMetrics(1, TestMetricTypes.FAILED);
-            recordFailure(GlobalConstants.givenAllArticlesAndPages_whenAPageLoads_thenValidateNoindexMetaTag);
-            badURLs.put(GlobalConstants.givenAllArticlesAndPages_whenAPageLoads_thenValidateNoindexMetaTag, page.getUrlWithNewLineFeed());
+            recordFailure(GlobalConstants.givenAllArticlesAndPages_whenAPageLoads_thenItDoesNotContainNoindexTag);
+            badURLs.put(GlobalConstants.givenAllArticlesAndPages_whenAPageLoads_thenItDoesNotContainNoindexTag, page.getUrlWithNewLineFeed());
         }
     }
 
