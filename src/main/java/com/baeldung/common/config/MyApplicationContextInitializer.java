@@ -1,13 +1,23 @@
 package com.baeldung.common.config;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Arrays;
+
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.env.ConfigurableEnvironment;
+import org.springframework.core.env.MutablePropertySources;
+import org.springframework.core.io.support.ResourcePropertySource;
 
 import com.baeldung.common.GlobalConstants;
 
 public class MyApplicationContextInitializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
+
+    private static final Logger logger = LoggerFactory.getLogger(MyApplicationContextInitializer.class);
 
     public MyApplicationContextInitializer() {
         super();
@@ -33,6 +43,19 @@ public class MyApplicationContextInitializer implements ApplicationContextInitia
 
         if (StringUtils.isBlank(headlessBrowserName)) {
             System.setProperty(GlobalConstants.ENV_PROPERTY_HEADLESS_BROWSER_NAME, GlobalConstants.TARGET_ENV_DEFAULT_HEADLESS_BROWSER);
+        }
+
+        final String[] profiles = environment.getActiveProfiles();
+        logger.info("Spring Active Profiles: {}", Arrays.toString(profiles));
+        final MutablePropertySources propertySources = environment.getPropertySources();
+        for (String profile : profiles) {
+            try {
+                propertySources.addFirst(new ResourcePropertySource("classpath:%s.properties".formatted(profile)));
+            } catch (FileNotFoundException e) {
+                // ignore resource not found
+            } catch (IOException e) {
+                logger.error("Cannot load property resource", e);
+            }
         }
     }
 }
