@@ -492,7 +492,7 @@ public class AllUrlsUITest extends AllUrlsUIBaseTest {
     }
 
     @ConcurrentTest
-    @Tag(GlobalConstants.TAG_TECHNICAL)
+    @Tag(GlobalConstants.TAG_NON_TECHNICAL)
     @PageTypes({ SitePage.Type.PAGE, SitePage.Type.ARTICLE })
     @LogOnce(GlobalConstants.givenAllTestsRelatedTechnicalArea_whenHittingAllUrls_thenOK)
     public final void givenAllTestsRelatedTechnicalArea_whenHittingAllUrls_thenOK(SitePage page) {

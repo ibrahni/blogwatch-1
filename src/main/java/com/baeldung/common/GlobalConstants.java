@@ -96,6 +96,7 @@ public class GlobalConstants {
     public static final String TAG_GITHUB_RELATED = "github-related";
     public static final String TAG_EDITORIAL = "editorial";
     public static final String TAG_TECHNICAL = "technical";
+    public static final String TAG_NON_TECHNICAL = "non-technical";
 
     // pages
 
