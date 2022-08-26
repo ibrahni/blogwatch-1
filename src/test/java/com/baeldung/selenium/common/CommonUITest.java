@@ -22,7 +22,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.stream.Collectors;
 
@@ -594,6 +593,27 @@ public class CommonUITest extends BaseUISeleniumTest {
             recordFailure(GlobalConstants.givenAGitHubModule_whenAnalysingTheModule_thenTheModuleHasANonEmptyReadme, modulesWithNoneOrEmptyReadme.size());
             failTestWithLoggingTotalNoOfFailures("\n Modules found with missing or empty READMEs \n" + modulesWithNoneOrEmptyReadme.stream().collect(Collectors.joining("\n")));
         }
+    }
+
+    @ParameterizedTest(name = " {displayName} - on {0}")
+    @MethodSource("com.baeldung.utility.TestUtils#noindexTagTestDataProvider")
+    public final void givenTagCategoryAndSearchPage_whenAPageLoads_thenItContainNoindexTag(String url) {
+
+        String fullUrl = page.getBaseURL() + url;
+        logger.info("Processing " + fullUrl);
+
+        page.setUrl(fullUrl);
+
+        page.loadUrl();
+
+        if (!page.hasNoindexMetaTag()) {
+            recordMetrics(1, FAILED);
+            recordFailure(GlobalConstants.givenTagCategoryAndSearchPage_whenAPageLoads_thenItContainNoindexTag);
+            fail("Found page that does not have noindex tag.");
+        }
+
+        logger.info(ConsoleColors.magentaColordMessage("finished"));
+
     }
 
 }

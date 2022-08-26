@@ -870,7 +870,7 @@ public class SitePage extends BlogBaseDriver {
     public boolean hasNoindexMetaTag() {
         try {
             return this.getWebDriver()
-                .findElement(By.xpath("//meta[(@name = 'robots and contains(@content, 'noindex'))]"))
+                .findElement(By.xpath("//meta[(@name = 'robots' and contains(@content, 'noindex'))]"))
                 .isEnabled();
         } catch (Exception e) {
             return false;
