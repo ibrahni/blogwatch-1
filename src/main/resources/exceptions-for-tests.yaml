@@ -162,5 +162,6 @@ givenAllArticles_whenAnalyzingImages_thenImagesDoNotHaveEmptyAltAttribute:
 
 givenAllArticles_whenAnalyzingExcerpt_thenItShouldNotBeEmptyAndShouldMatchDescription:
 
+givenAllArticlesAndPages_whenAPageLoads_thenItDoesNotContainNoindexTag:
 
 

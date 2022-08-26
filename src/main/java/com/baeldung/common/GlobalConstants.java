@@ -4,7 +4,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-
 import com.baeldung.common.vo.GitHubRepoVO;
 import com.google.common.collect.ImmutableList;
 
@@ -347,4 +346,5 @@ public class GlobalConstants {
     public static final String givenAllTheArticles_whenAnArticleLoads_thenJavaClassesAndMethodsCanBeFoundOnGitHub = "givenAllTheArticles_whenAnArticleLoads_thenJavaClassesAndMethodsCanBeFoundOnGitHub";
     public static final String givenAllTestsRelatedTechnicalArea_whenHittingAllUrls_thenOK = "givenAllTestsRelatedTechnicalArea_whenHittingAllUrls_thenOK";
     public static final String givenAllEditorialTests_whenHittingAllArticles_thenOK = "givenAllEditorialTests_whenHittingAllArticles_thenOK";
+    public static final String givenAllArticlesAndPages_whenAPageLoads_thenItDoesNotContainNoindexTag = "givenAllArticlesAndPages_whenAPageLoads_thenItDoesNotContainNoindexTag";
 }

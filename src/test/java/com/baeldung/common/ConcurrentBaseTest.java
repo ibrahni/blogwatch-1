@@ -1,6 +1,7 @@
 package com.baeldung.common;
 
 import java.util.List;
+import java.util.regex.Pattern;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.junit.jupiter.api.extension.RegisterExtension;

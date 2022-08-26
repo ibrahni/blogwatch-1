@@ -471,6 +471,23 @@ public class AllUrlsUITest extends AllUrlsUIBaseTest {
     }
 
     @ConcurrentTest
+    @PageTypes({ SitePage.Type.PAGE, SitePage.Type.ARTICLE })
+    @LogOnce(GlobalConstants.givenAllArticlesAndPages_whenAPageLoads_thenItDoesNotContainNoindexTag)
+    public final void givenAllArticlesAndPages_whenAPageLoads_thenItDoesNotContainNoindexTag(SitePage page) {
+        recordExecution(GlobalConstants.givenAllArticlesAndPages_whenAPageLoads_thenItDoesNotContainNoindexTag);
+
+        if (shouldSkipUrl(page, GlobalConstants.givenAllArticlesAndPages_whenAPageLoads_thenItDoesNotContainNoindexTag)) {
+            return;
+        }
+
+        if (page.hasNoindexMetaTag()) {
+            recordMetrics(1, TestMetricTypes.FAILED);
+            recordFailure(GlobalConstants.givenAllArticlesAndPages_whenAPageLoads_thenItDoesNotContainNoindexTag);
+            badURLs.put(GlobalConstants.givenAllArticlesAndPages_whenAPageLoads_thenItDoesNotContainNoindexTag, page.getUrlWithNewLineFeed());
+        }
+    }
+
+    @ConcurrentTest
     @Tag(GlobalConstants.TAG_EDITORIAL)
     @PageTypes({ SitePage.Type.PAGE, SitePage.Type.ARTICLE })
     @LogOnce(GlobalConstants.givenAllEditorialTests_whenHittingAllArticles_thenOK)
