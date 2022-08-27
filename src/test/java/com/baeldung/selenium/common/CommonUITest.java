@@ -597,8 +597,10 @@ public class CommonUITest extends BaseUISeleniumTest {
 
     @ParameterizedTest(name = " {displayName} - on {0}")
     @MethodSource("com.baeldung.utility.TestUtils#noindexTagTestDataProvider")
+    @Tag(GlobalConstants.TAG_NON_TECHNICAL)
     public final void givenTagCategoryAndSearchPage_whenAPageLoads_thenItContainNoindexTag(String url) {
-
+        
+        recordExecution(GlobalConstants.givenTagCategoryAndSearchPage_whenAPageLoads_thenItContainNoindexTag);
         String fullUrl = page.getBaseURL() + url;
         logger.info("Processing " + fullUrl);
 

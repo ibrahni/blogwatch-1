@@ -16,7 +16,7 @@ public class YAMLProperties {
     public static Map<String, List<String>> exceptionsForTestsLevel2 = fetchYMLPropertiesMap("exceptions-for-tests-level-2.yaml");
     public static Map<String, List<String>> multiSiteTargetUrls = fetchYMLPropertiesMap("multi-site-tests-target-urls.yaml");    
     public static Map<String, String> redirectsTestData = fetchYMLProperties("redirects.yaml");
-    public static List<String> noindexTagPages = fetchYMLPropertiesList("noindex-tag-pages.yaml");
+    public static List<String> noindexTagPages = fetchYMLPropertiesList("noindex-tag-category-and-search-pages.yaml");
 
     public static Map<String, List<String>> fetchYMLPropertiesMap(String fileName) {
         Map<String, List<String>> output = new HashMap<>();
