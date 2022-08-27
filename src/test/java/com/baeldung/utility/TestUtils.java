@@ -438,4 +438,9 @@ public class TestUtils {
             .stream()
             .map(es -> Arguments.of(es.getKey(), es.getValue()));
     }
+
+    public static Stream<Arguments> noindexTagTestDataProvider() {
+        return YAMLProperties.noindexTagPages.stream()
+            .map(Arguments::of);
+    }
 }

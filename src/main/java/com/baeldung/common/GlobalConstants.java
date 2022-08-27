@@ -347,4 +347,5 @@ public class GlobalConstants {
     public static final String givenAllTestsRelatedTechnicalArea_whenHittingAllUrls_thenOK = "givenAllTestsRelatedTechnicalArea_whenHittingAllUrls_thenOK";
     public static final String givenAllEditorialTests_whenHittingAllArticles_thenOK = "givenAllEditorialTests_whenHittingAllArticles_thenOK";
     public static final String givenAllArticlesAndPages_whenAPageLoads_thenItDoesNotContainNoindexTag = "givenAllArticlesAndPages_whenAPageLoads_thenItDoesNotContainNoindexTag";
+    public static final String givenTagCategoryAndSearchPage_whenAPageLoads_thenItContainNoindexTag = "givenTagCategoryAndSearchPage_whenAPageLoads_thenItContainNoindexTag";
 }
