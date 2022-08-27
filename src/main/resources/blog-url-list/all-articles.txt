@@ -48,7 +48,6 @@
 /spring-cloud-stream
 /drools-backward-chaining
 /maven-directory-structure
-/mockito-2-lazy-verification
 /java-continue-and-break
 /java-weekly-203
 /karate-rest-api-testing
@@ -532,7 +531,6 @@
 /hbase
 /jasypt
 /angularjs-crud-with-spring-data-rest
-/mockito-2-java-8
 /guava-reflection
 /reactor-core
 /register-servlet
