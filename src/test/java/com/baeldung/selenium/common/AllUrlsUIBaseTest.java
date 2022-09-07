@@ -34,6 +34,10 @@ import com.google.common.collect.Multimaps;
  */
 public class AllUrlsUIBaseTest extends ConcurrentBaseUISeleniumTest {
 
+    private static final String HTML_EXTENSION = ".html";
+    private static final Character SLASH_CHARACTER = '/';
+    private static final String YES_VALUE = "YES";
+
     /**
      * Overwrites ConcurrentBaseTest.extension
      */
@@ -62,6 +66,9 @@ public class AllUrlsUIBaseTest extends ConcurrentBaseUISeleniumTest {
 
     @Value("${single-url-to-run-all-tests}")
     protected String singleURL;
+
+    @Value("${offline.mode}")
+    protected String isOfflineMode;
 
     @Value("${redownload-repo}")
     protected String redownloadRepo;
@@ -122,7 +129,7 @@ public class AllUrlsUIBaseTest extends ConcurrentBaseUISeleniumTest {
             return false;
         }
         UrlIterator.UrlElement element = next.get();
-        page.setUrl(page.getBaseURL() + element.url());
+        page.setUrl(constructUrl(page, element));
         page.setType(SitePage.Type.valueOf(element.tag()));
 
         logger.info("Loading - {}", page.getUrl());
@@ -140,5 +147,18 @@ public class AllUrlsUIBaseTest extends ConcurrentBaseUISeleniumTest {
         return true;
     }
 
+    private String constructUrl(SitePage page, UrlIterator.UrlElement element) {
+        final StringBuilder urlBuilder = new StringBuilder();
+        urlBuilder.append(page.getBaseURL())
+            .append(element.url());
+        if (isOfflineModeActive() && urlBuilder.charAt(urlBuilder.length()-1) != SLASH_CHARACTER) {
+            urlBuilder.append(HTML_EXTENSION);
+        }
+        return urlBuilder.toString();
+    }
+
+    private boolean isOfflineModeActive() {
+        return YES_VALUE.equalsIgnoreCase(isOfflineMode);
+    }
 
 }
