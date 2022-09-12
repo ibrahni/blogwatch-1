@@ -138,7 +138,10 @@ public class AllUrlsUIBaseTest extends ConcurrentBaseUISeleniumTest {
             logger.info("Skipping {} as it's newer than {} weeks", page.getUrl(), ignoreUrlsNewerThanWeeks);
             loadNextURL(page);
         }
-        page.setWpTags();
+
+        if(!isOfflineModeActive()) {
+            page.setWpTags();
+        }
 
         if (shouldSkipUrl(page, GlobalConstants.givenAllLongRunningTests_whenHittingAllUrls_thenOK)) {
             loadNextURL(page);
